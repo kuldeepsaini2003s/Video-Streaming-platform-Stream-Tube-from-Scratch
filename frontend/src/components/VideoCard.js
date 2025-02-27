@@ -22,7 +22,7 @@ const VideoCard = ({ info }) => {
     <div className="shadow-md rounded-md">
       <div className="relative rounded-md">
         <img
-          className={`ml:rounded-md sm:h-[13rem]  ms:h-[12rem] object-contain aspect-video object-center w-full`}
+          className={`ml:rounded-md sm:h-[13rem] ms:h-[12rem] object-cover aspect-video object-center w-full`}
           alt="Thumbnails"
           src={thumbnail}
         />

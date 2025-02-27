@@ -464,7 +464,7 @@ const channelDetails = async (req, res) => {
         subscribed: {
           $cond: {
             if: {
-              $in: [req.user._id, "$subscribers.subscriber"],
+              $in: [userName, "$subscribers.subscriber"],
             },
             then: true,
             else: false,

@@ -1,4 +1,4 @@
-import { json, Router } from "express";
+import { Router } from "express";
 import {
   createVideo,
   getVideoById,

@@ -4,7 +4,7 @@ import axios from "axios";
 import {
   BACKEND_USER,
   formatDuration,
-  formatViewCount  
+  formatViewCount,
 } from "../utils/constants";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -40,11 +40,11 @@ const History = () => {
           <div className="mt-5 space-y-5">
             {watchHistory?.length > 0 ? (
               watchHistory.map((item) => (
-                <div className="flex gap-3 w-[70]">
+                <div className="flex gap-4 items-start">
                   <Link to={`/watch?v=${item?.videoId}`}>
                     <div className="flex-shrink-0 rounded-md relative">
                       <img
-                        className="w-60 h-36 rounded-md object-contain aspect-video object-center flex-shrink-0"
+                        className="w-[30rem] h-40 rounded-md object-cover aspect-video object-center flex-shrink-0"
                         src={item?.thumbnail}
                         alt="thumbnail"
                       />
@@ -53,28 +53,28 @@ const History = () => {
                       </p>
                     </div>
                   </Link>
-                  <div className="space-y-2 w-full">
+                  <div className="space-y-2 w-full ">
                     <div>
                       <Link to={`/watch?v=${item?.videoId}`}>
                         <h1 className="line-clamp-2 text-xl font-semibold">
                           {item?.title}
                         </h1>
                       </Link>
-                      <div className="flex items-end text-xs text-Lightblack font-medium">
+                      <div className="flex items-end text-xs mt-1 text-Lightblack font-medium">
                         <Link to={`/watch?v=${item?.videoId}`}>
                           {item?.channelName}
                         </Link>
                         <Dot width={12} height={12} strokeWidth={2} />
-                        {formatViewCount(item?.views)}
+                        <p>{formatViewCount(item?.viewsCount)}</p>
                       </div>
                     </div>
-                    <p className="line-clamp-2 text-sm leading-5">
+                    <p className="line-clamp-4 text-sm leading-5">
                       {item?.description}
                     </p>
                   </div>
                   <button>
                     <X
-                      size={40}
+                      size={50}
                       strokeWidth={1}
                       className="flex-shrink-0 bg-hover_icon_black cursor-pointer p-2 rounded-full"
                     />

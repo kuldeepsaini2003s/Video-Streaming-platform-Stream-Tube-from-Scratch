@@ -48,13 +48,13 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") || "light";
+    const savedTheme = localStorage.getItem("theme") || "dark";
     setTheme(savedTheme);
     document.body.classList.add("className", savedTheme);
   }, []);
 
   const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
+    const newTheme = theme === "dark" ? "light" : "dark";
     setTheme(newTheme);
     document.body.classList.remove(theme);
     document.body.classList.add(newTheme);
@@ -241,7 +241,7 @@ const Navbar = () => {
         </div>
         <div className="flex items-center gap-4 ">
           <Expand
-            toggled={theme === "light"}
+            toggled={theme === "dark"}
             onToggle={toggleTheme}
             className="text-2xl w-fit h-fit border border-red-500"
             duration={750}
