@@ -1,7 +1,7 @@
 import React from "react";
 import { GoDotFill } from "react-icons/go";
 import { PiDotsThreeVerticalBold } from "react-icons/pi";
-import { formatDuration, formatViewCount } from "../utils/constants";
+import { formatDuration, formatViewCount } from "../../utils/constants";
 import { FaCircleUser } from "react-icons/fa6";
 
 const Profile_Video_Card = ({ info }) => {
@@ -11,7 +11,7 @@ const Profile_Video_Card = ({ info }) => {
     <div>
       <div className="relative rounded-md">
         <img
-          className={`ml:rounded-md sm:h-[10rem]  ms:h-[12rem] object-contain aspect-video object-center w-full`}
+          className={`ml:rounded-md sm:h-[10rem]  ms:h-[12rem] object-cover aspect-video object-center w-full`}
           alt="Thumbnails"
           src={thumbnail}
         />
@@ -22,7 +22,7 @@ const Profile_Video_Card = ({ info }) => {
       <div className="yt-details py-2 sm:px-0 ms:px-4 ms:py-3 flex gap-x-3">
         {avatar ? (
           <img
-            className="rounded-full sm:h-10 sm:w-10 ms:h-8 ms:w-8 object-contain aspect-square flex-shrink-0 object-center"
+            className="rounded-full sm:h-10 sm:w-10 ms:h-8 ms:w-8 object-cover aspect-square flex-shrink-0 object-center"
             alt="Thumbnails"
             src={avatar}
           />

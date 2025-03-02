@@ -7,7 +7,7 @@ import Shimmer from "./Shimmer";
 const MainLayout = () => {
   const user = useSelector((store) => store.user.user);
   const token = localStorage.getItem("token");
-  const [loading, setLoading] = useState(true);  
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (user) {
@@ -21,7 +21,7 @@ const MainLayout = () => {
   return (
     <>
       {loading ? (
-        <Shimmer />        
+        <Shimmer />
       ) : (
         <>
           <Body />

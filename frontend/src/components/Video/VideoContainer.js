@@ -1,28 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import VideoCard from "./VideoCard";
-import ShimmerCard from "./ShimmerCard";
+import ShimmerCard from "../Main/ShimmerCard";
 import { useSelector } from "react-redux";
-import UseFetchAllVideos from "../hooks/useFetchAllVideos";
+import UseFetchAllVideos from "../../hooks/useFetchAllVideos";
 
 const VideoContainer = () => {
   UseFetchAllVideos();
   const [videos, setVideos] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const { allVideos, categories, fetchCategories } = useSelector(
-    (store) => store.videos
-  );
+  const { allVideos } = useSelector((store) => store.videos);
 
   useEffect(() => {
-    if (fetchCategories === "") {
+    if (allVideos?.length > 0) {
       setVideos(allVideos);
       setIsLoading(false);
-    } else {
-      setVideos(categories);
-      setIsLoading(false);
     }
-  }, [categories, allVideos, fetchCategories]);
+  }, [allVideos]);
 
   return (
     <>

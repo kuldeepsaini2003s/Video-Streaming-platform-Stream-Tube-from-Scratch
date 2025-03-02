@@ -4,20 +4,19 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { GoDotFill } from "react-icons/go";
 import { FaCircleUser } from "react-icons/fa6";
-import VideoCard from "./VideoCard";
-import { BACKEND_USER } from "../utils/constants";
+import { BACKEND_USER, BACKEND_VIDEO } from "../../utils/constants";
 import axios from "axios";
+import HistoryShimmer from "./History/UserChannelHistoryPage";
 
 const UserChannel = () => {
   const userToken = localStorage.getItem("token");
-  const user = useSelector((store) => store?.user?.user);
-  const [userVideosCount, setUserVideosCount] = useState(0);
+  const user = useSelector((store) => store?.user?.user);  
   const [history, setHistory] = useState([]);
 
   useEffect(() => {
     const fetchWatchHistory = async () => {
       try {
-        const response = await axios.get(BACKEND_USER + "/watchHistory", {
+        const response = await axios.get(BACKEND_VIDEO + "/watchHistory", {
           headers: {
             Authorization: `Bearer ${userToken}`,
           },
@@ -45,7 +44,7 @@ const UserChannel = () => {
                 <div className="flex-shrink-0">
                   <img
                     src={user?.avatar}
-                    className="w-32 h-32 max-sm:w-24 max-sm:h-24 object-contain aspect-square object-center rounded-full"
+                    className="w-32 h-32 max-sm:w-24 max-sm:h-24 object-cover aspect-square object-center rounded-full"
                     alt=""
                   />
                 </div>
@@ -85,9 +84,11 @@ const UserChannel = () => {
           <div>
             <h1 className="font-semibold text-lg mt-4">History</h1>
             {history?.length > 0 ? (
-              <div className="grid grid-cols-4 gap-4">
+              <div className="grid grid-cols-4 gap-4 mt-2">
                 {history?.map((item, index) => (
-                  <VideoCard key={index} info={item} />
+                  <Link to={`/watch?v=${item?.video_id}`}>
+                    <HistoryShimmer key={index} info={item} />
+                  </Link>
                 ))}
               </div>
             ) : (

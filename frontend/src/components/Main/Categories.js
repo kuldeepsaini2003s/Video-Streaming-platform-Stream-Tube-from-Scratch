@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setFetchCategories } from "../utils/VideoSlice";
+import { setFetchCategories } from "../../utils/Redux/VideoSlice";
 
 const Categories = () => {
   const [active, setActive] = useState("All");

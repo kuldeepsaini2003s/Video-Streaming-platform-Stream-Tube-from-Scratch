@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { BACKEND_USER } from "../utils/constants";
+import { BACKEND_USER } from "../../utils/constants";
 import { useDispatch } from "react-redux";
-import { setUser } from "../utils/userSlice";
-import useResponseHandler from "../hooks/UseResponseHandler";
+import { setUser } from "../../utils/Redux/userSlice";
+import useResponseHandler from "../../hooks/UseResponseHandler";
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import bell_icon_white from "../Icons/Bell-icon-white.json";
+import bell_icon_white from "../../Icons/Bell-icon-white.json";
 import Lottie from "lottie-react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { BACKEND_SUBSCRIPTION } from "../utils/constants";
+import { BACKEND_SUBSCRIPTION } from "../../utils/constants";
 import { Link } from "react-router-dom";
 import { CircleUserRound } from "lucide-react";
 
@@ -98,24 +98,27 @@ const Subscriptions = () => {
               subscriptions.map((item) => (
                 <div
                   key={item._id}
-                  className="flex gap-10 items-center w-full my-4"
+                  className="flex justify-between items-center w-full my-4"
                 >
-                  <img
-                    src={item?.avatar}
-                    className="w-32 h-32  object-contain aspect-square object-center rounded-full flex-shrink-0"
-                    alt="Avatar"
-                  />
-                  <div className="space-y-1 text-Lightblack text-sm w-full">
-                    <h1 className="text-xl text-white font-bold">
-                      {item?.channelName}
-                    </h1>
-                    <p>
-                      {item?.userName}. {item?.subscribers} Subscribers
-                    </p>
-                    <p className="leading-5">{item?.description}</p>
-                  </div>
+                  <Link to={`/${item?.userName}`} className="flex w-full gap-10">
+                    <img
+                      src={item?.avatar}
+                      className="w-32 h-32 object-cover aspect-square object-center rounded-full flex-shrink-0"
+                      alt="Avatar"
+                    />
+                    <div className="space-y-1 text-Lightblack text-sm w-full">
+                      <h1 className="text-xl text-white font-bold">
+                        {item?.channelName}
+                      </h1>
+                      <p>
+                        {item?.userName}. {item?.subscribers} Subscribers
+                      </p>
+                      <p className="leading-5">{item?.description}</p>
+                    </div>
+                  </Link>
                   <button
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setChannelName(item?.channelName);
                       setShowPop(true);
                     }}

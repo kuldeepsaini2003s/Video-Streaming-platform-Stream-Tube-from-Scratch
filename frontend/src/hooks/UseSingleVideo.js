@@ -1,22 +1,32 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSingleVideo } from "../utils/VideoSlice";
+import { setSingleVideo } from "../utils/Redux/VideoSlice";
 import { BACKEND_VIDEO } from "../utils/constants";
+import axios from "axios";
 
 const UseSingleVideo = (videoId) => {
-  const { user } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);  
+
   const dispatch = useDispatch();
 
   const getSingleVideo = async () => {
-    const data = await fetch(BACKEND_VIDEO + `/getVideo/${videoId}`, {
-      user: user && user?._id,
-    });
-    const json = await data.json();
-    dispatch(setSingleVideo(json?.data));
+    try {
+      const res = await axios.post(
+        BACKEND_VIDEO + `/getVideo/${videoId}`,
+        {
+          userId: user && user?._id,
+        }
+      );
+      if (res.status === 200) {
+        dispatch(setSingleVideo(res?.data?.data));
+      }
+    } catch (error) {
+      console.error("Error while getting video by id", error);
+    }
   };
   useEffect(() => {
     getSingleVideo();
-  }, [videoId]);
+  }, [videoId, user]);
 };
 
 export default UseSingleVideo;

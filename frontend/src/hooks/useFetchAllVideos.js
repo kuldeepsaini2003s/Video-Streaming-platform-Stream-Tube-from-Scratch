@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { setAllVideos } from "../utils/VideoSlice";
+import { setAllVideos } from "../utils/Redux/VideoSlice";
 import { BACKEND_VIDEO } from "../utils/constants";
 import { useEffect } from "react";
 

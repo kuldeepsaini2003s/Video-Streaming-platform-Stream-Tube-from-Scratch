@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { BACKEND_USER } from "../utils/constants";
+import { BACKEND_USER } from "../../utils/constants";
 import { useDispatch } from "react-redux";
-import { setUser } from "../utils/userSlice";
-import useResponseHandler from "../hooks/UseResponseHandler";
+import { setUser } from "../../utils/Redux/userSlice";
+import useResponseHandler from "../../hooks/UseResponseHandler";
 
 const SignUp = () => {
   const [formInput, setFormInput] = useState({
@@ -175,7 +175,7 @@ const SignUp = () => {
               />
               {formInput.avatar && (
                 <img
-                  className="w-10 h-10 object-contain aspect-square object-center rounded-full"
+                  className="w-10 h-10 object-cover aspect-square object-center rounded-full"
                   src={formInput.avatar}
                   alt=""
                 />

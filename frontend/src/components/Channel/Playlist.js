@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { BACKEND_PLAYLIST } from "../utils/constants";
-import useResponseHandler from "../hooks/UseResponseHandler";
+import { BACKEND_PLAYLIST } from "../../utils/constants";
+import useResponseHandler from "../../hooks/UseResponseHandler";
 import { FiChevronDown } from "react-icons/fi";
 import { IoMdGlobe } from "react-icons/io";
 import { Check, LockKeyhole, Plus, X } from "lucide-react";
@@ -163,10 +163,7 @@ export const CreatePlaylist = ({ setShowCreatePlaylist }) => {
   );
 };
 
-export const SavePlaylist = ({
-  setShowPlaylist,
-  setShowCreatePlaylist,  
-}) => {
+export const SavePlaylist = ({ setShowPlaylist, setShowCreatePlaylist }) => {
   const [searchParams] = useSearchParams();
   const videoId = searchParams.get("v");
 
@@ -294,7 +291,7 @@ export const SavePlaylist = ({
       debounceAddVideo.cancel();
       debounceRemovedVideo.cancel();
     };
-  }, [selectedItem]);  
+  }, [selectedItem]);
 
   return (
     <div
@@ -343,7 +340,10 @@ export const SavePlaylist = ({
                       checked={selectedItem.includes(item._id)}
                       id={`customCheckbox-${item._id}`}
                     />
-                    <label id="custom-label" for={`customCheckbox-${item._id}`}></label>
+                    <label
+                      id="custom-label"
+                      for={`customCheckbox-${item._id}`}
+                    ></label>
                   </div>
                   <p className="line-clamp-2 leading-4">{item.title}</p>
                 </div>
@@ -370,10 +370,9 @@ export const SavePlaylist = ({
   );
 };
 
-
 const PlaylistPage = {
   CreatePlaylist,
-  SavePlaylist,  
+  SavePlaylist,
 };
 
 export default PlaylistPage;

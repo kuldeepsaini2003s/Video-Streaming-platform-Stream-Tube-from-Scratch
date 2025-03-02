@@ -5,11 +5,11 @@ import { LuSave } from "react-icons/lu";
 import { BsSend } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
-import { BACKEND_USER } from "../utils/constants";
-import useResponseHandler from "../hooks/UseResponseHandler";
+import { BACKEND_USER } from "../../utils/constants";
+import useResponseHandler from "../../hooks/UseResponseHandler";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUser } from "../utils/userSlice";
+import { setUser } from "../../utils/Redux/userSlice";
 
 const CustomizeChannel = () => {
   const user = useSelector((store) => store.user.channelUser);
@@ -132,7 +132,7 @@ const CustomizeChannel = () => {
         <img
           src={formInput?.coverImage}
           alt="Channel Cover"
-          className="w-full h-full object-contain aspect-square rounded-md"
+          className="w-full h-full object-cover aspect-square rounded-md"
         />
         <input
           ref={coverImageRef}
@@ -158,7 +158,7 @@ const CustomizeChannel = () => {
           <img
             src={formInput?.avatar}
             alt="Channel Avatar"
-            className="w-32 h-32 rounded-full border-4 border-white object-contain aspect-square"
+            className="w-32 h-32 rounded-full border-4 border-white object-cover aspect-square"
           />
           <input
             ref={avatarImageRef}

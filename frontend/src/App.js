@@ -1,29 +1,29 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
-import WatchPage from "./components/WatchPage";
+import WatchPage from "./components/WatchPag/WatchPage";
 import React, { useEffect, useState } from "react";
-import VideoContainer from "./components/VideoContainer";
+import VideoContainer from "./components/Video/VideoContainer";
 import { useDispatch } from "react-redux";
-import Login from "./components/Login";
-import SignUp from "./components/SignUp";
+import Login from "./components/Auth//Login";
+import SignUp from "./components/Auth/SignUp";
 import { BACKEND_USER } from "./utils/constants";
-import { setUser } from "./utils/userSlice";
-import CreateVideo from "./components/CreateVideo";
-import Channel from "./components/Channel";
-import MainLayout from "./components/MainLayout";
-import CustomizeChannel from "./components/CustomizeChannel";
+import { setUser } from "./utils/Redux/userSlice";
+import CreateVideo from "./components/Video/CreateVideo";
+import Channel from "./components/Channel/Channel";
+import MainLayout from "./components/Main/MainLayout";
+import CustomizeChannel from "./components/Channel/CustomizeChannel";
 import {
   UserAbout,
   UserAllVideo,
   UserCommunity,
   UserPlaylist,
-} from "./components/userChannelCollection";
-import UpdateVideo from "./components/UpdateVideo";
-import LoginBlocker from "./utils/LoginBlocker";
-import Subscriptions from "./components/Subscriptions";
-import History from "./components/History";
+} from "./components/Channel/userChannelCollection";
+import UpdateVideo from "./components/Video/UpdateVideo";
+import LoginBlocker from "./utils/ProtectionLayout/LoginBlocker";
+import Subscriptions from "./components/Channel/Subscriptions";
+import History from "./components/Channel/History/History";
 import axios from "axios";
-import UserChannel from "./components/UserChannel";
+import UserChannel from "./components/Channel/UserChannel";
 
 export const AppRouter = createBrowserRouter([
   {
@@ -79,15 +79,7 @@ export const AppRouter = createBrowserRouter([
           {
             path: "playlists",
             element: <UserPlaylist />,
-          },
-          {
-            path: "community",
-            element: <UserCommunity />,
-          },
-          {
-            path: "about",
-            element: <UserAbout />,
-          },
+          },          
         ],
       },
       {
@@ -159,7 +151,7 @@ function App() {
   }, []);
 
   return (
-    <>    
+    <>
       <RouterProvider router={AppRouter} />
     </>
   );

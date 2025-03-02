@@ -4,6 +4,7 @@ import { uploadOnCloudinary } from "../utils/cloudinaryUpload.js";
 import { generateToken } from "../utils/generateToken.js";
 import jwt from "jsonwebtoken";
 import { v2 as cloudinary } from "cloudinary";
+import mongoose from "mongoose";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -107,8 +108,8 @@ const registerUser = async (req, res) => {
         avatar: avatarURL.secure_url,
       },
       draftDetails: {
-        userName: "",
-        channelName: "",
+        userName: userName.toLowerCase(),
+        channelName,
       },
     };
 
@@ -426,10 +427,13 @@ const userDetails = async (req, res) => {
 
 const channelDetails = async (req, res) => {
   const { userName } = req.params;
-  if (!userName)
+  const { userId } = req.body;
+
+  if (!userName) {
     return res
       .status(400)
       .json({ success: false, message: "User name is required" });
+  }
 
   const user = await User.aggregate([
     {
@@ -464,7 +468,15 @@ const channelDetails = async (req, res) => {
         subscribed: {
           $cond: {
             if: {
-              $in: [userName, "$subscribers.subscriber"],
+              $and: [
+                { $gt: [{ $type: userId }, "null"] },
+                {
+                  $in: [
+                    new mongoose.Types.ObjectId(userId),
+                    "$subscribers.subscriber",
+                  ],
+                },
+              ],
             },
             then: true,
             else: false,
@@ -474,7 +486,7 @@ const channelDetails = async (req, res) => {
     },
     {
       $project: {
-        _id: "$publishedDetails._id",
+        _id: "$_id",
         userName: "$publishedDetails.userName",
         channelName: "$publishedDetails.channelName",
         description: "$publishedDetails.description",
@@ -486,7 +498,8 @@ const channelDetails = async (req, res) => {
       },
     },
   ]);
-  if (!user.length > 0) {
+
+  if (user.length === 0) {
     return res.status(404).json({
       success: false,
       message: "User not found",
@@ -496,79 +509,12 @@ const channelDetails = async (req, res) => {
   return res.status(200).json({
     success: true,
     data: user[0],
-    message: "channel data fetched successfully",
+    message: "Channel data fetched successfully",
   });
 };
 
-const getWatchHistory = async (req, res) => {
-  const user = await User.aggregate([
-    {
-      $match: {
-        _id: req.user._id,
-      },
-    },
-    {
-      $unwind: {
-        path: "$watchHistory",
-        preserveNullAndEmptyArrays: true,
-      },
-    },
-    {
-      $lookup: {
-        from: "videos",
-        localField: "watchHistory",
-        foreignField: "_id",
-        as: "videoDetails",
-      },
-    },
-    {
-      $unwind: {
-        path: "$videoDetails",
-        preserveNullAndEmptyArrays: true,
-      },
-    },
-    {
-      $lookup: {
-        from: "users",
-        localField: "videoDetails.user",
-        foreignField: "_id",
-        as: "videoOwner",
-      },
-    },
-    {
-      $addFields: {
-        title: "$videoDetails.title",
-        description: "$videoDetails.description",
-        thumbnail: "$videoDetails.thumbnail",
-        videoId: "$videoDetails.video_id",
-        duration: "$videoDetails.duration",
-        viewsCount: { $size: "$videoDetails.views" },
-        createdAt: "$videoDetails.createdAt",
-        channelName: {
-          $arrayElemAt: ["$videoOwner.publishedDetails.channelName", 0],
-        },
-      },
-    },
-    {
-      $project: {
-        title: 1,
-        description: 1,
-        thumbnail: 1,
-        videoId: 1,
-        duration: 1,
-        viewsCount: 1,
-        createdAt: 1,
-        channelName: 1,
-      },
-    },
-  ]);
 
-  return res.status(200).json({
-    success: true,
-    data: user,
-    message: "watch history fetched successfully",
-  });
-};
+
 
 export {
   registerUser,
@@ -577,7 +523,6 @@ export {
   refreshAccessToken,
   updatePassword,
   userDetails,
-  channelDetails,
-  getWatchHistory,
+  channelDetails,  
   updateUser,
 };

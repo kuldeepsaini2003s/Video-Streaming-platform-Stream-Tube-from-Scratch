@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
-import UseVideoCategories from "../hooks/UseVideoCategories";
+import UseVideoCategories from "../../hooks/UseVideoCategories";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchQuary } from "../utils/SearchSlice";
-import { toggleSlider } from "../utils/appSlice";
+import { setSearchQuary } from "../../utils/Redux/SearchSlice";
+import { toggleSlider } from "../../utils/Redux/appSlice";
 import { RxCross2 } from "react-icons/rx";
 import { IoMenu, IoSearchOutline } from "react-icons/io5";
 import { MdOutlineMic, MdOutlineVideoCall } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
-import { BACKEND_USER } from "../utils/constants";
-import { setUser } from "../utils/userSlice";
+import { BACKEND_USER } from "../../utils/constants";
+import { setUser } from "../../utils/Redux/userSlice";
 import { toast } from "react-toastify";
 import "@theme-toggles/react/css/Expand.css";
 import { Expand } from "@theme-toggles/react";
 import { FaCircleUser } from "react-icons/fa6";
 import { CircleUserRound } from "lucide-react";
 import { size } from "lodash";
+import useResponseHandler from "../../hooks/UseResponseHandler";
 
 const Navbar = () => {
   UseVideoCategories();
@@ -27,6 +28,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user.user);
+  const { handleResponse, handleError } = useResponseHandler();
 
   const getSuggestion = useSelector(
     (store) => store.searchSuggestion.searchQuery
@@ -80,27 +82,21 @@ const Navbar = () => {
       });
       const data = await response.json();
       if (response.status === 200) {
-        localStorage.removeItem("token");
-        navigate("/login");
-        setShowSetting(false);
-        dispatch(setUser(null));
-        toast.update(toastId, {
-          render: data.message,
-          type: "success",
-          isLoading: false,
-          autoClose: 3000,
-          closeOnClick: true,
+        handleResponse({
+          status: response.status,
+          message: data?.message,
+          toastId,
+          onSuccess: () => {
+            localStorage.removeItem("token");
+            navigate("/login");
+            setShowSetting(false);
+            dispatch(setUser(null));
+          },
         });
       }
     } catch (error) {
-      toast.update(toastId, {
-        render: "Error while logging out",
-        type: "error",
-        isLoading: false,
-        autoClose: 3000,
-        closeOnClick: true,
-      });
       console.log("error while logging out", error);
+      handleError({ error, toastId, message: "Error while logging out." });
     }
   };
 
@@ -265,7 +261,7 @@ const Navbar = () => {
               <button onClick={settingHandler}>
                 {user?.avatar ? (
                   <img
-                    className="w-10 h-10 rounded-full object-contain aspect-square object-center"
+                    className="w-10 h-10 rounded-full object-cover aspect-square object-center"
                     src={user?.avatar}
                     alt=""
                   />
@@ -289,7 +285,7 @@ const Navbar = () => {
                   onClick={() => setShowSetting(false)}
                   className="bg-Gray w-full rounded-t-md border-b border-Gray hover:bg-Gray dark:bg-icon_black dark:hover:bg-hover_icon_black p-2"
                 >
-                  Profile
+                  Channel
                 </button>
               </Link>
               <button

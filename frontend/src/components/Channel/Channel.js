@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from "react";
-import { Link, Outlet, useLocation, useParams } from "react-router-dom";
-import { BACKEND_SUBSCRIPTION, BACKEND_USER, LOCAL_BACKEND_USER } from "../utils/constants";
+import {
+  Link,
+  Outlet,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
+import {
+  BACKEND_SUBSCRIPTION,
+  BACKEND_USER,  
+} from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { FaCircleUser } from "react-icons/fa6";
-import UseFetchAllVideos from "../hooks/useFetchAllVideos";
+import UseFetchAllVideos from "../../hooks/useFetchAllVideos";
 import { GoDotFill } from "react-icons/go";
 import Channel_Page_Shimmer from "./Channel_Page_Shimmer";
-import { setChannelUser } from "../utils/userSlice";
+import { setChannelUser } from "../../utils/Redux/userSlice";
 import axios from "axios";
-import bell_icon_white from "../Icons/Bell-icon-white.json";
+import bell_icon_white from "../../Icons/Bell-icon-white.json";
 import Lottie from "lottie-react";
 
 const channelNavigation = [
@@ -19,15 +28,7 @@ const channelNavigation = [
   {
     name: "Playlists",
     path: "playlists",
-  },
-  {
-    name: "Community",
-    path: "community",
-  },
-  {
-    name: "About",
-    path: "about",
-  },
+  },    
 ];
 
 const Channel = () => {
@@ -44,7 +45,10 @@ const Channel = () => {
   const [showPop, setShowPop] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [shimmer, setShimmer] = useState(true);
+  const [showLoginPop, setShowLoginPop] = useState(false);
+  const [loginMessage, setLoginMessage] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (userVideos) {
@@ -56,12 +60,13 @@ const Channel = () => {
     const fetchUserDetails = async () => {
       try {
         const response = await fetch(
-          LOCAL_BACKEND_USER + `/channel/${userName}`,
+          BACKEND_USER + `/channel/${userName}`,
           {
-            method: "GET",
+            method: "POST",
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "application/json",
             },
+            body: JSON.stringify({ userId: user?._id }),
           }
         );
         const data = await response.json();
@@ -78,7 +83,41 @@ const Channel = () => {
     fetchUserDetails();
   }, [userName]);
 
+  const LoginPop = () => {
+    return (
+      <div
+        onClick={() => setShowLoginPop(false)}
+        className="absolute w-dvw h-dvh top-0 left-0 remove-scrollbar bg-black bg-opacity-40 flex justify-center items-center"
+      >
+        <div className="text-Lightblack bg-black flex flex-col justify-between items-center h-36 rounded-md p-5">
+          <p>{loginMessage}</p>
+          <div className="flex gap-10 items-center justify-between">
+            <button
+              onClick={() => setShowPop(false)}
+              className="px-4 py-1 rounded-full font-medium dark:hover:bg-hover_icon_black dark:text-white hover:bg-lightgray"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => navigate}
+              className="px-4 py-1 rounded-full font-medium text-[#388BD4] hover:bg-[#3ca4ff36]"
+            >
+              Sign In
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
   const subscriberHandler = async () => {
+    if (!user) {
+      setShowLoginPop(true);
+      setLoginMessage(
+        `Want to subscribe to this channel? Sign in to subscribe to this channel.`
+      );
+      return;
+    }
     if (!subscribed) {
       try {
         await axios.get(
@@ -160,12 +199,12 @@ const Channel = () => {
       {shimmer ? (
         <Channel_Page_Shimmer />
       ) : (
-        <div id="main" className="p-2">
+        <div id="main" className="p-2 relative">
           <div className="border-b dark:border-gray-700 px-20">
             {channelDetails?.coverImage && (
               <img
                 src={channelDetails?.coverImage}
-                className="h-56 max-md:h-28 w-full object-contain aspect-square object-center md:rounded-xl"
+                className="h-56 max-md:h-28 w-full object-cover aspect-square object-center md:rounded-xl"
                 alt=""
               />
             )}
@@ -174,7 +213,7 @@ const Channel = () => {
                 <div className="flex-shrink-0">
                   <img
                     src={channelDetails?.avatar}
-                    className="w-32 h-32 max-sm:w-24 max-sm:h-24 object-contain aspect-square object-center rounded-full"
+                    className="w-32 h-32 max-sm:w-24 max-sm:h-24 object-cover aspect-square object-center rounded-full"
                     alt=""
                   />
                 </div>
@@ -257,6 +296,7 @@ const Channel = () => {
             <Outlet />
           </div>
           {showPop && <ConfirmationPop />}
+          {showLoginPop && <LoginPop />}
         </div>
       )}
     </>

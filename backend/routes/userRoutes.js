@@ -1,6 +1,5 @@
 import {
-  userDetails,
-  getWatchHistory,
+  userDetails,  
   loginUser,
   logoutUser,
   refreshAccessToken,
@@ -31,7 +30,7 @@ router.post(
 );
 
 router.get("/user", verifyToken, userDetails);
-router.get("/channel/:userName", channelDetails);
-router.get("/watchHistory", verifyToken, getWatchHistory);
+router.post("/channel/:userName", channelDetails);
+
 
 export default router;

@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleSlider } from "../utils/appSlice";
+import { toggleSlider } from "../../utils/Redux/appSlice";
 import { IoMdHome } from "react-icons/io";
 import { IoMenu } from "react-icons/io5";
 import { SiYoutubeshorts } from "react-icons/si";
@@ -20,7 +20,7 @@ const Slider = () => {
       name: "Home",
       icon: <IoMdHome className="text-[1.4rem]" />,
       path: "/",
-    },    
+    },
     {
       name: "Subscribers",
       icon: <MdOutlineSubscriptions className="text-[1.3rem]" />,

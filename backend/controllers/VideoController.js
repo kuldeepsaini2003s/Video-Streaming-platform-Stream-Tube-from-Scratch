@@ -36,6 +36,7 @@ const createVideo = async (req, res) => {
     status,
     category,
   } = req.body;
+  console.log(tags);
 
   console.log(
     `Received chunk ${chunkIndex + 1} of ${totalChunks} for file: ${fileName}`
@@ -244,7 +245,7 @@ const getUploadProgress = (req, res) => {
 const getVideoById = async (req, res) => {
   try {
     const { videoId } = req.params;
-    const userId = req.body.user;
+    const { userId } = req.body;
 
     let user = null;
     if (userId) {
@@ -423,7 +424,6 @@ const updateVideo = async (req, res) => {
   }
   try {
     const { id } = req.params;
-
     const video = await Video.findOne({ video_id: id });
 
     if (!video) {
@@ -433,19 +433,12 @@ const updateVideo = async (req, res) => {
       });
     }
 
-    const thumbnail = req.files;
-
-    if (!thumbnail) {
-      return res.status(400).json({
-        success: false,
-        message: "Please upload a thumbnail",
-      });
-    }
+    const { thumbnail } = req.body;
 
     if (thumbnail !== video.thumbnail) {
       const public_id = extractPublicId(video.thumbnail);
       await cloudinary.uploader.destroy(public_id);
-      const thumbnailUrl = await uploadOnCloudinary(thumbnail.path);
+      const thumbnailUrl = await uploadOnCloudinary(req.file.thumbnail.path);
       video.thumbnail = thumbnailUrl.secure_url;
     }
 
@@ -623,6 +616,132 @@ const addVideoToWatched = async (req, res) => {
   }
 };
 
+const getWatchHistory = async (req, res) => {
+  const user = await User.aggregate([
+    {
+      $match: {
+        _id: req.user._id,
+      },
+    },
+    {
+      $unwind: {
+        path: "$watchHistory",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $lookup: {
+        from: "videos",
+        localField: "watchHistory",
+        foreignField: "_id",
+        as: "videoDetails",
+      },
+    },
+    {
+      $unwind: {
+        path: "$videoDetails",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "videoDetails.user",
+        foreignField: "_id",
+        as: "videoOwner",
+      },
+    },
+    {
+      $addFields: {
+        title: "$videoDetails.title",
+        description: "$videoDetails.description",
+        thumbnail: "$videoDetails.thumbnail",
+        video_id: "$videoDetails.video_id",
+        duration: "$videoDetails.duration",
+        viewsCount: { $size: "$videoDetails.views" },
+        createdAt: "$videoDetails.createdAt",
+        channelName: {
+          $arrayElemAt: ["$videoOwner.publishedDetails.channelName", 0],
+        },
+        avatar: {
+          $arrayElemAt: ["$videoOwner.publishedDetails.avatar", 0],
+        },
+        userName: {
+          $arrayElemAt: ["$videoOwner.publishedDetails.userName", 0],
+        },
+      },
+    },
+    {
+      $project: {
+        title: 1,
+        description: 1,
+        thumbnail: 1,
+        avatar: 1,
+        video_id: 1,
+        duration: 1,
+        viewsCount: 1,
+        createdAt: 1,
+        channelName: 1,
+        userName: 1,
+      },
+    },
+  ]);
+
+  return res.status(200).json({
+    success: true,
+    data: user,
+    message: "watch history fetched successfully",
+  });
+};
+
+const removeFromHistory = async (req, res) => {
+  try {
+    const { videoId } = req.params;
+
+    const video = await Video.findOne({ video_id: videoId });
+
+    if (!video) {
+      return res.status(404).json({
+        success: false,
+        msg: "Video not found",
+      });
+    }
+
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        msg: "User not found",
+      });
+    }
+
+    const watchHistory = await User.findOneAndUpdate(
+      { _id: user._id },
+      { $pull: { watchHistory: video._id } },
+      { new: true }
+    );
+
+    if (!watchHistory) {
+      return res.status(400).json({
+        success: false,
+        msg: "Video not found in watch history",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      msg: "Video removed from history successfully",
+    });
+  } catch (error) {
+    console.log("Error while removing video from history", error);
+    return res.status(500).json({
+      success: false,
+      msg: "Something went wrong",
+    });
+  }
+};
+
 const deleteVideo = async (req, res) => {
   try {
     const { id } = req.params;
@@ -655,6 +774,97 @@ const deleteVideo = async (req, res) => {
   }
 };
 
+const videoById = async (req, res) => {
+  try {
+    const { videoId } = req.params;
+
+    const user = await User.findById(req.user._id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        msg: "User not found",
+      });
+    }
+
+    const video = await Video.findOne({ video_id: videoId })
+      .select(
+        "title thumbnail views duration likesCount description published tags video_id videoUrl category createdAt updatedAt"
+      )
+      .populate(
+        "user",
+        "publishedDetails.channelName publishedDetails.avatar publishedDetails.userName"
+      );
+
+    if (!video) {
+      return res.status(404).json({
+        success: false,
+        message: "Video not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: video,
+      message: "Videos fetched successfully",
+    });
+  } catch (error) {
+    console.log("Error while getting video", error);
+    return res.status(500).json({
+      success: false,
+      msg: "Something went wrong",
+    });
+  }
+};
+
+const videoByCategory = async (req, res) => {
+  const { category, videoId, searchQuery } = req.query;
+
+  if (!category) {
+    return res.status(400).json({
+      success: false,
+      msg: "Category is required",
+    });
+  }
+
+  // Preprocess the search query to remove common stop words
+  const stopWords = ["is", "was", "has", "the", "and", "or", "a", "an"];
+  const queryWords = searchQuery ? searchQuery.split(" ") : [];
+  const filteredQuery = queryWords
+    .filter(word => !stopWords.includes(word.toLowerCase()))
+    .join(" ");
+
+  // Build the query object
+  const query = {
+    category,
+    video_id: { $ne: videoId },
+    published: true,
+  };
+
+  // Add text search to the query if searchQuery is provided
+  if (filteredQuery) {
+    query.$text = { $search: filteredQuery };
+  }
+
+  // Fetch videos based on the query
+  const videos = await Video.find(query)
+    .select("title thumbnail views duration video_id category createdAt updatedAt")
+    .populate("user", "publishedDetails.channelName");
+
+  if (!videos || videos.length === 0) {
+    return res.status(404).json({
+      success: false,
+      msg: "No videos found with this category and search query",
+    });
+  }
+
+  return res.status(200).json({
+    success: true,
+    data: videos,
+    msg: "Category videos fetched successfully",
+  });
+};
+
 export {
   createVideo,
   getVideoById,
@@ -664,4 +874,8 @@ export {
   addVideoToWatched,
   getUploadProgress,
   deleteVideo,
+  videoById,
+  getWatchHistory,
+  removeFromHistory,
+  videoByCategory,
 };

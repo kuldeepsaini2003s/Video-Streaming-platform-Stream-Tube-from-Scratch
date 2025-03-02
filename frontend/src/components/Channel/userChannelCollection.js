@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
-import { BACKEND_PLAYLIST } from "../utils/constants";
+import { BACKEND_PLAYLIST } from "../../utils/constants";
 import { IoMdGlobe } from "react-icons/io";
 import { LockKeyhole } from "lucide-react";
 import { IoMdPlay } from "react-icons/io";
@@ -12,6 +12,8 @@ import { CgPlayList } from "react-icons/cg";
 export const UserAllVideo = () => {
   const [videos, setVideos] = useState([]);
   const userAllVideos = useSelector((store) => store.videos.allVideos);
+  const { user } = useSelector((state) => state.user);
+  const { userName } = useParams();
 
   useEffect(() => {
     if (userAllVideos && userAllVideos.length > 0) {
@@ -20,11 +22,19 @@ export const UserAllVideo = () => {
       setVideos([]);
     }
   }, [userAllVideos]);
+
   return (
     <div className="grid max-sm:grid-cols-1 gap-3 sm:grid-cols-2 ml:m-2   lg:grid-cols-3 mt-4">
       {videos && videos.length > 0 ? (
         videos.map((item) => (
-          <Link key={item.id} to={"/update-video/" + item?.video_id}>
+          <Link
+            key={item.id}
+            to={
+              user?.userName === userName
+                ? `/update-video/${item?.video_id}`
+                : `/watch?v=${item?.video_id}`
+            }
+          >
             <Profile_Video_Card
               info={item}
               height="[10rem]"
@@ -67,7 +77,7 @@ export const UserPlaylist = () => {
     if (channelUser?._id) {
       fetchData();
     }
-  }, [channelUser?._id]);  
+  }, [channelUser?._id]);
 
   return (
     <div className="grid grid-cols-5 gap-2 my-4">
@@ -81,7 +91,7 @@ export const UserPlaylist = () => {
                 <div className="relative w-full ">
                   <img
                     src={item?.thumbnail}
-                    className="w-full h-32 object-contain aspect-video object-center rounded-md bg-yellow-500"
+                    className="w-full h-32 object-cover aspect-video object-center rounded-md bg-yellow-500"
                   ></img>
                   <div className="absolute font-medium text-xs flex justify-center right-1 bottom-1 bg-icon_black bg-opacity-70 rounded-md px-2 py-1">
                     <CgPlayList className="text-lg" /> {item?.video?.length}{" "}
@@ -122,17 +132,10 @@ export const UserPlaylist = () => {
     </div>
   );
 };
-export const UserCommunity = () => {
-  return <div>User all community</div>;
-};
-export const UserAbout = () => {
-  return <div>User all about</div>;
-};
+
 
 const userChannelCollection = {
   UserAllVideo,
-  UserPlaylist,
-  UserCommunity,
-  UserAbout,
+  UserPlaylist,  
 };
 export default userChannelCollection;

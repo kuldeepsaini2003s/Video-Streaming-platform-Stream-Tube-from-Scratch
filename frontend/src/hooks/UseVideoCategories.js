@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { YOUTUBE_API_KEY } from "../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
-import { setCategories } from "../utils/VideoSlice";
+import { setCategories } from "../utils/Redux/VideoSlice";
 
 const UseVideoCategories = () => {
-  const getFetchCategory = useSelector((store) => store.videos.fetchcategories);  
+  const getFetchCategory = useSelector((store) => store.videos.fetchcategories);
   const dispatch = useDispatch();
 
   const getVideoCategories = async () => {

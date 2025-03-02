@@ -8,6 +8,10 @@ import {
   updateViews,
   addVideoToWatched,
   getUploadProgress,
+  videoById,
+  getWatchHistory,
+  removeFromHistory,
+  videoByCategory,
 } from "../controllers/VideoController.js";
 import { verifyToken } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -35,11 +39,15 @@ router.post(
   verifyToken,
   createVideo
 );
-router.get("/progress", getUploadProgress);
+router.post("/getVideo/:videoId", getVideoById);
 
+router.get("/progress", getUploadProgress);
 router.get("/add_To_Watched/:videoId", verifyToken, addVideoToWatched);
-router.get("/getVideo/:videoId", getVideoById);
 router.get("/updateViews/:videoId", verifyToken, updateViews);
+router.get("/video/:videoId", verifyToken, videoById);
+router.get("/watchHistory", verifyToken, getWatchHistory);
+router.get("/removeHistory/:videoId", verifyToken, removeFromHistory);
+router.get("/video", videoByCategory);
 
 router.delete("/deleteVideo/:id", verifyToken, deleteVideo);
 
