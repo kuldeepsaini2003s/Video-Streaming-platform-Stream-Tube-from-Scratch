@@ -35,7 +35,7 @@ const createVideo = async (req, res) => {
     tags,
     status,
     category,
-  } = req.body;  
+  } = req.body;
 
   // console.log(
   //   `Received chunk ${chunkIndex + 1} of ${totalChunks} for file: ${fileName}`
@@ -87,7 +87,7 @@ const createVideo = async (req, res) => {
       );
       uploadProgress[fileName].progress = 25;
       uploadProgress[fileName].thumbnailUrl = thumbnailUrl.secure_url;
-      uploadProgress[fileName].status = "uploading";      
+      uploadProgress[fileName].status = "uploading";
     } catch (err) {
       console.error("Error uploading thumbnail:", err);
       uploadProgress[fileName].status = "error";
@@ -160,7 +160,7 @@ const createVideo = async (req, res) => {
             thumbnail: uploadProgress[fileName]?.thumbnailUrl,
             videoUrl: videoUrl.secure_url,
           };
-          await Video.create(videoData);          
+          await Video.create(videoData);
           return res.status(200).json({
             success: true,
             message: "Video created successfully",
@@ -199,11 +199,7 @@ const createVideo = async (req, res) => {
   }
 };
 
-const cleanupUploadedFiles = (
-  files,  
-  combinedPath = null,
-  tempDir = null
-) => {
+const cleanupUploadedFiles = (files, combinedPath = null, tempDir = null) => {
   try {
     if (files?.thumbnail?.[0]?.path && fs.existsSync(files.thumbnail[0].path)) {
       fs.unlinkSync(files.thumbnail[0].path);
@@ -571,6 +567,7 @@ const updateViews = async (req, res) => {
     });
   }
 };
+
 const addVideoToWatched = async (req, res) => {
   try {
     const { videoId } = req.params;
@@ -650,7 +647,7 @@ const getWatchHistory = async (req, res) => {
         thumbnail: "$videoDetails.thumbnail",
         video_id: "$videoDetails.video_id",
         duration: "$videoDetails.duration",
-        viewsCount: { $size: "$videoDetails.views" },
+        viewsCount: { $size: { $ifNull: ["$videoDetails.views", []] } },
         createdAt: "$videoDetails.createdAt",
         channelName: {
           $arrayElemAt: ["$videoOwner.publishedDetails.channelName", 0],
