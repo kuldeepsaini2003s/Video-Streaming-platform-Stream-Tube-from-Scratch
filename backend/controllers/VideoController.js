@@ -233,7 +233,10 @@ const getUploadProgress = (req, res) => {
   if (!fileName) {
     return res.status(400).json({ message: "File name is required" });
   }
-  if (uploadProgress[fileName].progress === 100) {
+  if (
+    uploadProgress[fileName].progress &&
+    uploadProgress[fileName].progress === 100
+  ) {
     return res
       .status(200)
       .json((uploadProgress[fileName].status = "completed"));
@@ -831,7 +834,7 @@ const videoByCategory = async (req, res) => {
   const stopWords = ["is", "was", "has", "the", "and", "or", "a", "an"];
   const queryWords = searchQuery ? searchQuery.split(" ") : [];
   const filteredQuery = queryWords
-    .filter(word => !stopWords.includes(word.toLowerCase()))
+    .filter((word) => !stopWords.includes(word.toLowerCase()))
     .join(" ");
 
   // Build the query object
@@ -848,7 +851,9 @@ const videoByCategory = async (req, res) => {
 
   // Fetch videos based on the query
   const videos = await Video.find(query)
-    .select("title thumbnail views duration video_id category createdAt updatedAt")
+    .select(
+      "title thumbnail views duration video_id category createdAt updatedAt"
+    )
     .populate("user", "publishedDetails.channelName");
 
   if (!videos || videos.length === 0) {

@@ -18,7 +18,9 @@ const uploadOnCloudinary = async (localFilePath, onProgress) => {
     return new Promise((resolve, reject) => {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
-          public_id: "Youtube",
+          public_id: `Youtube_${new Date()
+            .toISOString()
+            .replace(/[:.]/g, "-")}`,
           resource_type: "auto",
           folder: "uploads",
         },
