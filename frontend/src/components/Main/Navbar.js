@@ -95,7 +95,7 @@ const Navbar = () => {
         });
       }
     } catch (error) {
-      console.log("error while logging out", error);
+      console.error("error while logging out", error);
       handleError({ error, toastId, message: "Error while logging out." });
     }
   };

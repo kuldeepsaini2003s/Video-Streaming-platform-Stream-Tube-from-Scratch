@@ -113,8 +113,7 @@ const registerUser = async (req, res) => {
       },
     };
 
-    const bcryptPassword = await bcrypt.hash(password, 10);
-    console.log({ ...userData, email, password: bcryptPassword });
+    const bcryptPassword = await bcrypt.hash(password, 10);    
 
     const user = await User.create({
       ...userData,

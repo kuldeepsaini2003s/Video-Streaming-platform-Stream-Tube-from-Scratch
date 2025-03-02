@@ -160,7 +160,7 @@ const UpdateVideo = () => {
           },
         });
       } catch (error) {
-        console.log("Error while creating video", error);
+        console.error("Error while creating video", error);
         handleError({ error, toastId, message: "Error while updating video" });
         setSubmissionDisable(false);
       }

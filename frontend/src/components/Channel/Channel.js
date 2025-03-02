@@ -77,7 +77,7 @@ const Channel = () => {
           dispatch(setChannelUser(data?.data));
         }
       } catch (error) {
-        console.log("error while fetching user channel details", error);
+        console.error("error while fetching user channel details", error);
       }
     };
     fetchUserDetails();

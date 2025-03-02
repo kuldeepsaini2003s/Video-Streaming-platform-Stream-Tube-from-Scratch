@@ -11,6 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import {
   BACKEND_VIDEO,
   categories,
+  LOCAL_BACKEND_VIDEO,
 } from "../../utils/constants";
 
 const CreateVideo = () => {
@@ -135,7 +136,7 @@ const CreateVideo = () => {
     const interval = setInterval(async () => {
       try {
         const response = await fetch(
-          `${BACKEND_VIDEO}/progress?fileName=${video?.name}`
+          `${LOCAL_BACKEND_VIDEO}/progress?fileName=${video?.name}`
         );
         const data = await response.json();
 
@@ -143,8 +144,8 @@ const CreateVideo = () => {
         toast.update(uploadingId, {
           render: `Uploading: ${data.progress}%`,
           progress: data.progress / 100,
-        });
-        if (data === "completed") {
+        });        
+        if (data?.status === "completed") {
           toast.update(uploadingId, {
             render: "Wrapping up... Thanks for your patience!",
             type: "info",
@@ -188,7 +189,7 @@ const CreateVideo = () => {
       formData.append("fileName", video.name);
 
       try {
-        const response = await fetch(BACKEND_VIDEO + "/upload", {
+        const response = await fetch(LOCAL_BACKEND_VIDEO + "/upload", {
           method: "POST",
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,

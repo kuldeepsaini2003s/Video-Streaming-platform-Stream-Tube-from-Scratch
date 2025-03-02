@@ -35,12 +35,11 @@ const createVideo = async (req, res) => {
     tags,
     status,
     category,
-  } = req.body;
-  console.log(tags);
+  } = req.body;  
 
-  console.log(
-    `Received chunk ${chunkIndex + 1} of ${totalChunks} for file: ${fileName}`
-  );
+  // console.log(
+  //   `Received chunk ${chunkIndex + 1} of ${totalChunks} for file: ${fileName}`
+  // );
 
   if (
     (!chunkIndex && chunkIndex !== 0) ||
@@ -88,9 +87,7 @@ const createVideo = async (req, res) => {
       );
       uploadProgress[fileName].progress = 25;
       uploadProgress[fileName].thumbnailUrl = thumbnailUrl.secure_url;
-      uploadProgress[fileName].status = "uploading";
-
-      console.log("Thumbnail uploaded successfully:", thumbnailUrl);
+      uploadProgress[fileName].status = "uploading";      
     } catch (err) {
       console.error("Error uploading thumbnail:", err);
       uploadProgress[fileName].status = "error";
@@ -163,9 +160,7 @@ const createVideo = async (req, res) => {
             thumbnail: uploadProgress[fileName]?.thumbnailUrl,
             videoUrl: videoUrl.secure_url,
           };
-          await Video.create(videoData);
-
-          console.log("Video created successfully:", videoData);
+          await Video.create(videoData);          
           return res.status(200).json({
             success: true,
             message: "Video created successfully",
@@ -205,8 +200,7 @@ const createVideo = async (req, res) => {
 };
 
 const cleanupUploadedFiles = (
-  files,
-  fileName,
+  files,  
   combinedPath = null,
   tempDir = null
 ) => {
@@ -233,13 +227,8 @@ const getUploadProgress = (req, res) => {
   if (!fileName) {
     return res.status(400).json({ message: "File name is required" });
   }
-  if (
-    uploadProgress[fileName].progress &&
-    uploadProgress[fileName].progress === 100
-  ) {
-    return res
-      .status(200)
-      .json((uploadProgress[fileName].status = "completed"));
+  if (uploadProgress[fileName] && uploadProgress[fileName].progress === 100) {
+    return res.status(200).json({ status: "completed" });
   } else {
     res.status(200).json(uploadProgress[fileName]);
   }

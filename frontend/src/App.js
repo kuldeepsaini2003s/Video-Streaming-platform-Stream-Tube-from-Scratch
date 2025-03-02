@@ -137,7 +137,7 @@ function App() {
           setIsRefreshing(false);
         }
       } catch (error) {
-        console.log("error while checking token", error);
+        console.error("error while checking token", error);
       }
     };
     if (userToken) {

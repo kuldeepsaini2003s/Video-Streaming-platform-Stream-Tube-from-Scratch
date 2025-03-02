@@ -15,7 +15,7 @@ const UseVideoCategories = () => {
       const json = await data.json();
       dispatch(setCategories(json.items));
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
