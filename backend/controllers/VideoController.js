@@ -800,33 +800,58 @@ const videoById = async (req, res) => {
 };
 
 const videoByCategory = async (req, res) => {
-  const { category, videoId, searchQuery } = req.query;
+  const { category, videoId } = req.query;
 
-  if (!category) {
-    return res.status(400).json({
+  // Fetch the video using videoId
+  const video = await Video.findOne({ video_id: videoId });
+
+  if (!video) {
+    return res.status(404).json({
       success: false,
-      msg: "Category is required",
+      msg: "Video not found",
     });
   }
 
-  // Preprocess the search query to remove common stop words
-  const stopWords = ["is", "was", "has", "the", "and", "or", "a", "an"];
-  const queryWords = searchQuery ? searchQuery.split(" ") : [];
-  const filteredQuery = queryWords
-    .filter((word) => !stopWords.includes(word.toLowerCase()))
-    .join(" ");
+  // Extract text from title, description, and tags
+  // const { title, description, tags } = video;
+  // const textToSearch = `${title} ${description} ${tags.join(" ")}`;
+
+  // Preprocess the text to remove common stop words
+  // const stopWords = [
+  //   "is",
+  //   "was",
+  //   "has",
+  //   "the",
+  //   "and",
+  //   "or",
+  //   "a",
+  //   "an",
+  //   "so",
+  //   "as",
+  //   "went",
+  //   "what",
+  //   "do",
+  //   "i",
+  //   "also",
+  // ];
+  // const queryWords = textToSearch.split(" ");
+  // const filteredQuery = queryWords
+  //   .filter((word) => !stopWords.includes(word.toLowerCase()))
+  //   .join(" ");
+
+  // console.log("Filtered Query:", filteredQuery);
 
   // Build the query object
   const query = {
     category,
-    video_id: { $ne: videoId },
+    video_id: { $ne: videoId }, // Exclude the video with the specified videoId
     published: true,
   };
 
-  // Add text search to the query if searchQuery is provided
-  if (filteredQuery) {
-    query.$text = { $search: filteredQuery };
-  }
+  // Add text search to the query if filteredQuery is not empty
+  // if (filteredQuery) {
+  //   query.$text = { $search: filteredQuery };
+  // }
 
   // Fetch videos based on the query
   const videos = await Video.find(query)
@@ -838,14 +863,14 @@ const videoByCategory = async (req, res) => {
   if (!videos || videos.length === 0) {
     return res.status(404).json({
       success: false,
-      msg: "No videos found with this category and search query",
+      msg: "No related videos found",
     });
   }
 
   return res.status(200).json({
     success: true,
     data: videos,
-    msg: "Category videos fetched successfully",
+    msg: "Related videos fetched successfully",
   });
 };
 
