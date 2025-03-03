@@ -615,7 +615,6 @@ const getWatchHistory = async (req, res) => {
     {
       $unwind: {
         path: "$watchHistory",
-        preserveNullAndEmptyArrays: true,
       },
     },
     {
