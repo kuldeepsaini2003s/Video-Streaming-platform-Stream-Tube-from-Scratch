@@ -145,8 +145,6 @@ const createVideo = async (req, res) => {
                 80 + Math.round((progress / 100) * 20); // Max 100%
             }
           );
-          uploadProgress[fileName].progress = 100;
-          uploadProgress[fileName].status = "completed";
 
           const videoData = {
             title,
@@ -223,11 +221,7 @@ const getUploadProgress = (req, res) => {
   if (!fileName) {
     return res.status(400).json({ message: "File name is required" });
   }
-  if (uploadProgress[fileName] && uploadProgress[fileName].progress === 100) {
-    return res.status(200).json({ status: "completed" });
-  } else {
-    res.status(200).json(uploadProgress[fileName]);
-  }
+  res.status(200).json(uploadProgress[fileName]);
 };
 
 const getVideoById = async (req, res) => {

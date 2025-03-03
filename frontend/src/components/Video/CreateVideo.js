@@ -8,10 +8,7 @@ import {
   IoVideocamOutline,
 } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  BACKEND_VIDEO,
-  categories,  
-} from "../../utils/constants";
+import { BACKEND_VIDEO, categories } from "../../utils/constants";
 
 const CreateVideo = () => {
   const [formInput, setFormInput] = useState({
@@ -143,14 +140,12 @@ const CreateVideo = () => {
         toast.update(uploadingId, {
           render: `Uploading: ${data.progress}%`,
           progress: data.progress / 100,
-        });        
-        if (data?.status === "completed") {
+        });
+        if (data?.progress === 100) {
           toast.update(uploadingId, {
             render: "Wrapping up... Thanks for your patience!",
             type: "info",
             progress: false,
-            autoClose: 3000,
-            closeOnClick: true,
           });
           clearInterval(interval);
         } else if (data.status === "error") {
@@ -205,6 +200,7 @@ const CreateVideo = () => {
             closeOnClick: true,
           });
           setDisable(false);
+          clearInterval(interval);
           navigate("/");
         }
       } catch (error) {
