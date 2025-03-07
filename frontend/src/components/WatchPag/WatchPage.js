@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import UseSingleVideo from "../../hooks/UseSingleVideo";
-import { useDispatch, useSelector } from "react-redux";
-import { setMessages } from "../../utils/Redux/ChatSlice";
+import { useSelector } from "react-redux";
 import { BiLike, BiSolidLike, BiDislike, BiSolidDislike } from "react-icons/bi";
 import { RiShareForwardLine } from "react-icons/ri";
 import {
@@ -11,7 +10,7 @@ import {
   BACKEND_SUBSCRIPTION,
   BACKEND_VIDEO,
   formatDuration,
-  formatViewCount,  
+  formatViewCount,
 } from "../../utils/constants";
 import axios from "axios";
 import UseLikeHandler from "../../hooks/UseLikeHandler";
@@ -23,6 +22,7 @@ import { MdBookmarkAdded } from "react-icons/md";
 import { timeAgo } from "../../utils/CustomFunctions/TimeCalculation";
 import { toast } from "react-toastify";
 import Recommendation from "./Recommendation";
+import Shimmer from "./Shimmer";
 
 const WatchPage = () => {
   const [searchParams] = useSearchParams();
@@ -34,8 +34,6 @@ const WatchPage = () => {
   const userToken = localStorage.getItem("token");
   const [video, setVideo] = useState([]);
   const [playlist, setPlaylist] = useState([]);
-  const [inputValue, setInputValue] = useState("");
-  const dispatch = useDispatch();
   const [shimmer, setShimmer] = useState(true);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showPop, setShowPop] = useState(false);
@@ -47,17 +45,15 @@ const WatchPage = () => {
   const [comment, setComment] = useState("");
   const [disableInput, setDisableInput] = useState(false);
   const [disable, setDisable] = useState(false);
+  const [openPlaylist, setOpenPlaylist] = useState(true);
   const navigate = useNavigate();
-
-  const { liked, disliked, likesCount, likeHandler, dislikeHandler } =
-    UseLikeHandler(videoId);
-  UseSingleVideo(videoId);
-
+  const videoRef = useRef(null);
+  const playlistRef = useRef(null);
   const currentUser = useSelector((store) => store.user.user);
   const getVideo = useSelector((store) => store.videos.singleVideo);
 
   useEffect(() => {
-    if (getVideo) {
+    if (getVideo?._id) {
       const { subscribersCount, subscribed } = getVideo;
       setVideo(getVideo);
       setSubscribersCount(subscribersCount);
@@ -113,10 +109,85 @@ const WatchPage = () => {
         console.error("Error while adding video to watched history", error);
       }
     };
-    if (videoId) {
+    if (!videoViewed) {
       addVideoToWatched();
     }
-  }, [videoId]);
+  }, [videoViewed]);
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      const video = videoRef.current;
+
+      if (!video) return;
+
+      switch (event.key) {
+        case " ": // Spacebar for play/pause
+          if (video.paused) {
+            video.play();
+          } else {
+            video.pause();
+          }
+          break;
+
+        case "f": // 'f' key to toggle fullscreen
+          if (document.fullscreenElement) {
+            // If already in fullscreen, exit fullscreen
+            if (document.exitFullscreen) {
+              document.exitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+              // Firefox
+              document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+              // Chrome, Safari, and Opera
+              document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+              // IE/Edge
+              document.msExitFullscreen();
+            }
+          } else {
+            // If not in fullscreen, enter fullscreen
+            if (video.requestFullscreen) {
+              video.requestFullscreen();
+            } else if (video.mozRequestFullScreen) {
+              // Firefox
+              video.mozRequestFullScreen();
+            } else if (video.webkitRequestFullscreen) {
+              // Chrome, Safari, and Opera
+              video.webkitRequestFullscreen();
+            } else if (video.msRequestFullscreen) {
+              // IE/Edge
+              video.msRequestFullscreen();
+            }
+          }
+          break;
+
+        case "m": // 'm' key for mute/unmute
+          video.muted = !video.muted;
+          break;
+
+        case "ArrowRight": // Right arrow key to skip forward by 5 seconds
+          video.currentTime += 5;
+          break;
+
+        case "ArrowLeft": // Left arrow key to skip backward by 5 seconds
+          video.currentTime -= 5;
+          break;
+
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  const { liked, disliked, likesCount, likeHandler, dislikeHandler } =
+    UseLikeHandler(videoId);
+  UseSingleVideo(videoId);
 
   useEffect(() => {
     const updateViews = async () => {
@@ -212,19 +283,6 @@ const WatchPage = () => {
     }
   };
 
-  const sendMessage = () => {
-    if (!inputValue) {
-      return;
-    }
-    dispatch(
-      setMessages({
-        name: "Oscar",
-        message: inputValue,
-      })
-    );
-    setInputValue("");
-  };
-
   const handleConfirmation = async () => {
     try {
       await axios.get(BACKEND_SUBSCRIPTION + `/unsubscribe/${channelName}`, {
@@ -292,15 +350,9 @@ const WatchPage = () => {
     );
   };
 
-  const handleLoginPop = () => {
-    setShowLoginPop(!showLoginPop);
-  };
-
   const getAllComments = async () => {
     try {
-      const res = await axios.get(
-        BACKEND_COMMENT + `/comments/${videoId}`
-      );
+      const res = await axios.get(BACKEND_COMMENT + `/comments/${videoId}`);
       if (res.status === 200) {
         setCommentsList(res?.data?.data);
       }
@@ -342,16 +394,24 @@ const WatchPage = () => {
     }
   }, [videoId]);
 
+  const handlePlaylistClose = () => {
+    setOpenPlaylist(!openPlaylist);
+  };
+
   return (
     <>
       {shimmer ? (
-        <p>Loading....</p>
+        <Shimmer />
       ) : (
-        <div id="main" className="sm:px-24 py-5 flex max-sm::flex-col gap-5 w-full">
+        <div
+          id="main"
+          className="sm:px-24 py-5 flex max-sm::flex-col gap-5 w-full"
+        >
           {/* left  */}
           <div className="w-[62%] h-fit">
             {/* video */}
             <video
+              ref={videoRef}
               className="sm:rounded-xl -z-40 w-full h-[27.5rem] object-cover aspect-video"
               src={videoUrl}
               controls
@@ -531,6 +591,7 @@ const WatchPage = () => {
                           Cancel
                         </button>
                         <button
+                          disabled={disable}
                           onClick={createComment}
                           className="bg-[#4ca7f7] font-medium text-black px-4 py-1 rounded-full"
                         >
@@ -582,7 +643,7 @@ const WatchPage = () => {
           {/* right */}
           <div className="h-fit w-[38%] ">
             {playlistId && (
-              <div className="border sm:flex flex-col dark:bg-icon_black justify-between min-w-[35%] hidden h-fit rounded-lg">
+              <div className="border mb-5 sm:flex flex-col dark:bg-icon_black justify-between min-w-[35%] hidden h-fit rounded-lg">
                 <div className="flex justify-between items-center border-b p-2">
                   <div>
                     <p className="font-bold text-lg">{playlist[0]?.title}</p>
@@ -596,10 +657,15 @@ const WatchPage = () => {
                   <X
                     size={40}
                     strokeWidth={1}
+                    onClick={handlePlaylistClose}
                     className="p-2 rounded-full dark:bg-icon_black dark:hover:bg-hover_icon_black"
                   />
                 </div>
-                <div className="no-scrollbar dark:bg-black rounded-b-xl flex flex-col-reverse overflow-y-auto px-4 py-2 max-h-[19rem]">
+                <div
+                  className={`${
+                    openPlaylist ? "max-h-[19rem]" : "h-0"
+                  } no-scrollbar dark:bg-black rounded-b-xl flex flex-col-reverse overflow-y-auto px-4 py-2`}
+                >
                   <div className="flex flex-col gap-2">
                     {playlist &&
                       playlist?.map((item, index) => (
@@ -623,7 +689,7 @@ const WatchPage = () => {
                               </p>
                             </div>
                             <div className="flex flex-col justify-between text-sm">
-                              <h1 className="line-clamp-2">
+                              <h1 className="line-clamp-2 font-medium">
                                 {item?.video_title}
                               </h1>
                               <h1 className="text-Lightblack text-xs">

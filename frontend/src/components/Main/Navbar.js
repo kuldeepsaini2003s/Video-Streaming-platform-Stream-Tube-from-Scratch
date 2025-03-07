@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import UseVideoCategories from "../../hooks/UseVideoCategories";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchQuary } from "../../utils/Redux/SearchSlice";
 import { toggleSlider } from "../../utils/Redux/appSlice";
@@ -14,11 +13,11 @@ import "@theme-toggles/react/css/Expand.css";
 import { Expand } from "@theme-toggles/react";
 import { FaCircleUser } from "react-icons/fa6";
 import { CircleUserRound } from "lucide-react";
-import { size } from "lodash";
 import useResponseHandler from "../../hooks/UseResponseHandler";
+import UseFetchVideoByCategory from "../../hooks/UseFetchVideoByCategory";
 
 const Navbar = () => {
-  UseVideoCategories();
+  UseFetchVideoByCategory();
 
   const [inputValue, setInputValue] = useState("");
   const [showSetting, setShowSetting] = useState(false);

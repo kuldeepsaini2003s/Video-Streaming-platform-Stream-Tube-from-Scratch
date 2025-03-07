@@ -1,13 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  videos: null,
-  allVideos: null,
-  singleVideo: null,
-  youtubeLogo: null,
-  youtubeComments: null,
-  fetchCategories: "",
-  categories: null,
+  videos: [],
+  allVideos: [],
+  singleVideo: [],
+  youtubeLogo: [],
+  youtubeComments: [],
+  fetchedCategoriesVideo: [],
+  category: "All",
 };
 const videoSlice = createSlice({
   name: "videos",
@@ -28,11 +28,11 @@ const videoSlice = createSlice({
     setYoutubeComments: (state, action) => {
       state.youtubeComments = action.payload;
     },
-    setFetchCategories: (state, action) => {
-      state.fetchCategories = action.payload;
+    setFetchedCategoriesVideo: (state, action) => {
+      state.fetchedCategoriesVideo = action.payload;
     },
-    setCategories: (state, action) => {
-      state.categories = action.payload;
+    setCategory: (state, action) => {
+      state.category = action.payload;
     },
   },
 });
@@ -43,8 +43,8 @@ export const {
   setSingleVideo,
   setYoutubeLogo,
   setYoutubeComments,
-  setFetchCategories,
-  setCategories,
+  setFetchedCategoriesVideo,
+  setCategory,
 } = videoSlice.actions;
 
 export default videoSlice.reducer;

@@ -7,16 +7,9 @@ import { FaCircleUser } from "react-icons/fa6";
 import { timeAgo } from "../../utils/CustomFunctions/TimeCalculation";
 
 const VideoCard = ({ info }) => {
-  const {
-    title,
-    userName,
-    duration,
-    thumbnail,
-    viewsCount,
-    channelName,
-    avatar,
-    createdAt,
-  } = info;
+  const { title, duration, thumbnail, views, user, createdAt } = info;
+
+  const { avatar, channelName, userName } = user?.publishedDetails;
 
   return (
     <div className="shadow-md rounded-md">
@@ -55,7 +48,7 @@ const VideoCard = ({ info }) => {
             <p className="text-Lightblack text-sm">{channelName}</p>
           </Link>
           <div className="flex gap-1 items-center text-Lightblack text-sm">
-            <p>{formatViewCount(viewsCount)} views</p>
+            <p>{formatViewCount(views.length)} views</p>
             <GoDotFill size={8} />
             <p>{timeAgo(createdAt)}</p>
           </div>

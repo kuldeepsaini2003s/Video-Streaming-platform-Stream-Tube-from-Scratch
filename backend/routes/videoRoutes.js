@@ -12,6 +12,7 @@ import {
   getWatchHistory,
   removeFromHistory,
   videoByCategory,
+  categoryList,
 } from "../controllers/VideoController.js";
 import { verifyToken } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -48,6 +49,7 @@ router.get("/video/:videoId", verifyToken, videoById);
 router.get("/watchHistory", verifyToken, getWatchHistory);
 router.get("/removeHistory/:videoId", verifyToken, removeFromHistory);
 router.get("/video", videoByCategory);
+router.get("/categoryList", categoryList)
 
 router.delete("/deleteVideo/:id", verifyToken, deleteVideo);
 

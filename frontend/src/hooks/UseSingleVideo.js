@@ -5,7 +5,7 @@ import { BACKEND_VIDEO } from "../utils/constants";
 import axios from "axios";
 
 const UseSingleVideo = (videoId) => {
-  const { user } = useSelector((state) => state.user);  
+  const { user } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
 

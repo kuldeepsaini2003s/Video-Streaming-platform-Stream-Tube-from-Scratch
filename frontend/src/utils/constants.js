@@ -74,7 +74,6 @@ export function formatDuration(seconds) {
     : `${formattedMinutes}:${formattedSeconds}`;
 }
 
-
 export const categories = [
   "Education",
   "Entertainment",

@@ -449,39 +449,26 @@ const updateVideo = async (req, res) => {
 const getAllVideo = async (req, res) => {
   try {
     const { userName } = req.body;
-    let user;
-    let videos;
 
-    if (userName) {
-      user = await User.findOne({
-        "publishedDetails.userName": userName,
+    const user = await User.findOne({
+      "publishedDetails.userName": userName,
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
       });
-
-      if (!user) {
-        return res.status(404).json({
-          success: false,
-          message: "User not found",
-        });
-      }
-
-      videos = await Video.find({ user: user._id, published: true })
-        .select(
-          "title thumbnail views duration likesCount video_id videoUrl category createdAt updatedAt"
-        )
-        .populate(
-          "user",
-          "publishedDetails.channelName publishedDetails.avatar publishedDetails.userName"
-        );
-    } else {
-      videos = await Video.find({ published: true })
-        .select(
-          "title thumbnail views duration likesCount video_id videoUrl category createdAt updatedAt"
-        )
-        .populate(
-          "user",
-          "publishedDetails.channelName publishedDetails.avatar publishedDetails.userName"
-        );
     }
+
+    const videos = await Video.find({ user: user._id, published: true })
+      .select(
+        "title thumbnail views duration likesCount video_id videoUrl category createdAt updatedAt"
+      )
+      .populate(
+        "user",
+        "publishedDetails.channelName publishedDetails.avatar publishedDetails.userName"
+      );
 
     if (!videos || videos.length === 0) {
       return res.status(404).json({
@@ -800,78 +787,95 @@ const videoById = async (req, res) => {
 };
 
 const videoByCategory = async (req, res) => {
-  const { category, videoId } = req.query;
+  try {
+    const { category, videoId } = req.query;
 
-  // Fetch the video using videoId
-  const video = await Video.findOne({ video_id: videoId });
+    let query;
 
-  if (!video) {
-    return res.status(404).json({
+    if (videoId) {
+      const video = await Video.findOne({ video_id: videoId });
+
+      if (!video) {
+        return res.status(404).json({
+          success: false,
+          msg: "Video not found",
+        });
+      }
+
+      query = {
+        category,
+        video_id: { $ne: videoId },
+        published: true,
+      };
+    } else if (category === "All") {
+      query = {
+        published: true,
+      };
+    } else {
+      query = {
+        category,
+        published: true,
+      };
+    }
+
+    const videos = await Video.find(query)
+      .select(
+        "title thumbnail views duration video_id category createdAt updatedAt"
+      )
+      .populate(
+        "user",
+        "publishedDetails.channelName publishedDetails.avatar publishedDetails.userName"
+      );
+
+    if (!videos || videos.length === 0) {
+      return res.status(404).json({
+        success: false,
+        msg: "No related videos found",
+      });
+    }
+
+    for (let i = videos.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [videos[i], videos[j]] = [videos[j], videos[i]];
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: videos,
+      msg: "videos fetched successfully",
+    });
+  } catch (error) {
+    console.log("Error while fetching video by category", error);
+    return res.status(500).json({
       success: false,
-      msg: "Video not found",
+      msg: "Something went wrong",
     });
   }
+};
 
-  // Extract text from title, description, and tags
-  // const { title, description, tags } = video;
-  // const textToSearch = `${title} ${description} ${tags.join(" ")}`;
+const categoryList = async (req, res) => {
+  try {
+    const categories = await Video.distinct("category");
 
-  // Preprocess the text to remove common stop words
-  // const stopWords = [
-  //   "is",
-  //   "was",
-  //   "has",
-  //   "the",
-  //   "and",
-  //   "or",
-  //   "a",
-  //   "an",
-  //   "so",
-  //   "as",
-  //   "went",
-  //   "what",
-  //   "do",
-  //   "i",
-  //   "also",
-  // ];
-  // const queryWords = textToSearch.split(" ");
-  // const filteredQuery = queryWords
-  //   .filter((word) => !stopWords.includes(word.toLowerCase()))
-  //   .join(" ");
+    if (categories.length === 0) {
+      return res.status(404).json({
+        success: false,
+        msg: "No category list found",
+      });
+    }
 
-  // console.log("Filtered Query:", filteredQuery);
-
-  // Build the query object
-  const query = {
-    category,
-    video_id: { $ne: videoId }, // Exclude the video with the specified videoId
-    published: true,
-  };
-
-  // Add text search to the query if filteredQuery is not empty
-  // if (filteredQuery) {
-  //   query.$text = { $search: filteredQuery };
-  // }
-
-  // Fetch videos based on the query
-  const videos = await Video.find(query)
-    .select(
-      "title thumbnail views duration video_id category createdAt updatedAt"
-    )
-    .populate("user", "publishedDetails.channelName");
-
-  if (!videos || videos.length === 0) {
-    return res.status(404).json({
+    return res.status(200).json({
+      success: true,
+      data: categories,
+      msg: "All category list found successfully",
+    });
+  } catch (error) {
+    console.log("Error while fetching the category list", error);
+    return res.status(500).json({
       success: false,
-      msg: "No related videos found",
+      msg: "Something went wrong",
     });
   }
-
-  return res.status(200).json({
-    success: true,
-    data: videos,
-    msg: "Related videos fetched successfully",
-  });
 };
 
 export {
@@ -887,4 +891,5 @@ export {
   getWatchHistory,
   removeFromHistory,
   videoByCategory,
+  categoryList,
 };

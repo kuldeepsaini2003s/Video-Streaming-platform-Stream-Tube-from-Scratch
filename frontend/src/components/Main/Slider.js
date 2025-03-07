@@ -144,10 +144,9 @@ const Slider = () => {
           {/* home-btn */}
           {tabs.map((item, index) =>
             item.path ? (
-              <Link to={item.path}>
+              <Link to={item.path} key={index}>
                 <div
-                  onClick={handleToggle}
-                  key={index}
+                  onClick={handleToggle}              
                   id="HomeBtn menu-items"
                   className="slider-icon active flex hover:bg-Gray dark:hover:bg-icon_black items-center px-3 rounded-xl py-3"
                 >

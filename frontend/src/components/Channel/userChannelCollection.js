@@ -56,13 +56,9 @@ export const UserPlaylist = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          BACKEND_PLAYLIST + `/userPlaylist/${channelUser?._id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
+        const response = await axios.post(
+          BACKEND_PLAYLIST + `/userPlaylist/${channelUser?.userName}`,
+          { userId: user?._id }
         );
         if (response.status === 200) {
           setPlaylist(response?.data?.data);
@@ -133,9 +129,8 @@ export const UserPlaylist = () => {
   );
 };
 
-
 const userChannelCollection = {
   UserAllVideo,
-  UserPlaylist,  
+  UserPlaylist,
 };
 export default userChannelCollection;

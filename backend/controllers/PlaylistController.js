@@ -160,9 +160,10 @@ const updatePlaylist = async (req, res) => {
 
 const userPlaylist = async (req, res) => {
   try {
-    const { userId } = req.params;
+    const { userName } = req.params;
+    const { userId } = req.body;
 
-    const user = await User.findById(userId);
+    const user = await User.findOne({ "publishedDetails.userName": userName });
 
     if (!user) {
       return res
@@ -170,11 +171,14 @@ const userPlaylist = async (req, res) => {
         .json({ success: false, message: "User not found" });
     }
 
+    const matchCondition = {
+      owner: user._id,
+      ...(userId !== String(user?._id) && { status: "Public" }),
+    };
+
     const playlists = await Playlist.aggregate([
       {
-        $match: {
-          owner: user._id,
-        },
+        $match: matchCondition,
       },
       {
         $addFields: {

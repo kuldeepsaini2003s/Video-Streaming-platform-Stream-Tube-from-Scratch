@@ -11,16 +11,15 @@ import {
 import { verifyToken } from "../middlewares/auth.middleware.js";
 
 const router = Router();
-router.use(verifyToken);
 
-router.post("/createPlaylist", createPlaylist);
-router.post("/updatePlaylist/:playlistId", updatePlaylist);
-router.post("/addVideo", addVideo);
-router.post("/removeVideo", removeVideo);
+router.post("/createPlaylist", verifyToken, createPlaylist);
+router.post("/updatePlaylist/:playlistId", verifyToken, updatePlaylist);
+router.post("/addVideo", verifyToken, addVideo);
+router.post("/removeVideo", verifyToken, removeVideo);
+router.post("/userPlaylist/:userName", userPlaylist);
 
-router.get("/userPlaylist/:userId", userPlaylist);
 router.get("/playlist/:playlistId", playlistById);
 
-router.delete("/deletePlaylist/:playlistId", deletePlaylist);
+router.delete("/deletePlaylist/:playlistId", verifyToken, deletePlaylist);
 
 export default router;

@@ -2,7 +2,10 @@ import React from "react";
 
 const Shimmer = () => {
   return (
-    <div className="shimmer-bg flex flex-col sm:gap-20 ms:gap-12 sm:pl-20">
+    <div
+      id="main"
+      className="shimmer-bg flex flex-col sm:gap-20 ms:gap-12 sm:pl-20"
+    >
       {/* navbar container  */}
       <div className="shimmer-border flex sm:pl-60 p-5 sm:justify-between ms:justify-end border-b border-[#E3E3E3] dark:border-icon_black">
         <div className="flex items-center sm:block ms:hidden">

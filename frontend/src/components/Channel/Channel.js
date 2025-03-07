@@ -6,10 +6,7 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
-import {
-  BACKEND_SUBSCRIPTION,
-  BACKEND_USER,  
-} from "../../utils/constants";
+import { BACKEND_SUBSCRIPTION, BACKEND_USER } from "../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import { FaCircleUser } from "react-icons/fa6";
 import UseFetchAllVideos from "../../hooks/useFetchAllVideos";
@@ -28,7 +25,7 @@ const channelNavigation = [
   {
     name: "Playlists",
     path: "playlists",
-  },    
+  },
 ];
 
 const Channel = () => {
@@ -59,16 +56,13 @@ const Channel = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const response = await fetch(
-          BACKEND_USER + `/channel/${userName}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ userId: user?._id }),
-          }
-        );
+        const response = await fetch(BACKEND_USER + `/channel/${userName}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ userId: user?._id }),
+        });
         const data = await response.json();
         if (response.status === 200) {
           setChannelDetails(data?.data);

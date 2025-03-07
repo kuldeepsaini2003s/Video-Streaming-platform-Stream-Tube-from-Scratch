@@ -1,10 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
 import {
-    BACKEND_VIDEO,
+  BACKEND_VIDEO,
   formatDuration,
-  formatViewCount,  
+  formatViewCount,
 } from "../../utils/constants";
 import { timeAgo } from "../../utils/CustomFunctions/TimeCalculation";
 import { GoDotFill } from "react-icons/go";
@@ -13,7 +12,6 @@ import { Link } from "react-router-dom";
 
 const Recommendation = ({ category, videoId }) => {
   const [recommendedVideos, setRecommendedVideos] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRecommendedVideos = async () => {
@@ -35,38 +33,45 @@ const Recommendation = ({ category, videoId }) => {
 
   return (
     <div className="flex flex-col gap-3">
-      {recommendedVideos?.length > 0 &&
-        recommendedVideos.map((item) => (
-          <Link to={`/watch?v=${item.video_id}`}>
-            <div key={item._id} className="flex gap-2 rounded-md">
-              <div className="relative min-w-40 h-24 rounded-md">
-                <img
-                  src={item?.thumbnail}
-                  className="w-full h-full rounded-md object-cover object-center aspect-square"
-                  alt="thumbnail"
-                />
-                <span className="absolute bottom-2 right-1 font-medium text-xs px-1 py-0.5 rounded-md text-white bg-black">
-                  {formatDuration(item?.duration)}
-                </span>
-              </div>
-              <div className="flex gap-2 w-full justify-between">
-                <div className="flex flex-col text-xs dark:text-Lightblack font-medium">
-                  <h1 className="line-clamp-2 mb-3 dark:text-white text-sm font-semibold leading-tight">
-                    {item?.title}
-                  </h1>
-                  <div>
-                    <h1>{item?.user?.publishedDetails.channelName}</h1>
-                    <h1 className="flex items-center gap-x-1">
-                      {formatViewCount(item?.views.length)}{" "}
-                      <GoDotFill size={6} /> {timeAgo(item?.createdAt)}
-                    </h1>
-                  </div>
+      {recommendedVideos?.length > 0 && (
+        <>
+          <h1 className="font-medium text-lg">Related Videos</h1>
+          {recommendedVideos.map((item) => (
+            <Link to={`/watch?v=${item.video_id}`}>
+              <div key={item._id} className="flex gap-2 rounded-md">
+                <div className="relative min-w-40 h-24 rounded-md">
+                  <img
+                    src={item?.thumbnail}
+                    className="w-full h-full rounded-md object-cover object-center aspect-square"
+                    alt="thumbnail"
+                  />
+                  <span className="absolute bottom-2 right-1 font-medium text-xs px-1 py-0.5 rounded-md text-white bg-black">
+                    {formatDuration(item?.duration)}
+                  </span>
                 </div>
-                <PiDotsThreeVerticalBold className="flex-shrink-0" size={20} />
+                <div className="flex gap-2 w-full justify-between">
+                  <div className="flex flex-col text-xs dark:text-Lightblack font-medium">
+                    <h1 className="line-clamp-2 mb-3 dark:text-white text-sm font-medium leading-tight">
+                      {item?.title}
+                    </h1>
+                    <div>
+                      <h1>{item?.user?.publishedDetails.channelName}</h1>
+                      <h1 className="flex items-center gap-x-1">
+                        {formatViewCount(item?.views.length)} views
+                        <GoDotFill size={6} /> {timeAgo(item?.createdAt)}
+                      </h1>
+                    </div>
+                  </div>
+                  <PiDotsThreeVerticalBold
+                    className="flex-shrink-0"
+                    size={20}
+                  />
+                </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            </Link>
+          ))}
+        </>
+      )}
     </div>
   );
 };

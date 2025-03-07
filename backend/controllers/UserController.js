@@ -113,7 +113,7 @@ const registerUser = async (req, res) => {
       },
     };
 
-    const bcryptPassword = await bcrypt.hash(password, 10);    
+    const bcryptPassword = await bcrypt.hash(password, 10);
 
     const user = await User.create({
       ...userData,
@@ -350,7 +350,7 @@ const updateUser = async (req, res) => {
     if (status === "save") {
       user.draftDetails.userName = userName;
       user.draftDetails.channelName = channelName;
-      user.draftDetails.description = description;
+      if (description) user.draftDetails.description = description;
       if (files?.avatar) {
         user.draftDetails.avatar = await handleImageUpload(
           user.draftDetails,
@@ -401,7 +401,7 @@ const updateUser = async (req, res) => {
   } catch (error) {
     console.log("Error while updating user details", error);
     return res.status(500).json({
-      success: false,
+      success: false, 
       message: "Something went wrong",
     });
   }
@@ -512,9 +512,6 @@ const channelDetails = async (req, res) => {
   });
 };
 
-
-
-
 export {
   registerUser,
   loginUser,
@@ -522,6 +519,6 @@ export {
   refreshAccessToken,
   updatePassword,
   userDetails,
-  channelDetails,  
+  channelDetails,
   updateUser,
 };
