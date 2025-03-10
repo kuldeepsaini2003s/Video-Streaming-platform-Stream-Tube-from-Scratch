@@ -1,30 +1,23 @@
-import { useEffect } from "react";
-import { YOUTUBE_SEARCH_SUGGESTION } from "../utils/constants";
-import { useDispatch, useSelector } from "react-redux";
-import { setSearchQuary, setSuggestion } from "../utils/SearchSlice";
+import { LOCAL_BACKEND_VIDEO } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { setSearchSuggestion } from "../utils/Redux/SearchSlice";
 
 const UseSearchSuggestions = () => {
   const dispatch = useDispatch();
 
-  const searchQuary = useSelector(
-    (store) => store.searchSuggestion.searchQuery
-  );  
-
-  const getSearchSuggestion = async () => {
+  const getSearchSuggestion = async (searchQuery) => {
     try {
-      const data = await fetch(YOUTUBE_SEARCH_SUGGESTION + searchQuary);
+      const data = await fetch(
+        LOCAL_BACKEND_VIDEO + `/searchSuggestion?searchQuery=${searchQuery}`
+      );
       const json = await data.json();      
-      dispatch(setSearchQuary(json[1]));
+      dispatch(setSearchSuggestion(json?.data));
     } catch (error) {
       console.error("Error fetch search suggestion", error);
     }
   };
 
-  useEffect(() => {
-    if (searchQuary) {
-      getSearchSuggestion();
-    }
-  }, [searchQuary]);
+  return { getSearchSuggestion };
 };
 
 export default UseSearchSuggestions;

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSearchQuary } from "../../utils/Redux/SearchSlice";
 import { toggleSlider } from "../../utils/Redux/appSlice";
 import { RxCross2 } from "react-icons/rx";
 import { IoMenu, IoSearchOutline } from "react-icons/io5";
@@ -15,37 +14,69 @@ import { FaCircleUser } from "react-icons/fa6";
 import { CircleUserRound } from "lucide-react";
 import useResponseHandler from "../../hooks/UseResponseHandler";
 import UseFetchVideoByCategory from "../../hooks/UseFetchVideoByCategory";
+import UseSearchSuggestions from "../../hooks/UseSearchSuggestions";
 
 const Navbar = () => {
   UseFetchVideoByCategory();
-
+  const { getSearchSuggestion } = UseSearchSuggestions();
   const [inputValue, setInputValue] = useState("");
   const [showSetting, setShowSetting] = useState(false);
+  const [suggestions, setSuggestions] = useState([]);
+  const [showSuggestion, setShowSuggestion] = useState(true);
   const [theme, setTheme] = useState("light");
-  const [searchResult, setSearchResult] = useState([]);
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((store) => store.user.user);
   const { handleResponse, handleError } = useResponseHandler();
-
-  const getSuggestion = useSelector(
-    (store) => store.searchSuggestion.searchQuery
-  );
+  const { searchSuggestion } = useSelector((store) => store.searchSuggestion);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      if (getSuggestion && Array.isArray(getSuggestion)) {
-        setSearchResult(getSuggestion);
+    if (!searchSuggestion) return;
+
+    const searchResult = searchSuggestion
+      ?.flatMap((suggestions) => suggestions?.results)
+      ?.flatMap((result) => {
+        if (!result.path) return [];
+
+        const cleanText = (text) =>
+          text
+            .replace(/[:|/"?><_+=]/g, " ")
+            .toLowerCase()
+            .trim();
+
+        if (result?.path === "title") {
+          return result.texts.map((text) => cleanText(text.value)).join("");
+        }
+
+        if (
+          [
+            "tags",
+            "publishedDetails.channelName",
+            "publishedDetails.userName",
+          ].includes(result.path)
+        ) {
+          return result.texts
+            .filter((text) => text.type === "hit")
+            .map((text) => cleanText(text.value));
+        }
+
+        return [];
+      });
+    setSuggestions(searchResult);
+  }, [searchSuggestion]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (inputValue) {
+        getSearchSuggestion(inputValue);
       }
-    }, 200);
+    }, 500);
     return () => clearInterval(timer);
-  }, [getSuggestion]);
+  }, [inputValue]);
 
   const handleChange = (e) => {
     const value = e.target.value;
     setInputValue(value);
-    dispatch(setSearchQuary(value));
   };
 
   useEffect(() => {
@@ -101,6 +132,7 @@ const Navbar = () => {
 
   const clearInput = () => {
     setInputValue("");
+    setSuggestions([]);
   };
 
   return (
@@ -187,6 +219,10 @@ const Navbar = () => {
                 autoComplete="off"
                 placeholder="Search"
                 value={inputValue}
+                onFocus={(e) => setShowSuggestion(true)}
+                onBlur={() => {
+                  setShowSuggestion(false);
+                }}
                 onChange={handleChange}
                 className="group w-[42vw] h-[2.5rem] dark:bg-black  border border-Gray dark:border-hover_icon_black  border-r-0 rounded-r-none rounded-3xl p-1 pl-5 focus:outline-none"
               />
@@ -217,20 +253,28 @@ const Navbar = () => {
               <MdOutlineMic className="text-[1.4rem]" />
             </button>
           </div>
-          {inputValue && (
+          {showSuggestion && inputValue && (
             <div
               id="searchSuggestion"
-              className="fixed font-mediu top-14 shadow-lg z-50 rounded-md w-[42vw]  py-4"
+              className="fixed font-medium top-14 max-h-[75vh] shadow-lg z-50 rounded-md w-[42vw] bg-white dark:bg-[#212121] py-4"
             >
-              {searchResult.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex items-center font-semibold mb-2 gap-2 px-4 py-1 hover:bg-icon_black hover:text-black"
-                >
-                  <IoSearchOutline className="text-[1.2rem] mr-1" />
-                  {item}
-                </div>
-              ))}
+              {suggestions.length > 0 ? (
+                suggestions.map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex text-sm gap-2 items-center font-medium  gap-2 px-4 py-2 dark:hover:bg-hover_icon_black"
+                  >
+                    <IoSearchOutline size={20} />
+                    <Link to={`search?query=${item}`}>
+                      <p className="line-clamp-2">{item}</p>
+                    </Link>
+                  </div>
+                ))
+              ) : (
+                <p className="flex gap-2 items-center">
+                  <IoSearchOutline size={25} /> No results found
+                </p>
+              )}
             </div>
           )}
         </div>

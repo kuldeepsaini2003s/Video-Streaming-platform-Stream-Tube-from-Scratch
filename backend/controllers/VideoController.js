@@ -853,6 +853,119 @@ const videoByCategory = async (req, res) => {
   }
 };
 
+const searchSuggestion = async (req, res) => {
+  try {
+    const { searchQuery } = req.query;
+
+    if (!searchQuery) {
+      return res.status(400).json({
+        success: false,
+        msg: "Please provide searchQuery",
+      });
+    }
+
+    const search = searchQuery.toLowerCase();
+
+    const video = await Video.aggregate([
+      {
+        $search: {
+          index: "search-suggestion",
+          compound: {
+            should: [
+              {
+                autocomplete: {
+                  query: search,
+                  path: "title",
+                },
+              },
+              {
+                autocomplete: {
+                  query: search,
+                  path: "tags",
+                },
+              },
+            ],
+          },
+          highlight: {
+            path: ["title", "tags"],
+          },
+        },
+      },
+      {
+        $unionWith: {
+          coll: "users",
+          pipeline: [
+            {
+              $search: {
+                index: "userSearch",
+                compound: {
+                  should: [
+                    {
+                      autocomplete: {
+                        query: search,
+                        path: "publishedDetails.channelName",
+                      },
+                    },
+                    {
+                      autocomplete: {
+                        query: search,
+                        path: "publishedDetails.userName",
+                      },
+                    },
+                  ],
+                },
+                highlight: {
+                  path: [
+                    "publishedDetails.channelName",
+                    "publishedDetails.userName",
+                  ],
+                },
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                highlights: { $meta: "searchHighlights" },
+              },
+            },
+          ],
+        },
+      },
+      {
+        $limit: 6,
+      },
+      {
+        $project: {
+          _id: 0,
+          results: { $meta: "searchHighlights" },
+        },
+      },
+    ]);
+
+    console.log(video);
+    
+
+    if (!video.length > 0) {
+      return res.status(404).json({
+        success: false,
+        msg: "No video found for this query",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: video,
+      msg: "Video found successfully for the query",
+    });
+  } catch (error) {
+    console.log("Error while searching the video", error);
+    return res.status(500).json({
+      success: false,
+      msg: "something went wrong",
+    });
+  }
+};
+
 const categoryList = async (req, res) => {
   try {
     const categories = await Video.distinct("category");
@@ -892,4 +1005,5 @@ export {
   removeFromHistory,
   videoByCategory,
   categoryList,
+  searchSuggestion,
 };
