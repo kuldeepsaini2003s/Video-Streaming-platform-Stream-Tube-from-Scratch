@@ -1,4 +1,4 @@
-import { LOCAL_BACKEND_VIDEO } from "../utils/constants";
+import { BACKEND_VIDEO } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { setSearchSuggestion } from "../utils/Redux/SearchSlice";
 
@@ -8,7 +8,7 @@ const UseSearchSuggestions = () => {
   const getSearchSuggestion = async (searchQuery) => {
     try {
       const data = await fetch(
-        LOCAL_BACKEND_VIDEO + `/searchSuggestion?searchQuery=${searchQuery}`
+        BACKEND_VIDEO + `/searchSuggestion?searchQuery=${searchQuery}`
       );
       const json = await data.json();      
       dispatch(setSearchSuggestion(json?.data));
