@@ -14,6 +14,7 @@ import {
   videoByCategory,
   categoryList,
   searchSuggestion,
+  videoSearch,
 } from "../controllers/VideoController.js";
 import { verifyToken } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -52,6 +53,7 @@ router.get("/removeHistory/:videoId", verifyToken, removeFromHistory);
 router.get("/video", videoByCategory);
 router.get("/categoryList", categoryList);
 router.get("/searchSuggestion", searchSuggestion);
+router.get("/search", videoSearch);
 
 router.delete("/deleteVideo/:id", verifyToken, deleteVideo);
 

@@ -31,37 +31,21 @@ const Navbar = () => {
   const { searchSuggestion } = useSelector((store) => store.searchSuggestion);
 
   useEffect(() => {
-    if (!searchSuggestion) return;
+    if (!Array.isArray(searchSuggestion)) return;
 
-    const searchResult = searchSuggestion
-      ?.flatMap((suggestions) => suggestions?.results)
-      ?.flatMap((result) => {
-        if (!result.path) return [];
+    // ...new Set used to remove duplicate values
+    const searchResult = [
+      ...new Set(
+        searchSuggestion.flatMap((item) => {
+          const tags = item?.tags?.map((tag) => tag.toLowerCase()) || [];
+          const title = item?.title ? [item?.title] : [];
+          const channelName = item?.channelName ? [item?.channelName] : [];
+          const userName = item?.userName ? [item?.userName] : [];
+          return [...channelName, ...userName, ...title, ...tags];
+        })
+      ),
+    ];
 
-        const cleanText = (text) =>
-          text
-            .replace(/[:|/"?><_+=]/g, " ")
-            .toLowerCase()
-            .trim();
-
-        if (result?.path === "title") {
-          return result.texts.map((text) => cleanText(text.value)).join("");
-        }
-
-        if (
-          [
-            "tags",
-            "publishedDetails.channelName",
-            "publishedDetails.userName",
-          ].includes(result.path)
-        ) {
-          return result.texts
-            .filter((text) => text.type === "hit")
-            .map((text) => cleanText(text.value));
-        }
-
-        return [];
-      });
     setSuggestions(searchResult);
   }, [searchSuggestion]);
 
@@ -219,10 +203,8 @@ const Navbar = () => {
                 autoComplete="off"
                 placeholder="Search"
                 value={inputValue}
-                onFocus={(e) => setShowSuggestion(true)}
-                onBlur={() => {
-                  setShowSuggestion(false);
-                }}
+                onFocus={() => setShowSuggestion(true)}
+                onBlur={() => setTimeout(() => setShowSuggestion(false), 200)}
                 onChange={handleChange}
                 className="group w-[42vw] h-[2.5rem] dark:bg-black  border border-Gray dark:border-hover_icon_black  border-r-0 rounded-r-none rounded-3xl p-1 pl-5 focus:outline-none"
               />
@@ -256,19 +238,19 @@ const Navbar = () => {
           {showSuggestion && inputValue && (
             <div
               id="searchSuggestion"
-              className="fixed font-medium top-14 max-h-[75vh] shadow-lg z-50 rounded-md w-[42vw] bg-white dark:bg-[#212121] py-4"
+              className="fixed font-medium top-14 max-h-[75vh] overflow-y-scroll remove-scrollbar shadow-lg z-50 rounded-md w-[42vw] bg-white dark:bg-[#212121] py-4"
             >
-              {suggestions.length > 0 ? (
-                suggestions.map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex text-sm gap-2 items-center font-medium  gap-2 px-4 py-2 dark:hover:bg-hover_icon_black"
-                  >
-                    <IoSearchOutline size={20} />
-                    <Link to={`search?query=${item}`}>
+              {suggestions?.length > 0 ? (
+                suggestions?.map((item, index) => (
+                  <Link to={`/search?query=${item}`}>
+                    <div
+                      key={index}
+                      className="flex text-sm gap-4 items-center font-medium  gap-2 px-4 py-2 dark:hover:bg-hover_icon_black"
+                    >
+                      <IoSearchOutline size={20} />
                       <p className="line-clamp-2">{item}</p>
-                    </Link>
-                  </div>
+                    </div>
+                  </Link>
                 ))
               ) : (
                 <p className="flex gap-2 items-center">

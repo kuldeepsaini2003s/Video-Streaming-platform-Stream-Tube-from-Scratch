@@ -24,6 +24,7 @@ import Subscriptions from "./components/Channel/Subscriptions";
 import History from "./components/Channel/History/History";
 import axios from "axios";
 import UserChannel from "./components/Channel/UserChannel";
+import SearchPage from "./components/Main/SearchPage";
 
 export const AppRouter = createBrowserRouter([
   {
@@ -79,7 +80,7 @@ export const AppRouter = createBrowserRouter([
           {
             path: "playlists",
             element: <UserPlaylist />,
-          },          
+          },
         ],
       },
       {
@@ -87,8 +88,12 @@ export const AppRouter = createBrowserRouter([
         element: <CustomizeChannel />,
       },
       {
-        path: "watch",
+        path: "/watch",
         element: <WatchPage />,
+      },
+      {
+        path: "/search",
+        element: <SearchPage />,
       },
     ],
   },

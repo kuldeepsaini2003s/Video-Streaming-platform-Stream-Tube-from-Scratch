@@ -4,6 +4,8 @@ import { Video } from "../models/videoModel.js";
 import { uploadOnCloudinary } from "../utils/cloudinaryUpload.js";
 import fs from "fs";
 import path from "path";
+import { shuffleVideo } from "../utils/shuffleVideos.js";
+import mongoose from "mongoose";
 
 function generateWatchId(length = 11) {
   const characters =
@@ -834,14 +836,11 @@ const videoByCategory = async (req, res) => {
       });
     }
 
-    for (let i = videos.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [videos[i], videos[j]] = [videos[j], videos[i]];
-    }
+    const shuffledVideos = shuffleVideo(videos);
 
     return res.status(200).json({
       success: true,
-      data: videos,
+      data: shuffledVideos,
       msg: "videos fetched successfully",
     });
   } catch (error) {
@@ -886,10 +885,19 @@ const searchSuggestion = async (req, res) => {
               },
             ],
           },
-          highlight: {
-            path: ["title", "tags"],
-          },
+          scoreDetails: true,
         },
+      },
+      {
+        $project: {
+          _id: 0,
+          title: 1,
+          tags: 1,
+          score: { $meta: "searchScore" },
+        },
+      },
+      {
+        $sort: { score: -1 },
       },
       {
         $unionWith: {
@@ -914,36 +922,27 @@ const searchSuggestion = async (req, res) => {
                     },
                   ],
                 },
-                highlight: {
-                  path: [
-                    "publishedDetails.channelName",
-                    "publishedDetails.userName",
-                  ],
-                },
+                scoreDetails: true,
               },
             },
             {
               $project: {
                 _id: 0,
-                highlights: { $meta: "searchHighlights" },
+                channelName: "$publishedDetails.channelName",
+                userName: "$publishedDetails.userName",
+                score: { $meta: "searchScore" },
               },
             },
           ],
         },
       },
       {
-        $limit: 6,
+        $sort: { score: -1 },
       },
       {
-        $project: {
-          _id: 0,
-          results: { $meta: "searchHighlights" },
-        },
+        $limit: 10,
       },
     ]);
-
-    console.log(video);
-    
 
     if (!video.length > 0) {
       return res.status(404).json({
@@ -956,6 +955,192 @@ const searchSuggestion = async (req, res) => {
       success: true,
       data: video,
       msg: "Video found successfully for the query",
+    });
+  } catch (error) {
+    console.log("Error while searching the video", error);
+    return res.status(500).json({
+      success: false,
+      msg: "something went wrong",
+    });
+  }
+};
+
+const videoSearch = async (req, res) => {
+  try {
+    const { query, userId } = req.query;
+
+    if (!query) {
+      return res.status(400).json({
+        success: false,
+        msg: "query is required",
+      });
+    }
+
+    const video = await Video.aggregate([
+      {
+        $search: {
+          index: "search-suggestion",
+          compound: {
+            should: [
+              {
+                autocomplete: {
+                  query: query,
+                  path: "title",
+                },
+              },
+              {
+                autocomplete: {
+                  query: query,
+                  path: "tags",
+                },
+              },
+            ],
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user",
+          foreignField: "_id",
+          as: "userDetails",
+        },
+      },
+      {
+        $unwind: {
+          path: "$userDetails",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $addFields: {
+          channelName: "$userDetails.publishedDetails.channelName",
+          userName: "$userDetails.publishedDetails.userName",
+          avatar: "$userDetails.publishedDetails.avatar",
+          viewsCount: { $size: "$views" },
+          type: "video",
+          sortOrder: 2, // Videos will have a higher sortOrder
+        },
+      },
+      {
+        $project: {
+          title: 1,
+          thumbnail: 1,
+          video_id: 1,
+          description: 1,
+          duration: 1,
+          viewsCount: 1,
+          channelName: 1,
+          userName: 1,
+          avatar: 1,
+          createdAt: 1,
+          type: 1,
+          sortOrder: 1,
+        },
+      },
+      {
+        $unionWith: {
+          coll: "users",
+          pipeline: [
+            {
+              $search: {
+                index: "userSearch",
+                compound: {
+                  should: [
+                    {
+                      autocomplete: {
+                        query: query,
+                        path: "publishedDetails.userName",
+                      },
+                    },
+                    {
+                      autocomplete: {
+                        query: query,
+                        path: "publishedDetails.channelName",
+                      },
+                    },
+                  ],
+                },
+              },
+            },
+            {
+              $lookup: {
+                from: "subscriptions",
+                localField: "_id",
+                foreignField: "channel",
+                as: "subscribers",
+              },
+            },
+            {
+              $addFields: {
+                subscribersCount: {
+                  $size: "$subscribers",
+                },
+                subscribed: {
+                  $cond: {
+                    if: {
+                      $and: [
+                        { $ne: [new mongoose.Types.ObjectId(userId), null] },
+                        {
+                          $in: [
+                            new mongoose.Types.ObjectId(userId),
+                            "$subscribers.subscriber",
+                          ],
+                        },
+                      ],
+                    },
+                    then: true,
+                    else: false,
+                  },
+                },
+                type: "user",
+                userName: "$publishedDetails.userName",
+                avatar: "$publishedDetails.avatar",
+                channelName: "$publishedDetails.channelName",
+                description: "$publishedDetails.description",
+                sortOrder: 1, // Users will have a lower sortOrder
+              },
+            },
+            {
+              $project: {
+                avatar: "$publishedDetails.avatar",
+                userName: "$publishedDetails.userName",
+                channelName: "$publishedDetails.channelName",
+                subscribersCount: 1,
+                description: 1,
+                type: 1,
+                subscribed: 1,
+                sortOrder: 1,
+              },
+            },
+          ],
+        },
+      },
+      {
+        // Sort the combined results by sortOrder
+        $sort: {
+          sortOrder: 1, // 1 for users, 2 for videos
+        },
+      },
+      {
+        // Remove the temporary sortOrder field
+        $project: {
+          sortOrder: 0,
+        },
+      },
+    ]);
+
+    if (!video.length > 0) {
+      return res.status(404).json({
+        success: false,
+        msg: "No video found for this query",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: video,
+      msg: "video fetched successfully",
     });
   } catch (error) {
     console.log("Error while searching the video", error);
@@ -1006,4 +1191,5 @@ export {
   videoByCategory,
   categoryList,
   searchSuggestion,
+  videoSearch,
 };
