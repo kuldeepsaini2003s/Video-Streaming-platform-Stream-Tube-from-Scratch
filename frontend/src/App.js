@@ -114,9 +114,9 @@ function App() {
         },
       });
       if (response.status === 200) {
-        // window.location.reload();
         localStorage.setItem("token", response?.data?.accessToken);
         localStorage.setItem("refreshToken", response?.data?.refreshToken);
+        window.location.reload();
       }
     } catch (error) {
       console.error("Error while refreshing the user token", error);
