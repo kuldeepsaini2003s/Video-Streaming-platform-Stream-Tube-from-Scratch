@@ -3,10 +3,7 @@ import { RxCross2 } from "react-icons/rx";
 import { toast } from "react-toastify";
 import { IoEyeOffOutline, IoEyeOutline, IoImageOutline } from "react-icons/io5";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import {
-  BACKEND_VIDEO,
-  categories,  
-} from "../../utils/constants";
+import { BACKEND_VIDEO, categories } from "../../utils/constants";
 import axios from "axios";
 import useResponseHandler from "../../hooks/UseResponseHandler";
 

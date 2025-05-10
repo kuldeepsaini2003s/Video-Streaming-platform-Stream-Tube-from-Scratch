@@ -105,7 +105,7 @@ export const UserPlaylist = () => {
                 <h1 className="text-sm line-clamp-2 font-medium mt-2">
                   {item?.title}
                 </h1>
-                <div className="flex justify-between font-medium items-center text-Lightblack text-xs">
+                <div className="flex justify-between font-medium items-center text-lightBlack text-xs">
                   <h1>View full playlist</h1>
                   {channelUser?._id === user?._id && (
                     <h1 className="flex gap-1 items-center">

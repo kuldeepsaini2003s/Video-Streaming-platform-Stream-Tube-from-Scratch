@@ -83,7 +83,7 @@ const Channel = () => {
         onClick={() => setShowLoginPop(false)}
         className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black bg-opacity-40 flex justify-center items-center"
       >
-        <div className="text-Lightblack bg-black flex flex-col justify-between items-center h-36 rounded-md p-5">
+        <div className="text-lightBlack bg-black flex flex-col justify-between items-center h-36 rounded-md p-5">
           <p>{loginMessage}</p>
           <div className="flex gap-10 items-center justify-between">
             <button
@@ -153,7 +153,7 @@ const Channel = () => {
         onClick={() => setShowPop(false)}
         className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
       >
-        <div className="text-Lightblack bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
+        <div className="text-lightBlack bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
           <p>Unsubscribe from {channelDetails?.channelName}</p>
           <div className="flex gap-4 items-center justify-end">
             <button
@@ -223,15 +223,15 @@ const Channel = () => {
                   </h1>
                   <div className=" font-semibold text-sm flex flex-wrap gap-x-2 items-center">
                     <h1>{channelDetails?.userName}</h1>
-                    <p className="dark:text-Lightblack flex items-center gap-1">
+                    <p className="dark:text-lightBlack flex items-center gap-1">
                       <GoDotFill className="w-2" />{" "}
                       {channelDetails?.subscribersCount} subscribers
                     </p>
-                    <p className="dark:text-Lightblack flex items-center gap-1">
+                    <p className="dark:text-lightBlack flex items-center gap-1">
                       <GoDotFill className="w-2" /> {userVideosCount} videos
                     </p>
                   </div>
-                  <p className="dark:text-Lightblack">
+                  <p className="dark:text-lightBlack">
                     {channelDetails?.description}
                   </p>
                 </div>

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { CircleUserRound, Dot, X } from "lucide-react";
 import axios from "axios";
-import {  
+import {
   BACKEND_VIDEO,
   formatDuration,
-  formatViewCount,  
+  formatViewCount,
 } from "../../../utils/constants";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -39,14 +39,11 @@ const History = () => {
   const removeFromHistory = async (videoId) => {
     const toastId = toast.loading("Removing video. Please wait...");
     try {
-      const res = await axios.get(
-        BACKEND_VIDEO + `/removeHistory/${videoId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const res = await axios.get(BACKEND_VIDEO + `/removeHistory/${videoId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       if (res.status === 200) {
         handleResponse({
           status: res.status,
@@ -91,7 +88,7 @@ const History = () => {
                           {item?.title}
                         </h1>
                       </Link>
-                      <div className="flex items-end text-xs mt-1 text-Lightblack font-medium">
+                      <div className="flex items-end text-xs mt-1 text-lightBlack font-medium">
                         <Link to={`/watch?v=${item?.video_id}`}>
                           {item?.channelName}
                         </Link>

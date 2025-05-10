@@ -15,6 +15,7 @@ app.use(
     credentials: true,
     origin: [
       process.env.CORS_ORIGIN_LOCAL,
+      process.env.CORS_ORIGIN_LOCAL_2,
       process.env.CORS_ORIGIN,
       process.env.FE_ORIGIN,
     ],

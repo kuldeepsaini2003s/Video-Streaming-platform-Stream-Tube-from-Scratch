@@ -34,25 +34,31 @@ const Menu = () => {
 
   const location = useLocation();
 
+  const isMobile = window.innerWidth < 640;
+  const filteredMenu =
+    user && isMobile ? menu.filter((item) => item.name !== "You") : menu;
+
   return (
     <div
       className={`${
         location.pathname === "/watch" && "hidden"
-      } max-[600px]:flex justify-around max-sm:py-1`}
+      } max-sm:flex justify-around max-sm:py-1 max-sm:dark:bg-black`}
       id="sidebar"
     >
       {/* home-btn */}
-      {menu.map((item, index) => (
-        <Link key={index} to={item?.path}>
-          <div
-            id="HomeBtn menu-items"
-            className="flex flex-col items-center rounded-md hover:bg-Gray dark:hover:bg-icon_black ms:m-0 sm:py-3 ms:p-1 sm:w-full ms:w-fit "
-          >
-            {item?.icon}
-            <p className="sm:text-xs ms:text-[12px] pt-1">{item?.name}</p>
-          </div>
-        </Link>
-      ))}
+      {filteredMenu.map((item, index) => {
+        return (
+          <Link key={index} to={item?.path}>
+            <div
+              id="HomeBtn menu-items"
+              className={`flex flex-col items-center rounded-md hover:bg-Gray dark:hover:bg-icon_black ms:m-0 sm:py-3 ms:p-1 sm:w-full ms:w-fit`}
+            >
+              {item?.icon}
+              <p className="sm:text-xs ms:text-[12px] pt-1">{item?.name}</p>
+            </div>
+          </Link>
+        );
+      })}
       {/* user-icon */}
       {user && (
         <Link to={`/${user?.userName}`}>

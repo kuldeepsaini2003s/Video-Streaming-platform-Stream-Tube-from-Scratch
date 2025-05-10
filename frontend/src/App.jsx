@@ -4,7 +4,7 @@ import WatchPage from "./components/WatchPag/WatchPage";
 import React, { useEffect, useState } from "react";
 import VideoContainer from "./components/Video/VideoContainer";
 import { useDispatch } from "react-redux";
-import Login from "./components/Auth//Login";
+import Login from "./components/Auth/Login";
 import SignUp from "./components/Auth/SignUp";
 import { BACKEND_USER } from "./utils/constants";
 import { setUser } from "./utils/Redux/userSlice";
@@ -13,9 +13,7 @@ import Channel from "./components/Channel/Channel";
 import MainLayout from "./components/Main/MainLayout";
 import CustomizeChannel from "./components/Channel/CustomizeChannel";
 import {
-  UserAbout,
   UserAllVideo,
-  UserCommunity,
   UserPlaylist,
 } from "./components/Channel/userChannelCollection";
 import UpdateVideo from "./components/Video/UpdateVideo";

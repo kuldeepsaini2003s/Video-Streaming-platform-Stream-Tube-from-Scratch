@@ -1,5 +1,3 @@
-import { round, floor, padStart } from "lodash";
-
 export const YOUTUBE_API_KEY = "AIzaSyB_0tssWKUF2AGkgH3eYLVAQLRkY1yNt9I"; // youtube api 1
 
 export const LOCAL_BACKEND_USER = "http://localhost:8000/api/users";

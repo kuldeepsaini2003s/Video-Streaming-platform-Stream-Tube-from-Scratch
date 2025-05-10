@@ -28,11 +28,7 @@ const VideoContainer = () => {
         >
           {" "}
           {videos?.length > 0 ? (
-            videos?.map((video) => (
-              <Link key={video.id} to={"/watch?v=" + video?.video_id}>
-                <VideoCard info={video} />
-              </Link>
-            ))
+            videos?.map((video) => <VideoCard info={video} key={video?._id} />)
           ) : (
             <p className="font-medium">No videos uploaded yet</p>
           )}

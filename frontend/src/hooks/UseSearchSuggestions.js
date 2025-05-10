@@ -10,7 +10,7 @@ const UseSearchSuggestions = () => {
       const data = await fetch(
         BACKEND_VIDEO + `/searchSuggestion?searchQuery=${searchQuery}`
       );
-      const json = await data.json();      
+      const json = await data.json();
       dispatch(setSearchSuggestion(json?.data));
     } catch (error) {
       console.error("Error fetch search suggestion", error);

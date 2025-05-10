@@ -8,7 +8,7 @@ import { IoMdGlobe } from "react-icons/io";
 import { Check, LockKeyhole, Plus, X } from "lucide-react";
 import { useSearchParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import debounce from "lodash.debounce";
+import debounce from "lodash/debounce";
 
 const visibilityOptions = [
   {
@@ -97,7 +97,7 @@ export const CreatePlaylist = ({ setShowCreatePlaylist }) => {
       >
         <h1>New playlist</h1>
         <input
-          className="py-3 px-2 border border-Lightblack  placeholder-Lightblack outline-none dark:bg-icon_black rounded-md"
+          className="py-3 px-2 border border-lightBlack  placeholder-lightBlack outline-none dark:bg-icon_black rounded-md"
           type="text"
           name="title"
           onChange={handleChange}
@@ -105,16 +105,16 @@ export const CreatePlaylist = ({ setShowCreatePlaylist }) => {
         />
         <div
           onClick={toggleDropdown}
-          className="relative flex justify-between border border-Lightblack py-1 items-center px-2  outline-none rounded-md"
+          className="relative flex justify-between border border-lightBlack py-1 items-center px-2  outline-none rounded-md"
         >
           <div className="flex flex-col">
-            <span className="text-sm text-Lightblack">visibility</span>
+            <span className="text-sm text-lightBlack">visibility</span>
             <p className="text-sm">{playlistData.status}</p>
           </div>
           <FiChevronDown />
           {isDropdownOpen && (
             <ul className="absolute z-10 w-[93%] translate-x-2 -bottom-[9.4rem] shadow-xl left-0 bg-white dark:bg-icon_black rounded-md mt-1">
-              <h1 className="px-4 py-2 border-b border-Lightblack">
+              <h1 className="px-4 py-2 border-b border-lightBlack">
                 Visibility
               </h1>
               {visibilityOptions.map((option) => (
@@ -132,7 +132,7 @@ export const CreatePlaylist = ({ setShowCreatePlaylist }) => {
                     {option.icon}
                     <div>
                       <p className="text-sm">{option.name}</p>
-                      <p className="text-Lightblack text-xs">{option.msg}</p>
+                      <p className="text-lightBlack text-xs">{option.msg}</p>
                     </div>
                   </div>
                   {playlistData.status === option.name && option.icon2}

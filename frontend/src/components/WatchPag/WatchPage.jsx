@@ -17,8 +17,9 @@ import UseLikeHandler from "../../hooks/UseLikeHandler";
 import Lottie from "lottie-react";
 import bell_icon_white from "../../Icons/Bell-icon-white.json";
 import { CreatePlaylist, SavePlaylist } from "../Channel/Playlist";
-import { Bookmark, UserCircleIcon, X } from "lucide-react";
-import { MdBookmarkAdded } from "react-icons/md";
+import { UserCircleIcon, X } from "lucide-react";
+import { FaRegBookmark } from "react-icons/fa";
+import { FaBookmark } from "react-icons/fa6";
 import { timeAgo } from "../../utils/CustomFunctions/TimeCalculation";
 import { toast } from "react-toastify";
 import Recommendation from "./Recommendation";
@@ -48,7 +49,6 @@ const WatchPage = () => {
   const [openPlaylist, setOpenPlaylist] = useState(true);
   const navigate = useNavigate();
   const videoRef = useRef(null);
-  const playlistRef = useRef(null);
   const currentUser = useSelector((store) => store.user.user);
   const getVideo = useSelector((store) => store.videos.singleVideo);
 
@@ -302,7 +302,7 @@ const WatchPage = () => {
         onClick={() => setShowPop(false)}
         className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
       >
-        <div className="text-Lightblack bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
+        <div className="text-lightBlack bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
           <p>Unsubscribe from {channelName}</p>
           <div className="flex gap-4 items-center justify-end">
             <button
@@ -329,7 +329,7 @@ const WatchPage = () => {
         onClick={() => setShowLoginPop(false)}
         className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
       >
-        <div className="text-Lightblack bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
+        <div className="text-lightBlack bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
           <p>{loginMessage}</p>
           <div className="flex gap-10 items-center justify-between">
             <button
@@ -405,37 +405,39 @@ const WatchPage = () => {
       ) : (
         <div
           id="main"
-          className="lg:px-14 max-lg:px-5 py-5 max-lg:py-0 flex max-lg:flex-col gap-5 w-full"
+          className="lg:px-14 max-lg:px-5 max-sm:px-0 py-5 max-sm:mt-2 max-lg:py-0 flex max-lg:flex-col sm:gap-5 w-full"
         >
           {/* left  */}
           <div className="w-[62%] max-lg:w-full h-fit">
             {/* video */}
             <video
               ref={videoRef}
-              className="sm:rounded-xl -z-40 w-full h-[27.5rem] object-cover aspect-video"
+              className="sm:rounded-xl -z-40 w-full sm:h-[27.5rem] object-cover aspect-video"
               src={videoUrl}
               controls
               autoPlay
             ></video>
             {/* channel-info */}
-            <div className="max-sm:mx-3 flex flex-col gap-2 my-2 justify-center">
+            <div className="flex flex-col gap-2 sm:my-2 max-sm:p-2 justify-center">
               {/* Channel titile */}
-              <h1 className="text-xl  font-semibold w-[95%] overflow-hidden whitespace-nowrap">
+              <h1 className="sm:text-xl font-semibold w-[95%] overflow-hidden text-sm">
                 {title}
               </h1>
               <div className="flex max-sm:flex-col sm:items-center sm:justify-between">
-                <div className="flex max-sm:justify-between items-center max-sm:gap-3 gap-5 max-sm:p-2">
+                <div className="flex max-sm:justify-between items-center max-sm:gap-3 gap-5">
                   {/* user-profile */}
                   <Link to={`/${userName}`}>
                     <div className="flex gap-5 items-center">
                       <img
-                        className="h-12 w-12 rounded-full object-cover aspect-square object-center"
+                        className="sm:h-12 h-10 w-10 sm:w-12 rounded-full object-cover aspect-square object-center"
                         src={userAvatar}
                         alt=""
                       />
                       <div>
-                        <p className="font-medium">{channelName}</p>
-                        <p className="text-xs text-Lightblack font-medium">
+                        <p className="font-medium max-sm:text-sm">
+                          {channelName}
+                        </p>
+                        <p className="text-xs text-lightBlack font-medium">
                           {subscribersCount} subscribers
                         </p>
                       </div>
@@ -465,7 +467,7 @@ const WatchPage = () => {
                     </Link>
                   )}
                 </div>
-                <div className="flex items-center gap-2  text-sm font-medium max-sm:p-2">
+                <div className="flex items-center gap-2 text-sm font-medium max-sm:text-xs max-sm:pt-4">
                   {/* like-btn */}
                   <div className="user-info flex items-center bg-lightgray dark:bg-icon_black rounded-full ">
                     <div
@@ -473,9 +475,9 @@ const WatchPage = () => {
                       className="watch-btn rounded-l-full flex gap-1 items-center px-4 py-2 select-none dark:hover:bg-hover_icon_black  cursor-pointer"
                     >
                       {!liked ? (
-                        <BiLike className="text-[1.3rem]" />
+                        <BiLike className="text-[1.3rem] max-sm:text-[1.2rem]" />
                       ) : (
-                        <BiSolidLike className="text-[1.3rem]" />
+                        <BiSolidLike className="text-[1.3rem] max-sm:text-[1.2rem]" />
                       )}
                       <p>{likesCount}</p>
                     </div>
@@ -485,9 +487,9 @@ const WatchPage = () => {
                       className="cursor-pointer px-4 rounded-r-full py-2 dark:hover:bg-hover_icon_black "
                     >
                       {!disliked ? (
-                        <BiDislike className="text-[1.3rem]" />
+                        <BiDislike className="text-[1.3rem] max-sm:text-[1.2rem]" />
                       ) : (
-                        <BiSolidDislike className="text-[1.3rem]" />
+                        <BiSolidDislike className="text-[1.3rem] max-sm:text-[1.2rem]" />
                       )}
                     </div>
                   </div>
@@ -496,41 +498,45 @@ const WatchPage = () => {
                     className="watch-btn user-info flex items-center gap-1 bg-lightgray dark:bg-icon_black dark:hover:bg-hover_icon_black rounded-3xl px-4 py-2 cursor-pointer "
                     onClick={handleShare}
                   >
-                    <RiShareForwardLine className="text-[1.3rem]" />
+                    <RiShareForwardLine className="text-[1.3rem] max-sm:text-[1.2rem]" />
                     <p>Share</p>
                   </div>
                   {/* option-btn */}
                   {videoSaved ? (
                     <button className="watch-btn user-info flex items-center gap-2 bg-lightgray dark:bg-icon_black dark:hover:bg-hover_icon_black rounded-3xl px-4 py-2 cursor-pointer ">
-                      <MdBookmarkAdded size={21} /> Saved
+                      <FaBookmark className="text-[1rem] text-[0.91rem]" />{" "}
+                      Saved
                     </button>
                   ) : (
                     <button
                       onClick={handlePlaylist}
                       className="watch-btn user-info flex items-center gap-2 bg-lightgray dark:bg-icon_black dark:hover:bg-hover_icon_black rounded-3xl px-4 py-2 cursor-pointer "
                     >
-                      <Bookmark strokeWidth={2} size={21} /> Save
+                      <FaRegBookmark className="max-sm:text-[0.91rem] text-[1rem]" />{" "}
+                      Save
                     </button>
                   )}
                 </div>
               </div>
 
-              <div className="gap-2 flex flex-col mt-2 sm:m-0 text-sm font-medium bg-lightgray dark:bg-icon_black rounded-2xl p-3">
+              <div className="gap-2 flex flex-col sm:mt-2 sm:m-0 text-sm font-medium bg-lightgray dark:bg-icon_black rounded-2xl p-3">
                 {/* views */}
                 <div className="flex items-center gap-x-2 font-semibold flex-wrap ">
                   <p className="p-0 m-0">{formatViewCount(viewsCount)} views</p>
                   <p className="p-0 m-0">{timeAgo(createdAt)} </p>
                   <div
-                    className={`${showFullDescription ? "" : "line-clamp-1 "}`}
+                    className={`${
+                      showFullDescription ? "" : "line-clamp-1"
+                    } flex flex-wrap gap-1`}
                   >
                     {tags?.length > 0 &&
                       tags?.map((tag, index) => (
-                        <span
+                        <p
                           key={index}
-                          className="text-Lightblack p-0 m-0 white mx-0.5"
+                          className="text-lightBlack p-0 m-0 max-sm:text-xs"
                         >
                           {tag}
-                        </span>
+                        </p>
                       ))}
                   </div>
                 </div>
@@ -556,7 +562,7 @@ const WatchPage = () => {
               </div>
               {/* comments-container */}
               <div>
-                <h1 className="text-xl my-5 font-semibold">
+                <h1 className="text-xl sm:my-5 max-sm:text-base max-sm:px-2 max-sm:py-1 font-semibold">
                   {commentsList?.length > 0
                     ? `${commentsList.length} comments`
                     : "Be the first to comment"}
@@ -573,7 +579,7 @@ const WatchPage = () => {
                   )}
                   <div className="w-full">
                     <input
-                      className="border-b pb-1 px-2 w-full placeholder:text-Lightblack text-sm placeholder:text-sm border-icon_black bg-transparent outline-none"
+                      className="border-b pb-1 px-2 w-full placeholder:text-lightBlack text-sm placeholder:text-sm border-icon_black bg-transparent outline-none"
                       type="text"
                       onFocus={handleCommentInput}
                       onChange={(e) => setComment(e.target.value)}
@@ -601,28 +607,30 @@ const WatchPage = () => {
                     )}
                   </div>
                 </div>
-                <div className="mt-10">
-                  {commentsList.map((items, index) => (
-                    <div
-                      key={index}
-                      className="flex gap-4 text-wrap items-start my-3"
-                    >
-                      <img
-                        className="rounded-full w-10 h-10 object-cover object-center"
-                        src={items?.avatar}
-                        alt=""
-                      />
-                      <div>
-                        <div className="flex text-sm font-medium gap-1  items-center">
-                          <h1 className="">{items?.userName}</h1>
-                          <h1 className="text-Lightblack">
-                            {timeAgo(items?.comments[0]?.createdAt)}
-                          </h1>
-                        </div>
-                        {items?.comments.map((item) => {
-                          return <p className="text-sm">{item.comment}</p>;
-                        })}
-                        {/* <div className="flex items-center mt-2 gap-5">
+
+                {commentsList.length > 0 && (
+                  <div className="sm:mt-10 max-sm:mt-4">
+                    {commentsList.map((items, index) => (
+                      <div
+                        key={index}
+                        className="flex gap-4 text-wrap items-start my-3"
+                      >
+                        <img
+                          className="rounded-full w-10 h-10 object-cover object-center"
+                          src={items?.avatar}
+                          alt=""
+                        />
+                        <div>
+                          <div className="flex text-sm font-medium gap-1  items-center">
+                            <h1 className="">{items?.userName}</h1>
+                            <h1 className="text-lightBlack">
+                              {timeAgo(items?.comments[0]?.createdAt)}
+                            </h1>
+                          </div>
+                          {items?.comments.map((item) => {
+                            return <p className="text-sm">{item.comment}</p>;
+                          })}
+                          {/* <div className="flex items-center mt-2 gap-5">
                           <div className="flex items-center gap-2">
                             <BiLike className="text-[1.3rem]" />
                             {
@@ -632,10 +640,11 @@ const WatchPage = () => {
                           </div>
                           <BiDislike className="text-[1.3rem]" />
                         </div> */}
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -647,7 +656,7 @@ const WatchPage = () => {
                 <div className="flex justify-between items-center border-b p-2">
                   <div>
                     <p className="font-bold text-lg">{playlist[0]?.title}</p>
-                    <p className="text-xs text-Lightblack">
+                    <p className="text-xs text-lightBlack">
                       <span className="text-white font-medium">
                         {playlist[0]?.channelName}
                       </span>{" "}
@@ -675,7 +684,7 @@ const WatchPage = () => {
                           }&index=${index + 1}`}
                         >
                           <div className="flex items-center gap-2">
-                            <p className="text-xs text-Lightblack">
+                            <p className="text-xs text-lightBlack">
                               {index + 1}
                             </p>
                             <div className="relative">
@@ -692,7 +701,7 @@ const WatchPage = () => {
                               <h1 className="line-clamp-2 font-medium">
                                 {item?.video_title}
                               </h1>
-                              <h1 className="text-Lightblack text-xs">
+                              <h1 className="text-lightBlack text-xs">
                                 {item?.channelName}
                               </h1>
                             </div>

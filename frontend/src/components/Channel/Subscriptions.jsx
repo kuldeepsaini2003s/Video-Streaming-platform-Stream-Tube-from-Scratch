@@ -64,7 +64,7 @@ const Subscriptions = () => {
         onClick={() => setShowPop(false)}
         className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
       >
-        <div className="text-Lightblack bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
+        <div className="text-lightBlack bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
           <p>Unsubscribe from {channelName}</p>
           <div className="flex gap-4 items-center justify-end">
             <button
@@ -109,7 +109,7 @@ const Subscriptions = () => {
                       className="w-32 h-32 object-cover aspect-square object-center rounded-full flex-shrink-0"
                       alt="Avatar"
                     />
-                    <div className="space-y-1 text-Lightblack text-sm w-full">
+                    <div className="space-y-1 text-lightBlack text-sm w-full">
                       <h1 className="text-xl text-white font-bold">
                         {item?.channelName}
                       </h1>

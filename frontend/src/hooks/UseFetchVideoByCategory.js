@@ -9,9 +9,7 @@ const UseFetchVideoByCategory = () => {
 
   const getVideoCategories = async () => {
     try {
-      const data = await fetch(
-        BACKEND_VIDEO + `/video?category=${category}`
-      );
+      const data = await fetch(BACKEND_VIDEO + `/video?category=${category}`);
       const json = await data.json();
       dispatch(setFetchedCategoriesVideo(json?.data));
     } catch (error) {

@@ -10,7 +10,7 @@ import HistoryShimmer from "./History/UserChannelHistoryPage";
 
 const UserChannel = () => {
   const userToken = localStorage.getItem("token");
-  const user = useSelector((store) => store?.user?.user);  
+  const user = useSelector((store) => store?.user?.user);
   const [history, setHistory] = useState([]);
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const UserChannel = () => {
                   </h1>
                   <div className=" font-semibold text-sm flex flex-wrap gap-x-2 items-center">
                     <h1>{user?.userName}</h1>
-                    <p className="dark:text-Lightblack flex items-center gap-1">
+                    <p className="dark:text-lightBlack flex items-center gap-1">
                       <GoDotFill className="w-2" /> {user?.subscribersCount}{" "}
                       View channel
                     </p>

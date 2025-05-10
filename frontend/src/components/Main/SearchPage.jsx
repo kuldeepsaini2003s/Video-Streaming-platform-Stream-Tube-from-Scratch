@@ -1,7 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
-import { BACKEND_SUBSCRIPTION, BACKEND_VIDEO, formatViewCount } from "../../utils/constants";
+import {
+  BACKEND_SUBSCRIPTION,
+  BACKEND_VIDEO,
+  formatViewCount,
+} from "../../utils/constants";
 import { useSelector } from "react-redux";
 import { GoDotFill } from "react-icons/go";
 import { timeAgo } from "../../utils/CustomFunctions/TimeCalculation";
@@ -80,7 +84,7 @@ const SearchPage = () => {
                     alt=""
                   />
                 </div>
-                <div className="w-[50%] space-y-2 text-xs text-Lightblack font-medium">
+                <div className="w-[50%] space-y-2 text-xs text-lightBlack font-medium">
                   <h1 className="text-lg text-white">{item.channelName}</h1>
                   <div className="flex gap-2 items-center">
                     <h1>{item.userName}</h1>
@@ -120,7 +124,7 @@ const SearchPage = () => {
                     className="flex-shrink-0 w-[42%] rounded-md object-cover object-center aspect-video"
                     alt="thumbnail"
                   />
-                  <div className="w-[50%] rounded-md text-xs font-medium text-Lightblack">
+                  <div className="w-[50%] rounded-md text-xs font-medium text-lightBlack">
                     <h1 className="text-white text-lg line-clamp-2">
                       {item.title}
                     </h1>

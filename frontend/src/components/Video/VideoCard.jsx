@@ -2,17 +2,23 @@ import React from "react";
 import { GoDotFill } from "react-icons/go";
 import { PiDotsThreeVerticalBold } from "react-icons/pi";
 import { formatDuration, formatViewCount } from "../../utils/constants";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaCircleUser } from "react-icons/fa6";
 import { timeAgo } from "../../utils/CustomFunctions/TimeCalculation";
 
 const VideoCard = ({ info }) => {
-  const { title, duration, thumbnail, views, user, createdAt } = info;
+  const { title, duration, thumbnail, views, user, video_id, createdAt } = info;
 
   const { avatar, channelName, userName } = user?.publishedDetails;
+  const navigate = useNavigate();
+
+  const handleNavigate = (e) => {
+    if (e.target.closest("a")) return;
+    navigate(`/watch?v=${video_id}`);
+  };
 
   return (
-    <div className="shadow-md rounded-md">
+    <div onClick={handleNavigate} className="shadow-md rounded-md">
       <div className="relative rounded-md">
         <img
           className={`ml:rounded-md sm:h-[13rem] ms:h-[12rem] object-cover aspect-video object-center w-full`}
@@ -45,9 +51,9 @@ const VideoCard = ({ info }) => {
             </p>
           </div>
           <Link to={`/${userName}`}>
-            <p className="text-Lightblack text-sm">{channelName}</p>
+            <p className="text-lightBlack text-sm">{channelName}</p>
           </Link>
-          <div className="flex gap-1 items-center text-Lightblack text-sm">
+          <div className="flex gap-1 items-center text-lightBlack text-sm">
             <p>{formatViewCount(views.length)} views</p>
             <GoDotFill size={8} />
             <p>{timeAgo(createdAt)}</p>

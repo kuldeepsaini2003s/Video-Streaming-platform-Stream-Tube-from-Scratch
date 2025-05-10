@@ -1,6 +1,25 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-*: initial;
+  --breakpoint-ms: 320px;
+  --breakpoint-mm: 375px;
+  --breakpoint-ml: 429px;
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1440px;
+  --breakpoint-3xl: 1536px;
+  --color-white: #fdfdff;
+  --color-black: #0f0f0f;
+  --color-icon_black: #212121;
+  --color-lightBlack: #8b8b8b;
+  --color-gray: #cccccc;
+  --color-lightgray: #f2f2f2;
+  --color-hover_icon_black: #3d3d3d;
+  --color-lightblue: #9fc1ee;
+}
 
 :root {
   --iconBlack: #292929;
@@ -12,6 +31,8 @@ body {
   box-sizing: border-box;
   font-family: "roboto", arial, sans-serif, arial, "noto", "youtube sans",
     "roboto", "youtube noto", helvetica;
+  max-width: 100vw;
+  height: 100svh;
 }
 
 .light {
@@ -115,16 +136,16 @@ body {
   font-size: 1rem;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   body {
     height: 100%;
+    width: 100vw;
   }
 
   .main-container {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
-    grid-template-rows: auto 1fr auto;
     grid-template-areas: "navbar" "main" "sidebar";
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
   }
 
   #category {

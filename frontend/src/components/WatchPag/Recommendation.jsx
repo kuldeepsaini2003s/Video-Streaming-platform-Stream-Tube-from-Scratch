@@ -32,13 +32,13 @@ const Recommendation = ({ category, videoId }) => {
   }, [category]);
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 max-sm:px-2">
       {recommendedVideos?.length > 0 && (
         <>
           <h1 className="font-medium text-lg">Related Videos</h1>
           {recommendedVideos.map((item) => (
-            <Link to={`/watch?v=${item.video_id}`}>
-              <div key={item._id} className="flex gap-2 rounded-md">
+            <Link to={`/watch?v=${item.video_id}`} key={item._id}>
+              <div className="flex gap-2 rounded-md">
                 <div className="relative min-w-40 h-24 rounded-md">
                   <img
                     src={item?.thumbnail}
@@ -50,7 +50,7 @@ const Recommendation = ({ category, videoId }) => {
                   </span>
                 </div>
                 <div className="flex gap-2 w-full justify-between">
-                  <div className="flex flex-col text-xs dark:text-Lightblack font-medium">
+                  <div className="flex flex-col text-xs dark:text-lightBlack font-medium">
                     <h1 className="line-clamp-2 mb-3 dark:text-white text-sm font-medium leading-tight">
                       {item?.title}
                     </h1>

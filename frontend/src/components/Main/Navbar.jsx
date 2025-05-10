@@ -121,7 +121,11 @@ const Navbar = () => {
 
   return (
     <>
-      <div id="navbar" className="flex items-center max-sm:py-1 justify-between px-2">
+      <div
+        id="navbar"
+        className="flex items-center max-w-[100vw] max-sm:py-3 justify-between px-2 max-sm:mb-1 max-sm:border-y border-hover_icon_black
+        "
+      >
         <div className="flex items-center gap-x-2">
           {/* Menu-btn */}
           <IoMenu
@@ -134,7 +138,7 @@ const Navbar = () => {
               viewBox="0 0 90 20"
               preserveAspectRatio="xMidYMid meet"
               focusable="false"
-              className="style-scope h-5"
+              className="style-scope h-5 "
             >
               <g
                 viewBox="0 0 90 20"
@@ -260,7 +264,7 @@ const Navbar = () => {
             </div>
           )}
         </div>
-        <div className="flex items-center gap-4 ">
+        <div className="flex items-center gap-x-4">
           <Expand
             toggled={theme === "dark"}
             onToggle={toggleTheme}
@@ -277,10 +281,19 @@ const Navbar = () => {
             <IoSearchOutline className="text-[1.2rem] mr-1" />
           </div>
 
+          {!user && (
+            <button
+              className="flex gap-1 items-center sm:hidden border text-nowrap border-icon_black font-medium rounded-full text-sm px-2 py-1 "
+              onClick={() => navigate("/login")}
+            >
+              <CircleUserRound size={22} strokeWidth={1} /> Sign in
+            </button>
+          )}
+
           {/* user-icon */}
           <div
             id="user-icon"
-            className=" py-2 flex gap-x-1 items-center  rounded-3xl sm:block ms:hidden "
+            className=" py-2 flex gap-x-1 items-center  rounded-3xl max-sm:hidden"
           >
             {user ? (
               <button onClick={settingHandler}>
@@ -296,7 +309,7 @@ const Navbar = () => {
               </button>
             ) : (
               <button
-                className="flex gap-1 items-center border border-icon_black font-medium rounded-full text-sm px-2 py-1"
+                className="flex gap-1 items-center border  border-icon_black font-medium rounded-full text-sm px-2 py-1"
                 onClick={() => navigate("/login")}
               >
                 <CircleUserRound size={22} strokeWidth={1} /> Sign in

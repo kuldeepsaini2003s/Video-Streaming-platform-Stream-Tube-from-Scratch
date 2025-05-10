@@ -6,7 +6,7 @@ const ShimmerCard = () => {
       <div className="flex items-center gap-4 justify-start mb-5">
         {Array(10)
           .fill(" ")
-          .map((index) => (
+          .map((_, index) => (
             <div
               key={index}
               className="shimmer bg-[#E3E3E3] dark:bg-icon_black rounded-md h-8 w-24"
@@ -16,7 +16,7 @@ const ShimmerCard = () => {
       <div className="grid max-md:grid-cols-1 ml:grid-cols-2 gap-3 sm:grid-cols-3 max-md:p-0 lg:grid-cols-3">
         {Array(30)
           .fill(" ")
-          .map((index) => (
+          .map((_, index) => (
             <div key={index}>
               <div>
                 <div className="shimmer w-full sm:h-[12rem] ms:h-[11rem] sm:rounded-xl bg-Gray dark:bg-icon_black"></div>

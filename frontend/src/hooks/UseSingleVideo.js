@@ -11,12 +11,9 @@ const UseSingleVideo = (videoId) => {
 
   const getSingleVideo = async () => {
     try {
-      const res = await axios.post(
-        BACKEND_VIDEO + `/getVideo/${videoId}`,
-        {
-          userId: user && user?._id,
-        }
-      );
+      const res = await axios.post(BACKEND_VIDEO + `/getVideo/${videoId}`, {
+        userId: user && user?._id,
+      });
       if (res.status === 200) {
         dispatch(setSingleVideo(res?.data?.data));
       }
