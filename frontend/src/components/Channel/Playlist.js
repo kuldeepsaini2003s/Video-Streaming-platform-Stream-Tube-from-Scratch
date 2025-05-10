@@ -89,7 +89,7 @@ export const CreatePlaylist = ({ setShowCreatePlaylist }) => {
   return (
     <div
       onClick={() => setShowCreatePlaylist(false)}
-      className="absolute w-dvw h-dvh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
+      className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
     >
       <div
         onClick={(e) => e.stopPropagation()}
@@ -296,7 +296,7 @@ export const SavePlaylist = ({ setShowPlaylist, setShowCreatePlaylist }) => {
   return (
     <div
       onClick={() => setShowPlaylist(false)}
-      className="absolute w-dvw h-dvh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
+      className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
     >
       <div
         onClick={(e) => e.stopPropagation()}

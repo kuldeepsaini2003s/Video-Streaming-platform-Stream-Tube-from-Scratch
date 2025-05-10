@@ -24,7 +24,7 @@ const VideoContainer = () => {
       ) : (
         <div
           id="main"
-          className="pt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 px-4"
+          className="pt-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 max-sm:gap-0 px-4 max-sm:px-0"
         >
           {" "}
           {videos?.length > 0 ? (

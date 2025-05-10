@@ -38,7 +38,7 @@ const Menu = () => {
     <div
       className={`${
         location.pathname === "/watch" && "hidden"
-      } max-[600px]:flex justify-around`}
+      } max-[600px]:flex justify-around max-sm:py-1`}
       id="sidebar"
     >
       {/* home-btn */}

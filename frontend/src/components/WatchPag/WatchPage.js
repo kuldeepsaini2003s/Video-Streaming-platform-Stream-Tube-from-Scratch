@@ -300,7 +300,7 @@ const WatchPage = () => {
     return (
       <div
         onClick={() => setShowPop(false)}
-        className="absolute w-dvw h-dvh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
+        className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
       >
         <div className="text-Lightblack bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
           <p>Unsubscribe from {channelName}</p>
@@ -327,7 +327,7 @@ const WatchPage = () => {
     return (
       <div
         onClick={() => setShowLoginPop(false)}
-        className="absolute w-dvw h-dvh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
+        className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
       >
         <div className="text-Lightblack bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
           <p>{loginMessage}</p>
@@ -405,10 +405,10 @@ const WatchPage = () => {
       ) : (
         <div
           id="main"
-          className="sm:px-24 py-5 flex max-sm::flex-col gap-5 w-full"
+          className="lg:px-14 max-lg:px-5 py-5 max-lg:py-0 flex max-lg:flex-col gap-5 w-full"
         >
           {/* left  */}
-          <div className="w-[62%] h-fit">
+          <div className="w-[62%] max-lg:w-full h-fit">
             {/* video */}
             <video
               ref={videoRef}
@@ -420,7 +420,7 @@ const WatchPage = () => {
             {/* channel-info */}
             <div className="max-sm:mx-3 flex flex-col gap-2 my-2 justify-center">
               {/* Channel titile */}
-              <h1 className=" text-xl font-semibold w-[95%] overflow-hidden whitespace-nowrap">
+              <h1 className="text-xl  font-semibold w-[95%] overflow-hidden whitespace-nowrap">
                 {title}
               </h1>
               <div className="flex max-sm:flex-col sm:items-center sm:justify-between">
@@ -641,7 +641,7 @@ const WatchPage = () => {
           </div>
 
           {/* right */}
-          <div className="h-fit w-[38%] ">
+          <div className="h-fit w-[38%] max-lg:w-full">
             {playlistId && (
               <div className="border mb-5 sm:flex flex-col dark:bg-icon_black justify-between min-w-[35%] hidden h-fit rounded-lg">
                 <div className="flex justify-between items-center border-b p-2">

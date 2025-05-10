@@ -81,7 +81,7 @@ const Channel = () => {
     return (
       <div
         onClick={() => setShowLoginPop(false)}
-        className="absolute w-dvw h-dvh top-0 left-0 remove-scrollbar bg-black bg-opacity-40 flex justify-center items-center"
+        className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black bg-opacity-40 flex justify-center items-center"
       >
         <div className="text-Lightblack bg-black flex flex-col justify-between items-center h-36 rounded-md p-5">
           <p>{loginMessage}</p>
@@ -151,7 +151,7 @@ const Channel = () => {
     return (
       <div
         onClick={() => setShowPop(false)}
-        className="absolute w-dvw h-dvh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
+        className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
       >
         <div className="text-Lightblack bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
           <p>Unsubscribe from {channelDetails?.channelName}</p>

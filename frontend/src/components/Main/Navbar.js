@@ -121,7 +121,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div id="navbar" className="flex items-center justify-between px-3">
+      <div id="navbar" className="flex items-center max-sm:py-1 justify-between px-2">
         <div className="flex items-center gap-x-2">
           {/* Menu-btn */}
           <IoMenu

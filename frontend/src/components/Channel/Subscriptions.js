@@ -62,7 +62,7 @@ const Subscriptions = () => {
     return (
       <div
         onClick={() => setShowPop(false)}
-        className="absolute w-dvw h-dvh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
+        className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
       >
         <div className="text-Lightblack bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
           <p>Unsubscribe from {channelName}</p>
@@ -100,7 +100,10 @@ const Subscriptions = () => {
                   key={item._id}
                   className="flex justify-between items-center w-full my-4"
                 >
-                  <Link to={`/${item?.userName}`} className="flex w-full gap-10">
+                  <Link
+                    to={`/${item?.userName}`}
+                    className="flex w-full gap-10"
+                  >
                     <img
                       src={item?.avatar}
                       className="w-32 h-32 object-cover aspect-square object-center rounded-full flex-shrink-0"
