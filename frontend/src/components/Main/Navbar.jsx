@@ -273,7 +273,7 @@ const Navbar = () => {
           />
           {user && (
             <Link to={"/create-video"}>
-              <MdOutlineVideoCall className="text-[2.4rem] bg-Gray hover:bg-Gray dark:bg-dark_bg dark:hover:bg-dark_bg_hover rounded-full p-2" />
+              <MdOutlineVideoCall className="text-[2.4rem] bg-lightGray hover:bg-medium_gray dark:bg-dark_bg dark:hover:bg-dark_bg_hover rounded-full p-2" />
             </Link>
           )}
           {/* search btn for mobile screen */}

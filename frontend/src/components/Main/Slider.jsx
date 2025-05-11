@@ -150,7 +150,9 @@ const Slider = () => {
                   onClick={handleToggle}
                   id="HomeBtn menu-items"
                   className={`${
-                    pathname === item?.path ? "bg-medium_gray" : ""
+                    pathname === item?.path
+                      ? "bg-medium_gray dark:bg-dark_bg_hover"
+                      : ""
                   } slider-icon active flex hover:bg-lightGray dark:hover:bg-dark_bg items-center px-3 rounded-xl py-3`}
                 >
                   {item.icon}
@@ -181,7 +183,9 @@ const Slider = () => {
                   onClick={handleToggle}
                   id="HomeBtn menu-items"
                   className={`${
-                    pathname === item?.path ? "bg-medium_gray" : ""
+                    pathname === item?.path
+                      ? "bg-medium_gray dark:bg-dark_bg_hover"
+                      : ""
                   } slider-icon active flex hover:bg-lightGray dark:hover:bg-dark_bg items-center px-3 rounded-xl py-3`}
                 >
                   {item.icon}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import bell_icon_white from "../../Icons/Bell-icon-white.json";
+import bell_icon_black from "../../Icons/Bell-icon-black.json";
 import Lottie from "lottie-react";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -12,6 +13,7 @@ const Subscriptions = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [channelName, setChannelName] = useState(false);
   const [subscriptions, setSubscriptions] = useState([]);
+  const theme = localStorage.getItem("theme");
 
   const user = useSelector((store) => store?.user?.user);
 
@@ -91,8 +93,8 @@ const Subscriptions = () => {
   return (
     <>
       {user ? (
-        <div className="relative px-20 py-2" id="main">
-          <h1 className="font-bold text-xl">All Subscriptions</h1>
+        <div className="relative sm:px-20 px-2 py-2" id="main">
+          <h1 className="font-bold sm:text-xl ">All Subscriptions</h1>
           <div>
             {subscriptions.length > 0 ? (
               subscriptions.map((item) => (
@@ -102,15 +104,15 @@ const Subscriptions = () => {
                 >
                   <Link
                     to={`/${item?.userName}`}
-                    className="flex w-full gap-10"
+                    className="flex w-full sm:gap-10 gap-2"
                   >
                     <img
                       src={item?.avatar}
-                      className="w-32 h-32 object-cover aspect-square object-center rounded-full flex-shrink-0"
+                      className="lg:w-[12%] lg:h-[12%] max-sm:w-14 max-sm:h-14 w-20 h-20 object-cover aspect-square object-center rounded-full flex-shrink-0"
                       alt="Avatar"
                     />
-                    <div className="space-y-1 text-medium_gray text-sm w-full">
-                      <h1 className="text-xl text-white font-bold">
+                    <div className="space-y-1 text-darkGray sm:text-sm text-xs w-full">
+                      <h1 className="sm:text-xl text-base text-black dark:text-white font-medium">
                         {item?.channelName}
                       </h1>
                       <p>
@@ -125,10 +127,12 @@ const Subscriptions = () => {
                       setChannelName(item?.channelName);
                       setShowPop(true);
                     }}
-                    className="watch-btn subscriber px-3 py-2 dark:bg-dark_bg dark:hover:bg-dark_bg_hover flex gap-1 items-center text-sm cursor-pointer rounded-3xl"
+                    className="watch-btn subscriber px-3 bg-lightGray hover:bg-medium_gray py-2 dark:bg-dark_bg dark:hover:bg-dark_bg_hover flex gap-1 items-center sm:text-sm text-xs cursor-pointer rounded-3xl"
                   >
                     <Lottie
-                      animationData={bell_icon_white}
+                      animationData={
+                        theme === "dark" ? bell_icon_white : bell_icon_black
+                      }
                       play={isPlaying}
                       loop={false}
                       className="w-6"

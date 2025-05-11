@@ -61,22 +61,22 @@ const History = () => {
   };
 
   return (
-    <div className="px-20 py-5" id="main">
+    <div className="lg:px-20 sm:px-5 px-2 sm:py-5" id="main">
       {user ? (
         <>
-          <h1 className="font-semibold text-2xl">Watch History</h1>
-          <div className="mt-5 space-y-5">
+          <h1 className="font-semibold lg:text-2xl">Watch History</h1>
+          <div className="sm:mt-5 mt-2 sm:space-y-5 space-y-2">
             {watchHistory?.length > 0 ? (
               watchHistory.map((item) => (
-                <div className="flex gap-4 items-start">
+                <div className="flex gap-2 items-start">
                   <Link to={`/watch?v=${item?.video_id}`}>
                     <div className="flex-shrink-0 rounded-md relative">
                       <img
-                        className="w-[30rem] h-40 rounded-md object-cover aspect-video object-center flex-shrink-0"
+                        className="lg:w-[30rem] lg:h-40 w-72 rounded-md object-cover aspect-video object-center flex-shrink-0"
                         src={item?.thumbnail}
                         alt="thumbnail"
                       />
-                      <p className="absolute text-[0.8rem] font-medium bg-black opacity-80 rounded-md right-2 bottom-2 px-2 py-0.5">
+                      <p className="absolute text-[0.8rem] font-medium bg-medium_gray/80 dark:bg-black/80 rounded-md right-2 bottom-2 px-2 py-0.5">
                         {formatDuration(item?.duration)}
                       </p>
                     </div>
@@ -84,19 +84,19 @@ const History = () => {
                   <div className="space-y-2 w-full ">
                     <div>
                       <Link to={`/watch?v=${item?.video_id}`}>
-                        <h1 className="line-clamp-2 text-xl font-semibold">
+                        <h1 className="line-clamp-2 lg:text-xl sm:text-sm text-xs font-semibold">
                           {item?.title}
                         </h1>
                       </Link>
-                      <div className="flex items-end text-xs mt-1 text-medium_gray font-medium">
+                      <div className="flex items-end text-xs mt-1 text-darkGray font-medium">
                         <Link to={`/watch?v=${item?.video_id}`}>
                           {item?.channelName}
                         </Link>
                         <Dot width={12} height={12} strokeWidth={2} />
-                        <p>{formatViewCount(item?.viewsCount)}</p>
+                        <p>{formatViewCount(item?.viewsCount)} views</p>
                       </div>
                     </div>
-                    <p className="line-clamp-4 text-sm leading-5">
+                    <p className="line-clamp-4 max-lg:hidden lg:text-sm text-xs leading-5">
                       {item?.description}
                     </p>
                   </div>
@@ -104,7 +104,7 @@ const History = () => {
                     <X
                       size={50}
                       strokeWidth={1}
-                      className="flex-shrink-0 bg-dark_bg_hover cursor-pointer p-2 rounded-full"
+                      className="flex-shrink-0 bg-medium_gray bg-dark_bg_hover max-sm:hidden cursor-pointer p-2 rounded-full"
                     />
                   </button>
                 </div>

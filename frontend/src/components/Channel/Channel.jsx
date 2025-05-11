@@ -194,7 +194,7 @@ const Channel = () => {
         <Channel_Page_Shimmer />
       ) : (
         <div id="main" className="p-2 relative">
-          <div className="border-b dark:border-gray-700 px-20">
+          <div className="border-b dark:border-gray-700 lg:px-20 sm:px-5">
             {channelDetails?.coverImage && (
               <img
                 src={channelDetails?.coverImage}
@@ -207,7 +207,7 @@ const Channel = () => {
                 <div className="flex-shrink-0">
                   <img
                     src={channelDetails?.avatar}
-                    className="w-32 h-32 max-sm:w-24 max-sm:h-24 object-cover aspect-square object-center rounded-full"
+                    className="w-32 h-32 max-sm:w-14 max-sm:h-14 object-cover aspect-square object-center rounded-full"
                     alt=""
                   />
                 </div>
@@ -221,7 +221,7 @@ const Channel = () => {
                   <h1 className="sm:text-2xl font-bold ">
                     {channelDetails?.channelName || ""}
                   </h1>
-                  <div className=" font-semibold text-sm flex flex-wrap gap-x-2 items-center">
+                  <div className=" font-semibold sm:text-sm text-xs flex flex-wrap gap-x-2 items-center">
                     <h1>{channelDetails?.userName}</h1>
                     <p className="dark:text-medium_gray flex items-center gap-1">
                       <GoDotFill className="w-2" />{" "}
@@ -235,16 +235,16 @@ const Channel = () => {
                     {channelDetails?.description}
                   </p>
                 </div>
-                <div className="flex self-baseline gap-x-5 ms:text-xs sm:text-sm items-center">
+                <div className="flex self-baseline sm:gap-x-5 gap-x-2 ms:text-xs sm:text-sm items-center">
                   {userName === user?.userName ? (
                     <>
                       <Link to={"/customize-channel"}>
-                        <button className="flex font-medium items-center gap-2 px-5 py-2 rounded-full hover:bg-lightGray dark:bg-dark_bg dark:hover:bg-dark_bg_hover">
+                        <button className="flex font-medium items-center gap-2 sm:px-5 px-3 py-2 rounded-full hover:bg-lightGray dark:bg-dark_bg dark:hover:bg-dark_bg_hover">
                           Customize channel
                         </button>
                       </Link>
                       <Link to={"/create-video"}>
-                        <button className="flex max-ml:hidden font-medium items-center gap-2 px-5 py-2 rounded-full hover:bg-lightGray dark:bg-dark_bg dark:hover:bg-dark_bg_hover">
+                        <button className="flex font-medium items-center gap-2 sm:px-5 px-3 py-2 rounded-full hover:bg-lightGray dark:bg-dark_bg dark:hover:bg-dark_bg_hover">
                           Add Video
                         </button>
                       </Link>
@@ -274,7 +274,7 @@ const Channel = () => {
                   <p
                     key={index}
                     onClick={() => setIsActive(item?.name)}
-                    className={`px-4 font-medium py-2 ${
+                    className={`px-4 text-sm font-medium py-2 ${
                       item.name === isActive
                         ? "border-b-2 border-black dark:border-white text-black dark:text-white"
                         : "text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white"
@@ -286,7 +286,7 @@ const Channel = () => {
               ))}
             </nav>
           </div>
-          <div className="px-20">
+          <div className="lg:px-20 sm:px-5 ">
             <Outlet />
           </div>
           {showPop && <ConfirmationPop />}

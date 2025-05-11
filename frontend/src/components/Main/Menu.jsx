@@ -32,7 +32,7 @@ const Menu = () => {
     },
   ];
 
-  const { pathname } = useLocation();  
+  const { pathname } = useLocation();
 
   const isMobile = window.innerWidth < 640;
   const filteredMenu =
@@ -51,7 +51,11 @@ const Menu = () => {
           <Link key={index} to={item?.path}>
             <div
               id="HomeBtn menu-items"
-              className={`${pathname === item?.path ? "bg-lightGray" : ""} flex flex-col items-center justify-center rounded-md hover:bg-lightGray dark:hover:bg-dark_bg ms:m-0 sm:py-3 ms:p-1 sm:w-full ms:w-fit`}
+              className={`${
+                pathname === item?.path
+                  ? "bg-lightGray dark:bg-dark_bg_hover"
+                  : ""
+              } flex flex-col items-center justify-center rounded-md hover:bg-lightGray dark:hover:bg-dark_bg ms:m-0 sm:py-3 ms:p-1 sm:w-full ms:w-fit`}
             >
               {item?.icon}
               <p className="sm:text-[10px] ms:text-[10px] pt-1">{item?.name}</p>
