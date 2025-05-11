@@ -47,11 +47,11 @@ const Categories = () => {
           <div className="flex sm:gap-3 ms:gap-2 ms:my-2 ms:mx-1 items-center">
             <div
               onClick={() => videoTag("All")}
-              className={`rounded-md bg-Gray hover:bg-Gray dark:bg-icon_black dark:hover:bg-hover_icon_black px-3 py-1 min-w-fit cursor-pointer text-sm font-semibold transition duration-200
+              className={`rounded-md dark:bg-dark_bg dark:hover:bg-dark_bg_hover px-3 py-1 min-w-fit cursor-pointer text-sm font-semibold transition duration-200
               ${
                 active === "All"
-                  ? "bg-[#000] text-white hover:bg-black dark:bg-white dark:hover:bg-white dark:text-black"
-                  : ""
+                  ? "bg-black text-white  dark:bg-white dark:text-black"
+                  : "bg-lightGray hover:bg-medium_gray"
               }`}
             >
               All
@@ -60,11 +60,11 @@ const Categories = () => {
               <div
                 key={index}
                 onClick={() => videoTag(item)}
-                className={`rounded-md bg-Gray hover:bg-Gray dark:bg-icon_black dark:hover:bg-hover_icon_black px-3 py-1 min-w-fit cursor-pointer text-sm font-semibold transition duration-200
+                className={`rounded-md dark:bg-dark_bg dark:hover:bg-dark_bg_hover px-3 py-1 min-w-fit cursor-pointer text-sm font-semibold transition duration-200
               ${
                 active === item
-                  ? "bg-[#000] text-white hover:bg-black dark:bg-white dark:hover:bg-white dark:text-black"
-                  : ""
+                  ? "bg-[#000] text-white dark:bg-white dark:text-black"
+                  : "bg-lightGray hover:bg-medium_gray"
               }`}
               >
                 {item}

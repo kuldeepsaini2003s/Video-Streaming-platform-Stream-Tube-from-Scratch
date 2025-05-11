@@ -123,14 +123,14 @@ const Navbar = () => {
     <>
       <div
         id="navbar"
-        className="flex items-center max-w-[100vw] max-sm:py-3 justify-between px-2 max-sm:mb-1 max-sm:border-y border-hover_icon_black
+        className="flex items-center max-w-[100vw] justify-between px-2 py-1 max-sm:py-2 max-sm:mb-1 max-sm:border-y border-dark_bg_hover
         "
       >
         <div className="flex items-center gap-x-2">
           {/* Menu-btn */}
           <IoMenu
             onClick={handleToggle}
-            className="text-[2.6rem] hover:bg-Gray dark:hover:bg-icon_black p-2 rounded-full ms:hidden sm:block"
+            className="text-[2.6rem] hover:bg-lightGray dark:hover:bg-dark_bg p-2 rounded-full ms:hidden sm:block"
           />
           {/* Youtube-logo */}
           <Link to={"/"}>
@@ -210,13 +210,13 @@ const Navbar = () => {
                 onFocus={() => setShowSuggestion(true)}
                 onBlur={() => setTimeout(() => setShowSuggestion(false), 200)}
                 onChange={handleChange}
-                className="group w-[42vw] h-[2.5rem] dark:bg-black bg-white border border-Gray dark:border-hover_icon_black  border-r-0 rounded-r-none rounded-3xl p-1 pl-5 focus:outline-none"
+                className="group w-[42vw] h-[2.5rem] dark:bg-black bg-white border border-Gray dark:border-dark_bg_hover  border-r-0 rounded-r-none rounded-3xl p-1 pl-5 focus:outline-none"
               />
               {/* X-btn */}
               {inputValue && (
                 <button
                   onClick={clearInput}
-                  className="absolute right-0 top-0 flex items-center hover:bg-Gray hover:bg-hover_icon_black rounded-full p-1 my-1"
+                  className="absolute right-0 top-0 flex items-center hover:bg-Gray hover:bg-dark_bg_hover rounded-full p-1 my-1"
                 >
                   <RxCross2 className="text-[1.4rem]" />
                 </button>
@@ -225,7 +225,7 @@ const Navbar = () => {
             {/* Search-btn */}
             <button
               id="search-btn"
-              className="sm:rounded-3xl sm:rounded-l-none border-Gray bg-Gray hover:bg-Gray dark:bg-icon_black dark:border-hover_icon_black sm:border h-[2.5rem] w-[5vw] pl-5 flex justify-center items-center sm:block ms:hidden"
+              className="sm:rounded-3xl sm:rounded-l-none border-Gray bg-lightGray hover:bg-medium_gray dark:bg-dark_bg dark:hover:bg-dark_bg_hover dark:hover:bg-dark_bg_hover dark:border-dark_bg_hover sm:border h-[2.5rem] w-[5vw] pl-5 flex justify-center items-center sm:block ms:hidden"
             >
               <IoSearchOutline className="text-[1.3rem]" />
             </button>
@@ -234,7 +234,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <button
               id="audioBtn"
-              className="rounded-full m-0 sm:block ms:hidden p-2 bg-Gray hover:bg-Gray dark:bg-icon_black dark:hover:bg-hover_icon_black"
+              className="rounded-full m-0 sm:block ms:hidden p-2 bg-lightGray hover:bg-medium_gray dark:bg-dark_bg dark:hover:bg-dark_bg_hover"
             >
               <MdOutlineMic className="text-[1.4rem]" />
             </button>
@@ -249,7 +249,7 @@ const Navbar = () => {
                   <Link to={`/search?query=${item}`}>
                     <div
                       key={index}
-                      className="flex text-sm gap-4 items-center font-medium  gap-2 px-4 py-2 dark:hover:bg-hover_icon_black"
+                      className="flex text-sm gap-4 items-center font-medium  gap-2 px-4 py-2 dark:hover:bg-dark_bg_hover"
                     >
                       <IoSearchOutline size={20} />
                       <p className="line-clamp-2">{item}</p>
@@ -273,7 +273,7 @@ const Navbar = () => {
           />
           {user && (
             <Link to={"/create-video"}>
-              <MdOutlineVideoCall className="text-[2.4rem] bg-Gray hover:bg-Gray dark:bg-icon_black dark:hover:bg-hover_icon_black rounded-full p-2" />
+              <MdOutlineVideoCall className="text-[2.4rem] bg-Gray hover:bg-Gray dark:bg-dark_bg dark:hover:bg-dark_bg_hover rounded-full p-2" />
             </Link>
           )}
           {/* search btn for mobile screen */}
@@ -283,7 +283,7 @@ const Navbar = () => {
 
           {!user && (
             <button
-              className="flex gap-1 items-center sm:hidden border text-nowrap border-icon_black font-medium rounded-full text-sm px-2 py-1 "
+              className="flex gap-1 items-center sm:hidden border text-nowrap border-dark_bg font-medium rounded-full text-sm px-2 py-1 "
               onClick={() => navigate("/login")}
             >
               <CircleUserRound size={22} strokeWidth={1} /> Sign in
@@ -309,7 +309,7 @@ const Navbar = () => {
               </button>
             ) : (
               <button
-                className="flex gap-1 items-center border  border-icon_black font-medium rounded-full text-sm px-2 py-1"
+                className="flex gap-1 items-center bg-lightGray hover:bg-medium_gray dark:bg-dark_bg dark:hover:bg-dark_bg_hover font-medium rounded-full text-sm px-2 py-1"
                 onClick={() => navigate("/login")}
               >
                 <CircleUserRound size={22} strokeWidth={1} /> Sign in
@@ -321,14 +321,14 @@ const Navbar = () => {
               <Link to={`/${user?.userName}`} className="w-full">
                 <button
                   onClick={() => setShowSetting(false)}
-                  className="bg-Gray w-full rounded-t-md border-b border-Gray hover:bg-Gray dark:bg-icon_black dark:hover:bg-hover_icon_black p-2"
+                  className="bg-Gray w-full rounded-t-md border-b border-Gray hover:bg-Gray dark:bg-dark_bg dark:hover:bg-dark_bg_hover p-2"
                 >
                   Channel
                 </button>
               </Link>
               <button
                 onClick={handleLogout}
-                className="bg-Gray hover:bg-Gray dark:bg-icon_black dark:hover:bg-hover_icon_black p-2"
+                className="bg-Gray hover:bg-Gray dark:bg-dark_bg dark:hover:bg-dark_bg_hover p-2"
               >
                 Logout
               </button>

@@ -89,15 +89,15 @@ export const CreatePlaylist = ({ setShowCreatePlaylist }) => {
   return (
     <div
       onClick={() => setShowCreatePlaylist(false)}
-      className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
+      className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black/30 flex justify-center items-center"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-icon_black rounded-md p-5 flex flex-col gap-5 justify-between"
+        className="bg-dark_bg rounded-md p-5 flex flex-col gap-5 justify-between"
       >
         <h1>New playlist</h1>
         <input
-          className="py-3 px-2 border border-lightBlack  placeholder-lightBlack outline-none dark:bg-icon_black rounded-md"
+          className="py-3 px-2 border border-medium_gray  placeholder-medium_gray outline-none dark:bg-dark_bg rounded-md"
           type="text"
           name="title"
           onChange={handleChange}
@@ -105,16 +105,16 @@ export const CreatePlaylist = ({ setShowCreatePlaylist }) => {
         />
         <div
           onClick={toggleDropdown}
-          className="relative flex justify-between border border-lightBlack py-1 items-center px-2  outline-none rounded-md"
+          className="relative flex justify-between border border-medium_gray py-1 items-center px-2  outline-none rounded-md"
         >
           <div className="flex flex-col">
-            <span className="text-sm text-lightBlack">visibility</span>
+            <span className="text-sm text-medium_gray">visibility</span>
             <p className="text-sm">{playlistData.status}</p>
           </div>
           <FiChevronDown />
           {isDropdownOpen && (
-            <ul className="absolute z-10 w-[93%] translate-x-2 -bottom-[9.4rem] shadow-xl left-0 bg-white dark:bg-icon_black rounded-md mt-1">
-              <h1 className="px-4 py-2 border-b border-lightBlack">
+            <ul className="absolute z-10 w-[93%] translate-x-2 -bottom-[9.4rem] shadow-xl left-0 bg-white dark:bg-dark_bg rounded-md mt-1">
+              <h1 className="px-4 py-2 border-b border-medium_gray">
                 Visibility
               </h1>
               {visibilityOptions.map((option) => (
@@ -123,16 +123,16 @@ export const CreatePlaylist = ({ setShowCreatePlaylist }) => {
                   onClick={() => handleOptionSelect(option.name)}
                   className={`flex justify-between items-center px-2 py-2 text-sm font-medium hover:bg-gray-200 ${
                     playlistData.status === option.name &&
-                    "dark:bg-hover_icon_black"
+                    "dark:bg-dark_bg_hover"
                   } ${
                     playlistData.status === "Private" && "rounded-b-md"
-                  } dark:hover:bg-hover_icon_black cursor-pointer`}
+                  } dark:hover:bg-dark_bg_hover cursor-pointer`}
                 >
                   <div className="flex gap-2 items-center">
                     {option.icon}
                     <div>
                       <p className="text-sm">{option.name}</p>
-                      <p className="text-lightBlack text-xs">{option.msg}</p>
+                      <p className="text-medium_gray text-xs">{option.msg}</p>
                     </div>
                   </div>
                   {playlistData.status === option.name && option.icon2}
@@ -146,7 +146,7 @@ export const CreatePlaylist = ({ setShowCreatePlaylist }) => {
             onClick={() => {
               setShowCreatePlaylist(false);
             }}
-            className="px-10 py-1 border rounded-full hover:bg-hover_icon_black"
+            className="px-10 py-1 border rounded-full hover:bg-dark_bg_hover"
           >
             Cancel
           </button>
@@ -296,11 +296,11 @@ export const SavePlaylist = ({ setShowPlaylist, setShowCreatePlaylist }) => {
   return (
     <div
       onClick={() => setShowPlaylist(false)}
-      className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
+      className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black/30 flex justify-center items-center"
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="relative dark:bg-icon_black rounded-md w-[18rem] p-4 font-medium flex flex-col items-center gap-3"
+        className="relative dark:bg-dark_bg rounded-md w-[18rem] p-4 font-medium flex flex-col items-center gap-3"
       >
         <div className="flex justify-between items-center w-full ">
           <h1>Save video to...</h1>
@@ -360,7 +360,7 @@ export const SavePlaylist = ({ setShowPlaylist, setShowCreatePlaylist }) => {
             setShowCreatePlaylist(true);
             setShowPlaylist(false);
           }}
-          className="px-6 py-2 rounded-full dark:bg-hover_icon_black dark:hover:bg-[#4D4D4D]  flex gap-2 items-center"
+          className="px-6 py-2 rounded-full dark:bg-dark_bg_hover dark:hover:bg-[#4D4D4D]  flex gap-2 items-center"
         >
           <Plus size={20} strokeWidth={2} />
           New playlist

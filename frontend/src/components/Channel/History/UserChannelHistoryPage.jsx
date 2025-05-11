@@ -52,9 +52,9 @@ const UserChannelHistoryPage = ({ info }) => {
             </p>
           </div>
           <Link to={`/${userName}`}>
-            <p className="text-lightBlack text-sm">{channelName}</p>
+            <p className="text-medium_gray text-sm">{channelName}</p>
           </Link>
-          <div className="flex gap-1 items-center text-lightBlack text-sm">
+          <div className="flex gap-1 items-center text-medium_gray text-sm">
             <p>{formatViewCount(viewsCount)} views</p>
             <GoDotFill size={8} />
             <p>{timeAgo(createdAt)}</p>

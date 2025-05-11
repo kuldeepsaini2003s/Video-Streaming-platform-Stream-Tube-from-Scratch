@@ -88,7 +88,7 @@ const History = () => {
                           {item?.title}
                         </h1>
                       </Link>
-                      <div className="flex items-end text-xs mt-1 text-lightBlack font-medium">
+                      <div className="flex items-end text-xs mt-1 text-medium_gray font-medium">
                         <Link to={`/watch?v=${item?.video_id}`}>
                           {item?.channelName}
                         </Link>
@@ -104,7 +104,7 @@ const History = () => {
                     <X
                       size={50}
                       strokeWidth={1}
-                      className="flex-shrink-0 bg-hover_icon_black cursor-pointer p-2 rounded-full"
+                      className="flex-shrink-0 bg-dark_bg_hover cursor-pointer p-2 rounded-full"
                     />
                   </button>
                 </div>
@@ -118,7 +118,7 @@ const History = () => {
         <div id="main" className="flex flex-col items-center pt-40">
           <p>Watch history isn't viewable when signed out.</p>
           <Link to={"/login"}>
-            <button className="flex gap-2 items-center border mt-5 border-icon_black font-medium rounded-full text-sm px-3 py-1">
+            <button className="flex gap-2 items-center border mt-5 border-dark_bg font-medium rounded-full text-sm px-3 py-1">
               <CircleUserRound size={25} strokeWidth={1} /> Sign in
             </button>
           </Link>

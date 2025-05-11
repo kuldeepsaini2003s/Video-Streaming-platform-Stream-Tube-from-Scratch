@@ -38,8 +38,8 @@ const Profile_Video_Card = ({ info }) => {
               <PiDotsThreeVerticalBold size={22} />
             </p>
           </div>
-          <p className="text-lightBlack text-sm">{channelName}</p>
-          <div className="flex gap-1 items-center text-lightBlack text-sm">
+          <p className="text-medium_gray text-sm">{channelName}</p>
+          <div className="flex gap-1 items-center text-medium_gray text-sm">
             <p>{formatViewCount(viewsCount)} views</p>
             <GoDotFill size={8} />
           </div>

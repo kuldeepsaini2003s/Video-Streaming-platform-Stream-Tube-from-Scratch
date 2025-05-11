@@ -62,9 +62,9 @@ const Subscriptions = () => {
     return (
       <div
         onClick={() => setShowPop(false)}
-        className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
+        className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black/30 flex justify-center items-center"
       >
-        <div className="text-lightBlack bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
+        <div className="text-medium_gray bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
           <p>Unsubscribe from {channelName}</p>
           <div className="flex gap-4 items-center justify-end">
             <button
@@ -72,7 +72,7 @@ const Subscriptions = () => {
                 setShowPop(false);
                 setChannelName("");
               }}
-              className="px-4 py-1 rounded-full font-medium dark:hover:bg-hover_icon_black dark:text-white hover:bg-lightgray"
+              className="px-4 py-1 rounded-full font-medium dark:hover:bg-dark_bg_hover dark:text-white hover:bg-lightGray"
             >
               Cancel
             </button>
@@ -109,7 +109,7 @@ const Subscriptions = () => {
                       className="w-32 h-32 object-cover aspect-square object-center rounded-full flex-shrink-0"
                       alt="Avatar"
                     />
-                    <div className="space-y-1 text-lightBlack text-sm w-full">
+                    <div className="space-y-1 text-medium_gray text-sm w-full">
                       <h1 className="text-xl text-white font-bold">
                         {item?.channelName}
                       </h1>
@@ -125,7 +125,7 @@ const Subscriptions = () => {
                       setChannelName(item?.channelName);
                       setShowPop(true);
                     }}
-                    className="watch-btn subscriber px-3 py-2 dark:bg-icon_black dark:hover:bg-hover_icon_black flex gap-1 items-center text-sm cursor-pointer rounded-3xl"
+                    className="watch-btn subscriber px-3 py-2 dark:bg-dark_bg dark:hover:bg-dark_bg_hover flex gap-1 items-center text-sm cursor-pointer rounded-3xl"
                   >
                     <Lottie
                       animationData={bell_icon_white}
@@ -147,7 +147,7 @@ const Subscriptions = () => {
         <div id="main" className="flex flex-col items-center pt-40">
           <p>Sign in to see updates from your favorite YouTube channels</p>
           <Link to={"/login"}>
-            <button className="flex gap-2 items-center border mt-5 border-icon_black font-medium rounded-full text-sm px-3 py-1">
+            <button className="flex gap-2 items-center border mt-5 border-dark_bg font-medium rounded-full text-sm px-3 py-1">
               <CircleUserRound size={25} strokeWidth={1} /> Sign in
             </button>
           </Link>

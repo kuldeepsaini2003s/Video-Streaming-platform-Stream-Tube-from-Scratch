@@ -89,11 +89,11 @@ export const UserPlaylist = () => {
                     src={item?.thumbnail}
                     className="w-full h-32 object-cover aspect-video object-center rounded-md bg-yellow-500"
                   ></img>
-                  <div className="absolute font-medium text-xs flex justify-center right-1 bottom-1 bg-icon_black bg-opacity-70 rounded-md px-2 py-1">
+                  <div className="absolute font-medium text-xs flex justify-center right-1 bottom-1 bg-dark_bg/70 rounded-md px-2 py-1">
                     <CgPlayList className="text-lg" /> {item?.video?.length}{" "}
                     videos
                   </div>
-                  <div className="hidden rounded-md group-hover:block absolute w-full h-full top-0 bg-black bg-opacity-60">
+                  <div className="hidden rounded-md group-hover:block absolute w-full h-full top-0 bg-black/60">
                     <p className="flex justify-center items-center h-full w-full">
                       <IoMdPlay /> Play all
                     </p>
@@ -105,7 +105,7 @@ export const UserPlaylist = () => {
                 <h1 className="text-sm line-clamp-2 font-medium mt-2">
                   {item?.title}
                 </h1>
-                <div className="flex justify-between font-medium items-center text-lightBlack text-xs">
+                <div className="flex justify-between font-medium items-center text-medium_gray text-xs">
                   <h1>View full playlist</h1>
                   {channelUser?._id === user?._id && (
                     <h1 className="flex gap-1 items-center">

@@ -9,7 +9,7 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { MdOutlineVideoLibrary } from "react-icons/md";
 import { BsPersonSquare } from "react-icons/bs";
 import { GrHistory } from "react-icons/gr";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Slider = () => {
   const dispatch = useDispatch();
@@ -51,6 +51,7 @@ const Slider = () => {
   ];
 
   const isSliderOpen = useSelector((store) => store.app.open);
+  const { pathname } = useLocation();
 
   const handleToggle = () => {
     dispatch(toggleSlider());
@@ -74,7 +75,7 @@ const Slider = () => {
           {/* Menu-Bar-Btn */}
           <div
             id="menubar-Btn"
-            className="rounded-full p-2 hover:bg-Gray dark:hover:bg-icon_black"
+            className="rounded-full p-2 hover:bg-lightGray dark:hover:bg-dark_bg"
             onClick={handleToggle}
           >
             <IoMenu className="text-[1.6rem]" />
@@ -140,7 +141,7 @@ const Slider = () => {
             </svg>
           </div>
         </div>
-        <div id="sideMenu" className="flex flex-col py-5">
+        <div id="sideMenu" className="flex flex-col">
           {/* home-btn */}
           {tabs.map((item, index) =>
             item.path ? (
@@ -148,7 +149,9 @@ const Slider = () => {
                 <div
                   onClick={handleToggle}
                   id="HomeBtn menu-items"
-                  className="slider-icon active flex hover:bg-Gray dark:hover:bg-icon_black items-center px-3 rounded-xl py-3"
+                  className={`${
+                    pathname === item?.path ? "bg-medium_gray" : ""
+                  } slider-icon active flex hover:bg-lightGray dark:hover:bg-dark_bg items-center px-3 rounded-xl py-3`}
                 >
                   {item.icon}
                   <p className="text-sm  pl-6">{item.name}</p>
@@ -158,14 +161,14 @@ const Slider = () => {
               <div
                 key={index}
                 id="HomeBtn menu-items"
-                className="slider-icon active flex hover:bg-Gray dark:hover:bg-icon_black items-center px-3 rounded-xl py-3"
+                className="slider-icon active flex hover:bg-Gray dark:hover:bg-dark_bg items-center px-3 rounded-xl py-3"
               >
                 {item.icon}
                 <p className="text-sm  pl-6">{item.name}</p>
               </div>
             )
           )}
-          <div className=" border-t border-Gray  mt-3 py-2 w-full">
+          <div className=" border-t border-lightGray w-full">
             <Link to={"/feed/you"}>
               <div className="slider-icon active flex gap-2 items-center px-3 rounded-xl py-3">
                 <p>You</p>
@@ -177,7 +180,9 @@ const Slider = () => {
                 <div
                   onClick={handleToggle}
                   id="HomeBtn menu-items"
-                  className="slider-icon active flex hover:bg-Gray dark:hover:bg-icon_black items-center px-3 rounded-xl py-3"
+                  className={`${
+                    pathname === item?.path ? "bg-medium_gray" : ""
+                  } slider-icon active flex hover:bg-lightGray dark:hover:bg-dark_bg items-center px-3 rounded-xl py-3`}
                 >
                   {item.icon}
                   <p className="text-sm  pl-6">{item.name}</p>

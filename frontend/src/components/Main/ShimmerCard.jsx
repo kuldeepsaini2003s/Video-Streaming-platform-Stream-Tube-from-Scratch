@@ -9,7 +9,7 @@ const ShimmerCard = () => {
           .map((_, index) => (
             <div
               key={index}
-              className="shimmer bg-[#E3E3E3] dark:bg-icon_black rounded-md h-8 w-24"
+              className="shimmer bg-[#E3E3E3] dark:bg-dark_bg rounded-md h-8 w-24"
             ></div>
           ))}
       </div>
@@ -19,12 +19,12 @@ const ShimmerCard = () => {
           .map((_, index) => (
             <div key={index}>
               <div>
-                <div className="shimmer w-full sm:h-[12rem] ms:h-[11rem] sm:rounded-xl bg-Gray dark:bg-icon_black"></div>
+                <div className="shimmer w-full sm:h-[12rem] ms:h-[11rem] sm:rounded-xl bg-Gray dark:bg-dark_bg"></div>
                 <div className="flex sm:p-2 sm:px-0 sm:py-2 ms:px-4 ms:py-4 gap-3">
-                  <div className="shimmer bg-[#E3E3E3] dark:bg-icon_black rounded-full p-4 w-10 h-10"></div>
+                  <div className="shimmer bg-[#E3E3E3] dark:bg-dark_bg rounded-full p-4 w-10 h-10"></div>
                   <div className="flex flex-col gap-2 w-full">
-                    <div className="shimmer bg-[#E3E3E3] dark:bg-icon_black rounded-sm h-5 w-[80%]"></div>
-                    <div className="shimmer bg-[#E3E3E3] dark:bg-icon_black rounded-sm h-5 w-[60%]"></div>
+                    <div className="shimmer bg-[#E3E3E3] dark:bg-dark_bg rounded-sm h-5 w-[80%]"></div>
+                    <div className="shimmer bg-[#E3E3E3] dark:bg-dark_bg rounded-sm h-5 w-[60%]"></div>
                   </div>
                 </div>
               </div>

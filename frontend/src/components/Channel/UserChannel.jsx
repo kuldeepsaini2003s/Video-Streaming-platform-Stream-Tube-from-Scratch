@@ -60,7 +60,7 @@ const UserChannel = () => {
                   </h1>
                   <div className=" font-semibold text-sm flex flex-wrap gap-x-2 items-center">
                     <h1>{user?.userName}</h1>
-                    <p className="dark:text-lightBlack flex items-center gap-1">
+                    <p className="dark:text-medium_gray flex items-center gap-1">
                       <GoDotFill className="w-2" /> {user?.subscribersCount}{" "}
                       View channel
                     </p>
@@ -68,12 +68,12 @@ const UserChannel = () => {
                 </div>
                 <div className="flex self-baseline gap-x-5 ms:text-xs sm:text-sm items-center">
                   <Link to={"/customize-channel"}>
-                    <button className="flex font-medium items-center gap-2 px-5 py-2 rounded-full hover:bg-lightgray dark:bg-icon_black dark:hover:bg-hover_icon_black">
+                    <button className="flex font-medium items-center gap-2 px-5 py-2 rounded-full hover:bg-lightGray dark:bg-dark_bg dark:hover:bg-dark_bg_hover">
                       Customize channel
                     </button>
                   </Link>
                   <Link to={"/create-video"}>
-                    <button className="flex max-ml:hidden font-medium items-center gap-2 px-5 py-2 rounded-full hover:bg-lightgray dark:bg-icon_black dark:hover:bg-hover_icon_black">
+                    <button className="flex max-ml:hidden font-medium items-center gap-2 px-5 py-2 rounded-full hover:bg-lightGray dark:bg-dark_bg dark:hover:bg-dark_bg_hover">
                       Add Video
                     </button>
                   </Link>
@@ -102,7 +102,7 @@ const UserChannel = () => {
         <div className="flex flex-col items-center pt-36">
           <p>Sign in to access videos that you’ve liked or saved</p>
           <Link to={"/login"}>
-            <button className="flex gap-2 items-center border mt-5 border-icon_black font-medium rounded-full text-sm px-3 py-1">
+            <button className="flex gap-2 items-center border mt-5 border-dark_bg font-medium rounded-full text-sm px-3 py-1">
               <CircleUserRound size={25} strokeWidth={1} /> Sign in
             </button>
           </Link>

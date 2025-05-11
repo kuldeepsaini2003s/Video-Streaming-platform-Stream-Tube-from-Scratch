@@ -29,7 +29,7 @@ const VideoCard = ({ info }) => {
           {formatDuration(duration)}
         </p>
       </div>
-      <div className="yt-details py-2 sm:px-0 ms:px-4 ms:py-3 flex gap-x-3">
+      <div className="yt-details py-2 sm:px-2 ms:px-4 ms:py-3 flex gap-x-3">
         <Link to={`/${userName}`} className="flex-shrink-0">
           {avatar ? (
             <img
@@ -43,7 +43,7 @@ const VideoCard = ({ info }) => {
         </Link>
         <div className="w-full">
           <div className="flex gap-5 justify-between w-full">
-            <p className="line-clamp-2 font-semibold sm:text-base ms:text-sm ">
+            <p className="line-clamp-2 font-semibold max-sm:text-sm ">
               {title}
             </p>
             <p className="three-dots-container ">
@@ -51,9 +51,9 @@ const VideoCard = ({ info }) => {
             </p>
           </div>
           <Link to={`/${userName}`}>
-            <p className="text-lightBlack text-sm">{channelName}</p>
+            <p className="text-darkGray text-sm">{channelName}</p>
           </Link>
-          <div className="flex gap-1 items-center text-lightBlack text-sm">
+          <div className="flex gap-1 items-center text-darkGray text-sm">
             <p>{formatViewCount(views.length)} views</p>
             <GoDotFill size={8} />
             <p>{timeAgo(createdAt)}</p>

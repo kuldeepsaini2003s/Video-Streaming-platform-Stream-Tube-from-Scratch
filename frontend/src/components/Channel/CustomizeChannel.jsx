@@ -142,7 +142,7 @@ const CustomizeChannel = () => {
           accept="image/*"
           onChange={handleFileChange}
         />
-        <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg">
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center rounded-lg">
           <button className="bg-white p-3 rounded-full">
             <IoCameraOutline className="w-6 h-6 text-black" />
           </button>
@@ -168,7 +168,7 @@ const CustomizeChannel = () => {
             accept="image/*"
             onChange={handleFileChange}
           />
-          <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity rounded-full flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity rounded-full flex items-center justify-center">
             <FiUpload className="w-6 h-6 text-white" />
           </div>
         </div>

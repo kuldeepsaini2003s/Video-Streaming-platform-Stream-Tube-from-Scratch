@@ -13,13 +13,16 @@
   --breakpoint-3xl: 1536px;
   --color-white: #fdfdff;
   --color-black: #0f0f0f;
-  --color-icon_black: #212121;
-  --color-lightBlack: #8b8b8b;
-  --color-gray: #cccccc;
-  --color-lightgray: #f2f2f2;
-  --color-hover_icon_black: #3d3d3d;
+  --color-dark_bg: #212121;
+  --color-dark_bg_hover: #3d3d3d;
+  --color-medium_gray: #e3e3e3  ;
+  --color-Gray: #cccccc;
+  --color-lightGray: #f1f1f1;
+  --color-darkGray: #666666;
   --color-lightblue: #9fc1ee;
 }
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
   --iconBlack: #292929;

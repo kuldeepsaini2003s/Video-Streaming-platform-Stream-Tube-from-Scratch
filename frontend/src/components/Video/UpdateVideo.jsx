@@ -333,7 +333,7 @@ const UpdateVideo = () => {
 
         <div className="flex justify-end gap-5">
           <Link to={"/"}>
-            <button className="border px-6 py-2 rounded-md hover:bg-[#E3E3E3] dark:hover:bg-icon_black">
+            <button className="border px-6 py-2 rounded-md hover:bg-[#E3E3E3] dark:hover:bg-dark_bg">
               Cancel
             </button>
           </Link>

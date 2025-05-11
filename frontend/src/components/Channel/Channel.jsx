@@ -81,14 +81,14 @@ const Channel = () => {
     return (
       <div
         onClick={() => setShowLoginPop(false)}
-        className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black bg-opacity-40 flex justify-center items-center"
+        className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black/40 flex justify-center items-center"
       >
-        <div className="text-lightBlack bg-black flex flex-col justify-between items-center h-36 rounded-md p-5">
+        <div className="text-medium_gray bg-black flex flex-col justify-between items-center h-36 rounded-md p-5">
           <p>{loginMessage}</p>
           <div className="flex gap-10 items-center justify-between">
             <button
               onClick={() => setShowPop(false)}
-              className="px-4 py-1 rounded-full font-medium dark:hover:bg-hover_icon_black dark:text-white hover:bg-lightgray"
+              className="px-4 py-1 rounded-full font-medium dark:hover:bg-dark_bg_hover dark:text-white hover:bg-lightGray"
             >
               Cancel
             </button>
@@ -151,14 +151,14 @@ const Channel = () => {
     return (
       <div
         onClick={() => setShowPop(false)}
-        className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
+        className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black/30 flex justify-center items-center"
       >
-        <div className="text-lightBlack bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
+        <div className="text-medium_gray bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
           <p>Unsubscribe from {channelDetails?.channelName}</p>
           <div className="flex gap-4 items-center justify-end">
             <button
               onClick={() => setShowPop(false)}
-              className="px-4 py-1 rounded-full font-medium dark:hover:bg-hover_icon_black dark:text-white hover:bg-lightgray"
+              className="px-4 py-1 rounded-full font-medium dark:hover:bg-dark_bg_hover dark:text-white hover:bg-lightGray"
             >
               Cancel
             </button>
@@ -223,15 +223,15 @@ const Channel = () => {
                   </h1>
                   <div className=" font-semibold text-sm flex flex-wrap gap-x-2 items-center">
                     <h1>{channelDetails?.userName}</h1>
-                    <p className="dark:text-lightBlack flex items-center gap-1">
+                    <p className="dark:text-medium_gray flex items-center gap-1">
                       <GoDotFill className="w-2" />{" "}
                       {channelDetails?.subscribersCount} subscribers
                     </p>
-                    <p className="dark:text-lightBlack flex items-center gap-1">
+                    <p className="dark:text-medium_gray flex items-center gap-1">
                       <GoDotFill className="w-2" /> {userVideosCount} videos
                     </p>
                   </div>
-                  <p className="dark:text-lightBlack">
+                  <p className="dark:text-medium_gray">
                     {channelDetails?.description}
                   </p>
                 </div>
@@ -239,12 +239,12 @@ const Channel = () => {
                   {userName === user?.userName ? (
                     <>
                       <Link to={"/customize-channel"}>
-                        <button className="flex font-medium items-center gap-2 px-5 py-2 rounded-full hover:bg-lightgray dark:bg-icon_black dark:hover:bg-hover_icon_black">
+                        <button className="flex font-medium items-center gap-2 px-5 py-2 rounded-full hover:bg-lightGray dark:bg-dark_bg dark:hover:bg-dark_bg_hover">
                           Customize channel
                         </button>
                       </Link>
                       <Link to={"/create-video"}>
-                        <button className="flex max-ml:hidden font-medium items-center gap-2 px-5 py-2 rounded-full hover:bg-lightgray dark:bg-icon_black dark:hover:bg-hover_icon_black">
+                        <button className="flex max-ml:hidden font-medium items-center gap-2 px-5 py-2 rounded-full hover:bg-lightGray dark:bg-dark_bg dark:hover:bg-dark_bg_hover">
                           Add Video
                         </button>
                       </Link>
@@ -252,7 +252,7 @@ const Channel = () => {
                   ) : (
                     <button
                       onClick={subscriberHandler}
-                      className="watch-btn subscriber px-3 py-2 dark:bg-icon_black dark:hover:bg-hover_icon_black flex gap-1 items-center text-sm cursor-pointer rounded-3xl"
+                      className="watch-btn subscriber px-3 py-2 dark:bg-dark_bg dark:hover:bg-dark_bg_hover flex gap-1 items-center text-sm cursor-pointer rounded-3xl"
                     >
                       {subscribed && (
                         <Lottie

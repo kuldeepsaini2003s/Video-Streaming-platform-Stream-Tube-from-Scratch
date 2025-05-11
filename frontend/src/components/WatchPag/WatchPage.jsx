@@ -300,14 +300,14 @@ const WatchPage = () => {
     return (
       <div
         onClick={() => setShowPop(false)}
-        className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
+        className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black/30 flex justify-center items-center"
       >
-        <div className="text-lightBlack bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
+        <div className="text-medium_gray bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
           <p>Unsubscribe from {channelName}</p>
           <div className="flex gap-4 items-center justify-end">
             <button
               onClick={() => setShowPop(false)}
-              className="px-4 py-1 rounded-full font-medium dark:hover:bg-hover_icon_black dark:text-white hover:bg-lightgray"
+              className="px-4 py-1 rounded-full font-medium dark:hover:bg-dark_bg_hover dark:text-white hover:bg-darkGray"
             >
               Cancel
             </button>
@@ -327,14 +327,14 @@ const WatchPage = () => {
     return (
       <div
         onClick={() => setShowLoginPop(false)}
-        className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black bg-opacity-30 flex justify-center items-center"
+        className="absolute w-dvw h-svh top-0 left-0 remove-scrollbar bg-black/30 flex justify-center items-center"
       >
-        <div className="text-lightBlack bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
+        <div className="text-medium_gray bg-[#212121] flex flex-col justify-between items-center h-36 rounded-md p-5">
           <p>{loginMessage}</p>
           <div className="flex gap-10 items-center justify-between">
             <button
               onClick={() => setShowPop(false)}
-              className="px-4 py-1 rounded-full font-medium dark:hover:bg-hover_icon_black dark:text-white hover:bg-lightgray"
+              className="px-4 py-1 rounded-full font-medium dark:hover:bg-dark_bg_hover dark:text-white hover:bg-darkGray"
             >
               Cancel
             </button>
@@ -437,7 +437,7 @@ const WatchPage = () => {
                         <p className="font-medium max-sm:text-sm">
                           {channelName}
                         </p>
-                        <p className="text-xs text-lightBlack font-medium">
+                        <p className="text-xs text-darkGray font-medium">
                           {subscribersCount} subscribers
                         </p>
                       </div>
@@ -447,7 +447,7 @@ const WatchPage = () => {
                   {currentUser?._id !== user ? (
                     <button
                       onClick={subscriberHandler}
-                      className="watch-btn subscriber px-3 py-2 dark:bg-icon_black dark:hover:bg-hover_icon_black flex gap-1 items-center text-sm cursor-pointer rounded-3xl"
+                      className="watch-btn subscriber bg-lightGray hover:bg-medium_gray  px-3 py-2 dark:bg-dark_bg dark:hover:bg-dark_bg_hover flex gap-1 items-center text-sm cursor-pointer rounded-3xl"
                     >
                       {subscribed && (
                         <Lottie
@@ -461,7 +461,7 @@ const WatchPage = () => {
                     </button>
                   ) : (
                     <Link to={`/${userName}`}>
-                      <button className="watch-btn subscriber px-3 py-2 dark:bg-icon_black dark:hover:bg-hover_icon_black flex gap-1 items-center text-sm cursor-pointer rounded-3xl">
+                      <button className="watch-btn subscriber px-3 py-2 dark:bg-dark_bg dark:hover:bg-dark_bg_hover flex gap-1 items-center text-sm cursor-pointer rounded-3xl">
                         View Channel
                       </button>
                     </Link>
@@ -469,10 +469,10 @@ const WatchPage = () => {
                 </div>
                 <div className="flex items-center gap-2 text-sm font-medium max-sm:text-xs max-sm:pt-4">
                   {/* like-btn */}
-                  <div className="user-info flex items-center bg-lightgray dark:bg-icon_black rounded-full ">
+                  <div className="user-info flex items-center bg-lightGray dark:bg-dark_bg rounded-full ">
                     <div
                       onClick={handleLike}
-                      className="watch-btn rounded-l-full flex gap-1 items-center px-4 py-2 select-none dark:hover:bg-hover_icon_black  cursor-pointer"
+                      className="watch-btn rounded-l-full flex gap-1 items-center px-4 py-2 select-none dark:hover:bg-dark_bg_hover  cursor-pointer"
                     >
                       {!liked ? (
                         <BiLike className="text-[1.3rem] max-sm:text-[1.2rem]" />
@@ -484,7 +484,7 @@ const WatchPage = () => {
                     <span className="border-l-2 py-3"></span>
                     <div
                       onClick={handleDisLike}
-                      className="cursor-pointer px-4 rounded-r-full py-2 dark:hover:bg-hover_icon_black "
+                      className="cursor-pointer px-4 rounded-r-full py-2 dark:hover:bg-dark_bg_hover "
                     >
                       {!disliked ? (
                         <BiDislike className="text-[1.3rem] max-sm:text-[1.2rem]" />
@@ -495,7 +495,7 @@ const WatchPage = () => {
                   </div>
                   {/* share-btn */}
                   <div
-                    className="watch-btn user-info flex items-center gap-1 bg-lightgray dark:bg-icon_black dark:hover:bg-hover_icon_black rounded-3xl px-4 py-2 cursor-pointer "
+                    className="watch-btn user-info flex items-center gap-1 bg-lightGray dark:bg-dark_bg dark:hover:bg-dark_bg_hover rounded-3xl px-4 py-2 cursor-pointer "
                     onClick={handleShare}
                   >
                     <RiShareForwardLine className="text-[1.3rem] max-sm:text-[1.2rem]" />
@@ -503,14 +503,14 @@ const WatchPage = () => {
                   </div>
                   {/* option-btn */}
                   {videoSaved ? (
-                    <button className="watch-btn user-info flex items-center gap-2 bg-lightgray dark:bg-icon_black dark:hover:bg-hover_icon_black rounded-3xl px-4 py-2 cursor-pointer ">
+                    <button className="watch-btn user-info flex items-center gap-2 bg-lightGray dark:bg-dark_bg dark:hover:bg-dark_bg_hover rounded-3xl px-4 py-2 cursor-pointer ">
                       <FaBookmark className="text-[1rem] text-[0.91rem]" />{" "}
                       Saved
                     </button>
                   ) : (
                     <button
                       onClick={handlePlaylist}
-                      className="watch-btn user-info flex items-center gap-2 bg-lightgray dark:bg-icon_black dark:hover:bg-hover_icon_black rounded-3xl px-4 py-2 cursor-pointer "
+                      className="watch-btn user-info flex items-center gap-2 bg-lightGray dark:bg-dark_bg dark:hover:bg-dark_bg_hover rounded-3xl px-4 py-2 cursor-pointer "
                     >
                       <FaRegBookmark className="max-sm:text-[0.91rem] text-[1rem]" />{" "}
                       Save
@@ -519,7 +519,7 @@ const WatchPage = () => {
                 </div>
               </div>
 
-              <div className="gap-2 flex flex-col sm:mt-2 sm:m-0 text-sm font-medium bg-lightgray dark:bg-icon_black rounded-2xl p-3">
+              <div className="gap-2 flex flex-col sm:mt-2 sm:m-0 text-sm font-medium bg-lightGray dark:bg-dark_bg rounded-2xl p-3">
                 {/* views */}
                 <div className="flex items-center gap-x-2 font-semibold flex-wrap ">
                   <p className="p-0 m-0">{formatViewCount(viewsCount)} views</p>
@@ -533,7 +533,7 @@ const WatchPage = () => {
                       tags?.map((tag, index) => (
                         <p
                           key={index}
-                          className="text-lightBlack p-0 m-0 max-sm:text-xs"
+                          className="text-darkGray p-0 m-0 max-sm:text-xs"
                         >
                           {tag}
                         </p>
@@ -579,7 +579,7 @@ const WatchPage = () => {
                   )}
                   <div className="w-full">
                     <input
-                      className="border-b pb-1 px-2 w-full placeholder:text-lightBlack text-sm placeholder:text-sm border-icon_black bg-transparent outline-none"
+                      className="border-b pb-1 px-2 w-full placeholder:text-darkGray text-sm placeholder:text-sm border-dark_bg bg-transparent outline-none"
                       type="text"
                       onFocus={handleCommentInput}
                       onChange={(e) => setComment(e.target.value)}
@@ -591,7 +591,7 @@ const WatchPage = () => {
                     {comment && (
                       <div className="flex text-sm mt-2 justify-end items-center gap-5">
                         <button
-                          className="hover:bg-icon_black px-4 py-1 rounded-full"
+                          className="hover:bg-dark_bg px-4 py-1 rounded-full"
                           onClick={() => setComment("")}
                         >
                           Cancel
@@ -623,7 +623,7 @@ const WatchPage = () => {
                         <div>
                           <div className="flex text-sm font-medium gap-1  items-center">
                             <h1 className="">{items?.userName}</h1>
-                            <h1 className="text-lightBlack">
+                            <h1 className="text-medium_gray">
                               {timeAgo(items?.comments[0]?.createdAt)}
                             </h1>
                           </div>
@@ -652,11 +652,11 @@ const WatchPage = () => {
           {/* right */}
           <div className="h-fit w-[38%] max-lg:w-full">
             {playlistId && (
-              <div className="border mb-5 sm:flex flex-col dark:bg-icon_black justify-between min-w-[35%] hidden h-fit rounded-lg">
+              <div className="border mb-5 sm:flex flex-col dark:bg-dark_bg justify-between min-w-[35%] hidden h-fit rounded-lg">
                 <div className="flex justify-between items-center border-b p-2">
                   <div>
                     <p className="font-bold text-lg">{playlist[0]?.title}</p>
-                    <p className="text-xs text-lightBlack">
+                    <p className="text-xs text-medium_gray">
                       <span className="text-white font-medium">
                         {playlist[0]?.channelName}
                       </span>{" "}
@@ -667,7 +667,7 @@ const WatchPage = () => {
                     size={40}
                     strokeWidth={1}
                     onClick={handlePlaylistClose}
-                    className="p-2 rounded-full dark:bg-icon_black dark:hover:bg-hover_icon_black"
+                    className="p-2 rounded-full dark:bg-dark_bg dark:hover:bg-dark_bg_hover"
                   />
                 </div>
                 <div
@@ -684,7 +684,7 @@ const WatchPage = () => {
                           }&index=${index + 1}`}
                         >
                           <div className="flex items-center gap-2">
-                            <p className="text-xs text-lightBlack">
+                            <p className="text-xs text-medium_gray">
                               {index + 1}
                             </p>
                             <div className="relative">
@@ -693,7 +693,7 @@ const WatchPage = () => {
                                 src={item?.thumbnail}
                                 alt=""
                               />
-                              <p className="absolute right-1 bottom-1 rounded-sm text-xs px-1 bg-black bg-opacity-80 ">
+                              <p className="absolute right-1 bottom-1 rounded-sm text-xs px-1 bg-black/80 ">
                                 {formatDuration(item?.duration)}
                               </p>
                             </div>
@@ -701,7 +701,7 @@ const WatchPage = () => {
                               <h1 className="line-clamp-2 font-medium">
                                 {item?.video_title}
                               </h1>
-                              <h1 className="text-lightBlack text-xs">
+                              <h1 className="text-medium_gray text-xs">
                                 {item?.channelName}
                               </h1>
                             </div>

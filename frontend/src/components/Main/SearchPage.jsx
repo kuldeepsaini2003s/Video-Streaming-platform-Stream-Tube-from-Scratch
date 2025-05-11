@@ -84,7 +84,7 @@ const SearchPage = () => {
                     alt=""
                   />
                 </div>
-                <div className="w-[50%] space-y-2 text-xs text-lightBlack font-medium">
+                <div className="w-[50%] space-y-2 text-xs text-medium_gray font-medium">
                   <h1 className="text-lg text-white">{item.channelName}</h1>
                   <div className="flex gap-2 items-center">
                     <h1>{item.userName}</h1>
@@ -100,7 +100,7 @@ const SearchPage = () => {
                 onClick={subscriberHandler}
                 className={`watch-btn subscriber px-3 py-2 ${
                   item?.subscribed
-                    ? "dark:bg-icon_black dark:hover:bg-hover_icon_black"
+                    ? "dark:bg-dark_bg dark:hover:bg-dark_bg_hover"
                     : "bg-white text-black"
                 } flex gap-1 items-center text-sm cursor-pointer rounded-3xl`}
               >
@@ -124,7 +124,7 @@ const SearchPage = () => {
                     className="flex-shrink-0 w-[42%] rounded-md object-cover object-center aspect-video"
                     alt="thumbnail"
                   />
-                  <div className="w-[50%] rounded-md text-xs font-medium text-lightBlack">
+                  <div className="w-[50%] rounded-md text-xs font-medium text-medium_gray">
                     <h1 className="text-white text-lg line-clamp-2">
                       {item.title}
                     </h1>

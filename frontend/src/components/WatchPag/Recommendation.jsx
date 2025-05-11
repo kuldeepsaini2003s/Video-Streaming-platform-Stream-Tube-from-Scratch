@@ -50,7 +50,7 @@ const Recommendation = ({ category, videoId }) => {
                   </span>
                 </div>
                 <div className="flex gap-2 w-full justify-between">
-                  <div className="flex flex-col text-xs dark:text-lightBlack font-medium">
+                  <div className="flex flex-col text-xs dark:text-medium_gray font-medium">
                     <h1 className="line-clamp-2 mb-3 dark:text-white text-sm font-medium leading-tight">
                       {item?.title}
                     </h1>
