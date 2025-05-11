@@ -210,7 +210,7 @@ const Navbar = () => {
                 onFocus={() => setShowSuggestion(true)}
                 onBlur={() => setTimeout(() => setShowSuggestion(false), 200)}
                 onChange={handleChange}
-                className="group w-[42vw] h-[2.5rem] dark:bg-black  border border-Gray dark:border-hover_icon_black  border-r-0 rounded-r-none rounded-3xl p-1 pl-5 focus:outline-none"
+                className="group w-[42vw] h-[2.5rem] dark:bg-black bg-white border border-Gray dark:border-hover_icon_black  border-r-0 rounded-r-none rounded-3xl p-1 pl-5 focus:outline-none"
               />
               {/* X-btn */}
               {inputValue && (
