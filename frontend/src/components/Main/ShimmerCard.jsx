@@ -3,7 +3,7 @@ import React from "react";
 const ShimmerCard = () => {
   return (
     <div id="main" className="p-4">
-      <div className="flex items-center gap-4 justify-start mb-5">
+      <div className="flex max-sm:hidden items-center gap-4 justify-start mb-5">
         {Array(10)
           .fill(" ")
           .map((_, index) => (

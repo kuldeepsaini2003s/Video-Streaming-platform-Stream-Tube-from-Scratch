@@ -1,23 +1,14 @@
 export const YOUTUBE_API_KEY = "AIzaSyB_0tssWKUF2AGkgH3eYLVAQLRkY1yNt9I"; // youtube api 1
 
-export const LOCAL_BACKEND_USER = "http://localhost:8000/api/users";
-export const LOCAL_BACKEND_VIDEO = "http://localhost:8000/api/videos";
-export const LOCAL_BACKEND_PLAYLIST = "http://localhost:8000/api/playlists";
-export const LOCAL_BACKEND_LIKE = "http://localhost:8000/api/likes";
-export const LOCAL_BACKEND_SUBSCRIPTION =
-  "http://localhost:8000/api/subscriptions";
-export const LOCAL_BACKEND_COMMENT = "http://localhost:8000/api/comments";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+const LOCALHOST_URL = import.meta.env.VITE_LOCALHOST_URL;
 
-export const BACKEND_USER = "https://streamtube-kuldeep.onrender.com/api/users";
-export const BACKEND_VIDEO =
-  "https://streamtube-kuldeep.onrender.com/api/videos";
-export const BACKEND_PLAYLIST =
-  "https://streamtube-kuldeep.onrender.com/api/playlists";
-export const BACKEND_LIKE = "https://streamtube-kuldeep.onrender.com/api/likes";
-export const BACKEND_SUBSCRIPTION =
-  "https://streamtube-kuldeep.onrender.com/api/subscriptions";
-export const BACKEND_COMMENT =
-  "https://streamtube-kuldeep.onrender.com/api/comments";
+export const BACKEND_USER = `${BACKEND_URL}/users`;
+export const BACKEND_VIDEO = `${BACKEND_URL}/videos`;
+export const BACKEND_PLAYLIST = `${BACKEND_URL}/playlists`;
+export const BACKEND_LIKE = `${BACKEND_URL}/likes`;
+export const BACKEND_SUBSCRIPTION = `${BACKEND_URL}/subscriptions`;
+export const BACKEND_COMMENT = `${BACKEND_URL}/comments`;
 
 export const YOUTUBE_VIDEOS_API =
   "https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=IN&key=" +

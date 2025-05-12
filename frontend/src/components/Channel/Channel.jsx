@@ -202,7 +202,7 @@ const Channel = () => {
                 alt=""
               />
             )}
-            <div className="flex justify-center gap-5 my-5">
+            <div className="flex justify-center gap-5 sm:my-5">
               {channelDetails?.avatar ? (
                 <div className="flex-shrink-0">
                   <img

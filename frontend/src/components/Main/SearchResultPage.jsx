@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import {
   BACKEND_SUBSCRIPTION,
   BACKEND_VIDEO,
+  formatDuration,
   formatViewCount,
 } from "../../utils/constants";
 import { useSelector } from "react-redux";
@@ -13,9 +14,9 @@ import Lottie from "lottie-react";
 import bell_icon_white from "../../Icons/Bell-icon-white.json";
 import { PiDotsThreeVerticalBold } from "react-icons/pi";
 
-const SearchPage = () => {
+const SearchResultPage = () => {
   const [searchParams] = useSearchParams();
-  const query = searchParams.get("query");
+  const search_query = searchParams.get("search_query");
   const { user } = useSelector((state) => state.user);
   const [videos, setVideos] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -23,12 +24,13 @@ const SearchPage = () => {
   const [showLoginPop, setShowLoginPop] = useState(false);
   const [loginMessage, setLoginMessage] = useState("");
   const [showPop, setShowPop] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getVideos = async () => {
       try {
         const res = await axios.get(
-          BACKEND_VIDEO + `/search?query=${query}&userId=${user?._id}`
+          BACKEND_VIDEO + `/search?query=${search_query}&userId=${user?._id}`
         );
 
         if (res.status === 200) {
@@ -38,10 +40,10 @@ const SearchPage = () => {
         console.error("Error while searching video", error);
       }
     };
-    if (query) {
+    if (search_query) {
       getVideos();
     }
-  }, [query]);
+  }, [search_query]);
 
   const subscriberHandler = async (channelName, subscribed) => {
     if (!user) {
@@ -67,8 +69,13 @@ const SearchPage = () => {
     }
   };
 
+  const handleNavigate = (e) => {
+    if (e.target.closest("a")) return;
+    navigate(`/watch?v=${video_id}`);
+  };
+
   return (
-    <div id="main" className="px-10 py-2 relative">
+    <div id="main" className="lg:px-10 sm:px-5 px-2 lg:py-2 relative">
       {videos?.length > 0 ? (
         videos.map((item) =>
           item.type === "user" ? (
@@ -116,40 +123,56 @@ const SearchPage = () => {
               </button>
             </div>
           ) : (
-            <div className="flex my-4">
-              <Link to={`/watch?v=${item?.video_id}`}>
-                <div className="flex gap-5">
+            <>
+              <div
+                onClick={handleNavigate}
+                className="flex max-sm:flex-col sm:gap-3 shadow-md rounded-md sm:my-4"
+              >
+                <div className="relative rounded-md flex-shrink-0 sm:w-[37%]">
                   <img
-                    src={item.thumbnail}
-                    className="flex-shrink-0 w-[42%] rounded-md object-cover object-center aspect-video"
-                    alt="thumbnail"
+                    className={`ml:rounded-md sm:h-[13rem] sm:w-full ms:h-[12rem] object-cover aspect-video object-center w-full`}
+                    alt="Thumbnails"
+                    src={item?.thumbnail}
                   />
-                  <div className="w-[50%] rounded-md text-xs font-medium text-medium_gray">
-                    <h1 className="text-white text-lg line-clamp-2">
-                      {item.title}
-                    </h1>
-                    <p className="flex items-center gap-2">
-                      {formatViewCount(item.viewsCount)} views{" "}
-                      <GoDotFill size={8} /> {timeAgo(item.createdAt)}
-                    </p>
-                    <Link to={`/${item.userName}`}>
-                      <div className="flex gap-2 my-2 items-center">
-                        <img
-                          src={item.avatar}
-                          className="w-8 h-8 object-cover aspect-square object-center rounded-full"
-                          alt=""
-                        />
-                        <h1>{item.channelName}</h1>
-                      </div>
+                  <p className="absolute text-[0.8rem] font-medium text-white bg-black opacity-80 rounded-md right-2 bottom-2 px-2 py-0.5">
+                    {formatDuration(item?.duration)}
+                  </p>
+                </div>
+                <div className="yt-details sm:w-full px-2 max-sm:py-3 flex gap-2 sm:flex-col-reverse sm:justify-end gap-x-3">
+                  <Link to={`/${item?.userName}`} className="flex-shrink-0">
+                    {item?.avatar ? (
+                      <img
+                        className="rounded-full sm:h-10 sm:w-10 ms:h-8 ms:w-8 object-cover aspect-square flex-shrink-0 object-center"
+                        alt="Avatar"
+                        src={item?.avatar}
+                      />
+                    ) : (
+                      <FaCircleUser className="sm:w-12 sm:h-14" />
+                    )}
+                  </Link>
+                  <div className="w-full">
+                    <div className="flex gap-5 justify-between w-full">
+                      <p className="line-clamp-2 font-semibold max-sm:text-sm ">
+                        {item?.title}
+                      </p>
+                      <p className="three-dots-container ">
+                        <PiDotsThreeVerticalBold size={22} />
+                      </p>
+                    </div>
+                    <Link to={`/${item?.userName}`}>
+                      <p className="text-darkGray text-sm max-sm:text-xs">
+                        {item?.channelName}
+                      </p>
                     </Link>
-                    <p className="line-clamp-2">{item.description}</p>
+                    <div className="flex gap-1 items-center text-darkGray text-sm max-sm:text-xs">
+                      <p>{formatViewCount(item?.viewsCount)} views</p>
+                      <GoDotFill size={8} />
+                      <p>{timeAgo(item?.createdAt)}</p>
+                    </div>
                   </div>
                 </div>
-              </Link>
-              <button className="flex-shrink-0 self-start">
-                <PiDotsThreeVerticalBold size={20} />
-              </button>
-            </div>
+              </div>
+            </>
           )
         )
       ) : (
@@ -159,4 +182,4 @@ const SearchPage = () => {
   );
 };
 
-export default SearchPage;
+export default SearchResultPage;

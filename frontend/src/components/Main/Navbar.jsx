@@ -123,7 +123,7 @@ const Navbar = () => {
     <>
       <div
         id="navbar"
-        className="flex items-center max-w-[100vw] justify-between px-2 py-1 max-sm:py-2 max-sm:mb-1 max-sm:border-y border-dark_bg_hover
+        className="flex items-center max-w-[100vw] justify-between px-2 py-1 max-sm:py-2 max-sm:mb-1 max-sm:border-y border-medium_gray dark:border-dark_bg_hover
         "
       >
         <div className="flex items-center gap-x-2">
@@ -196,11 +196,11 @@ const Navbar = () => {
         {/* search-bar container  */}
         <div
           id="searchBar"
-          className="flex items-center justify-between w-[52vw] relative"
+          className="flex items-center justify-between gap-5 w-[52vw] relative"
         >
-          <div className="flex items-center">
+          <div className="flex items-center w-full">
             {/* input-btn */}
-            <div className="relative sm:block ms:hidden">
+            <div className="relative sm:block ms:hidden w-full">
               <input
                 id="input"
                 type="text"
@@ -210,7 +210,7 @@ const Navbar = () => {
                 onFocus={() => setShowSuggestion(true)}
                 onBlur={() => setTimeout(() => setShowSuggestion(false), 200)}
                 onChange={handleChange}
-                className="group w-[42vw] h-[2.5rem] dark:bg-black bg-white border border-Gray dark:border-dark_bg_hover  border-r-0 rounded-r-none rounded-3xl p-1 pl-5 focus:outline-none"
+                className="group w-full h-[2.5rem] dark:bg-black bg-white border border-Gray dark:border-dark_bg_hover  border-r-0 rounded-r-none rounded-3xl p-1 pl-5 focus:outline-none"
               />
               {/* X-btn */}
               {inputValue && (
@@ -225,7 +225,7 @@ const Navbar = () => {
             {/* Search-btn */}
             <button
               id="search-btn"
-              className="sm:rounded-3xl sm:rounded-l-none border-Gray bg-lightGray hover:bg-medium_gray dark:bg-dark_bg dark:hover:bg-dark_bg_hover dark:hover:bg-dark_bg_hover dark:border-dark_bg_hover sm:border h-[2.5rem] w-[5vw] pl-5 flex justify-center items-center sm:block ms:hidden"
+              className="sm:rounded-3xl sm:rounded-l-none border-Gray bg-lightGray hover:bg-medium_gray dark:bg-dark_bg dark:hover:bg-dark_bg_hover dark:hover:bg-dark_bg_hover dark:border-dark_bg_hover sm:border h-[2.5rem] px-4 flex flex-shrink-0 justify-center items-center sm:block ms:hidden"
             >
               <IoSearchOutline className="text-[1.3rem]" />
             </button>
@@ -242,23 +242,23 @@ const Navbar = () => {
           {showSuggestion && inputValue && (
             <div
               id="searchSuggestion"
-              className="fixed font-medium top-14 max-h-[75vh] overflow-y-scroll remove-scrollbar shadow-lg z-50 rounded-md w-[42vw] bg-white dark:bg-[#212121] py-4"
+              className="fixed font-medium top-14 max-h-[75vh] overflow-y-scroll remove-scrollbar shadow-lg z-50 rounded-md w-[42vw] bg-white dark:bg-[#212121] p-2"
             >
               {suggestions?.length > 0 ? (
                 suggestions?.map((item, index) => (
-                  <Link to={`/search?query=${item}`}>
+                  <Link to={`/results?search_query=${item}`}>
                     <div
                       key={index}
-                      className="flex text-sm gap-4 items-center font-medium  gap-2 px-4 py-2 dark:hover:bg-dark_bg_hover"
+                      className="flex text-sm gap-4 items-center rounded-md font-medium  gap-2 px-4 py-2 dark:hover:bg-dark_bg_hover"
                     >
-                      <IoSearchOutline size={20} />
+                      <IoSearchOutline size={20} className="flex-shrink-0" />
                       <p className="line-clamp-2">{item}</p>
                     </div>
                   </Link>
                 ))
               ) : (
                 <p className="flex gap-2 items-center">
-                  <IoSearchOutline size={25} /> No results found
+                  <IoSearchOutline size={20} /> No results found
                 </p>
               )}
             </div>
@@ -277,9 +277,11 @@ const Navbar = () => {
             </Link>
           )}
           {/* search btn for mobile screen */}
-          <div className="sm:hidden">
-            <IoSearchOutline className="text-[1.2rem] mr-1" />
-          </div>
+          <Link to={"/search"}>
+            <div className="sm:hidden">
+              <IoSearchOutline className="text-[1.2rem] mr-1" />
+            </div>
+          </Link>
 
           {!user && (
             <button

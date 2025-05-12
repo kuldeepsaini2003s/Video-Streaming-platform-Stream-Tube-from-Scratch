@@ -22,7 +22,8 @@ import Subscriptions from "./components/Channel/Subscriptions";
 import History from "./components/Channel/History/History";
 import axios from "axios";
 import UserChannel from "./components/Channel/UserChannel";
-import SearchPage from "./components/Main/SearchPage";
+import SearchResultPage from "./components/Main/SearchResultPage";
+import MobileSearchPage from "./components/Main/MobileSearchPage";
 
 export const AppRouter = createBrowserRouter([
   {
@@ -90,8 +91,12 @@ export const AppRouter = createBrowserRouter([
         element: <WatchPage />,
       },
       {
+        path: "/results",
+        element: <SearchResultPage />,
+      },
+      {
         path: "/search",
-        element: <SearchPage />,
+        element: <MobileSearchPage />,
       },
     ],
   },

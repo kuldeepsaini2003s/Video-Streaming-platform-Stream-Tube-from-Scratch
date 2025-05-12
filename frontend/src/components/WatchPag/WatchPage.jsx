@@ -405,7 +405,7 @@ const WatchPage = () => {
       ) : (
         <div
           id="main"
-          className="lg:px-14 max-lg:px-5 max-sm:px-0 py-5 max-sm:mt-2 max-lg:py-0 flex max-lg:flex-col sm:gap-5 w-full"
+          className="lg:px-14 max-lg:px-5 max-sm:px-0 py-5 max-sm:mt-2 max-lg:py-0 max-lg:pb-5 flex max-lg:flex-col sm:gap-5 w-full"
         >
           {/* left  */}
           <div className="w-[62%] max-lg:w-full h-fit">
@@ -522,8 +522,10 @@ const WatchPage = () => {
               <div className="gap-2 flex flex-col sm:mt-2 sm:m-0 text-sm font-medium bg-lightGray dark:bg-dark_bg rounded-2xl p-3">
                 {/* views */}
                 <div className="flex items-center gap-x-2 font-semibold flex-wrap ">
-                  <p className="p-0 m-0">{formatViewCount(viewsCount)} views</p>
-                  <p className="p-0 m-0">{timeAgo(createdAt)} </p>
+                  <p className="p-0 m-0">
+                    {viewsCount && formatViewCount(viewsCount)} views
+                  </p>
+                  <p className="p-0 m-0">{createdAt && timeAgo(createdAt)} </p>
                   <div
                     className={`${
                       showFullDescription ? "" : "line-clamp-1"
@@ -571,7 +573,7 @@ const WatchPage = () => {
                   {currentUser ? (
                     <img
                       src={currentUser?.avatar}
-                      className="rounded-full w-14 h-14 object-cover object-center"
+                      className="rounded-full sm:w-14 sm:h-14 h-10 w-10 object-cover object-center"
                       alt="user-avatar"
                     />
                   ) : (
