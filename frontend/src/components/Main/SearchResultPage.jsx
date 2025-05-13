@@ -79,24 +79,26 @@ const SearchResultPage = () => {
       {videos?.length > 0 ? (
         videos.map((item) =>
           item.type === "user" ? (
-            <div className="flex gap-5 items-center w-full">
+            <div className="flex items-center max-sm:gap-2 max-sm:my-3">
               <Link
                 to={`/${item.userName}`}
-                className="flex flex-shrink-0 items-center w-[90%] gap-5"
+                className="flex items-center w-full max-mm:gap-2"
               >
-                <div className="w-[46%] flex justify-center items-center">
+                <div className="flex-shrink-0 w-[40%] max-sm:w-[25%] flex justify-center items-center">
                   <img
                     src={item.avatar}
-                    className="flex-shrink-0 rounded-full w-32 h-32 object-cover object-center aspect-square"
+                    className="rounded-full w-32 h-32 max-sm:w-14 max-sm:h-14 object-cover object-center aspect-square"
                     alt=""
                   />
                 </div>
-                <div className="w-[50%] space-y-2 text-xs text-medium_gray font-medium">
-                  <h1 className="text-lg text-white">{item.channelName}</h1>
-                  <div className="flex gap-2 items-center">
+                <div className="w-full space-y-2 text-xs text-medium_gray font-medium">
+                  <h1 className="sm:text-lg text-sm text-white">
+                    {item.channelName}
+                  </h1>
+                  <div className="flex gap-2 flex-wrap max-sm:text-xs items-center">
                     <h1>{item.userName}</h1>
-                    <GoDotFill size={8} />
-                    <h1>
+                    <h1 className="flex gap-2 items-center">
+                      <GoDotFill size={8} className="max-mm:hidden"/>
                       {formatViewCount(item.subscribersCount)} subscribers
                     </h1>
                   </div>
@@ -109,7 +111,7 @@ const SearchResultPage = () => {
                   item?.subscribed
                     ? "dark:bg-dark_bg dark:hover:bg-dark_bg_hover"
                     : "bg-white text-black"
-                } flex gap-1 items-center text-sm cursor-pointer rounded-3xl`}
+                } flex gap-1 flex-shrink-0  items-center sm:text-sm text-xs cursor-pointer rounded-3xl`}
               >
                 {item?.subscribed && (
                   <Lottie

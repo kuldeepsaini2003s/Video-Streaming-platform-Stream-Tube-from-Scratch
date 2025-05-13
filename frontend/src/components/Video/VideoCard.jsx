@@ -51,9 +51,11 @@ const VideoCard = ({ info }) => {
             </p>
           </div>
           <Link to={`/${userName}`}>
-            <p className="text-darkGray text-sm">{channelName}</p>
+            <p className="text-darkGray text-sm max-sm:text-xs">
+              {channelName}
+            </p>
           </Link>
-          <div className="flex gap-1 items-center text-darkGray text-sm">
+          <div className="flex gap-1 items-center text-darkGray text-sm max-sm:text-xs">
             <p>{formatViewCount(views.length)} views</p>
             <GoDotFill size={8} />
             <p>{timeAgo(createdAt)}</p>

@@ -268,7 +268,7 @@ const Channel = () => {
                 </div>
               </div>
             </div>
-            <nav className="flex overflow-x-scroll remove-scrollbar gap-8 ">
+            <nav className="flex overflow-x-scroll remove-scrollbar gap-8 pt-2">
               {channelNavigation.map((item, index) => (
                 <Link to={item?.path}>
                   <p
@@ -286,7 +286,7 @@ const Channel = () => {
               ))}
             </nav>
           </div>
-          <div className="lg:px-20 sm:px-5 ">
+          <div className="lg:px-20 sm:px-5">
             <Outlet />
           </div>
           {showPop && <ConfirmationPop />}

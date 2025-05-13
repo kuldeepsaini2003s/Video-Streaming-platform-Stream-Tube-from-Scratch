@@ -86,7 +86,8 @@ const MobileSearchPage = () => {
         </div>
       </div>
       <div className="mt-2">
-        {suggestions?.length > 0 ? (
+        {inputValue &&
+          suggestions?.length > 0 &&
           suggestions?.map((item, index) => (
             <Link to={`/results?search_query=${item}`}>
               <div
@@ -97,12 +98,7 @@ const MobileSearchPage = () => {
                 <p className="line-clamp-2">{item}</p>
               </div>
             </Link>
-          ))
-        ) : (
-          <p className="flex gap-2 items-center">
-            <IoSearchOutline size={20} /> No results found
-          </p>
-        )}
+          ))}
       </div>
     </div>
   );

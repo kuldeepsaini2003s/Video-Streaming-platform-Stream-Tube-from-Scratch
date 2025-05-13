@@ -8,10 +8,10 @@ const Profile_Video_Card = ({ info }) => {
   const { title, duration, thumbnail, viewsCount, channelName, avatar } = info;
 
   return (
-    <div>
+    <>
       <div className="relative rounded-md">
         <img
-          className={`ml:rounded-md sm:h-[10rem]  ms:h-[12rem] object-cover aspect-video object-center w-full`}
+          className={`ml:rounded-md sm:h-[10rem] ms:h-[12rem] object-cover aspect-video object-center w-full`}
           alt="Thumbnails"
           src={thumbnail}
         />
@@ -19,7 +19,7 @@ const Profile_Video_Card = ({ info }) => {
           {formatDuration(duration)}
         </p>
       </div>
-      <div className="yt-details py-2 sm:px-0 ms:px-4 ms:py-3 flex gap-x-3">
+      <div className="yt-details py-2 sm:px-0 ms:px-2 flex gap-x-3">
         {avatar ? (
           <img
             className="rounded-full sm:h-10 sm:w-10 ms:h-8 ms:w-8 object-cover aspect-square flex-shrink-0 object-center"
@@ -45,7 +45,7 @@ const Profile_Video_Card = ({ info }) => {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

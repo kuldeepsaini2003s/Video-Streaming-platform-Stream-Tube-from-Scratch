@@ -24,7 +24,7 @@ export const UserAllVideo = () => {
   }, [userAllVideos]);
 
   return (
-    <div className="grid max-sm:grid-cols-1 gap-3 sm:grid-cols-2 ml:m-2   lg:grid-cols-3 mt-4">
+    <div className="grid max-sm:grid-cols-1 gap-2 sm:grid-cols-2 ml:m-2 lg:grid-cols-3 mt4">
       {videos && videos.length > 0 ? (
         videos.map((item) => (
           <Link
