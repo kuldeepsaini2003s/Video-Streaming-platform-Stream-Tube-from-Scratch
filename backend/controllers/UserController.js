@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const generateAccessAndRefreshToken = (user) => {
-  const accessToken = generateToken(user, "10d");
+  const accessToken = generateToken(user, "1min");
   const refreshToken = generateToken(user, "30d");
   return { accessToken, refreshToken };
 };
@@ -208,16 +208,32 @@ const loginUser = async (req, res) => {
 };
 
 const logoutUser = async (req, res) => {
-  await User.findByIdAndUpdate(
-    req.user._id,
-    { refreshToken: undefined },
-    { new: true }
-  );
-  return res
-    .status(200)
-    .clearCookie("accessToken", option)
-    .clearCookie("refreshToken", option)
-    .json({ success: true, message: "User logged out successfully" });
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { refreshToken: undefined },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+    
+    return res
+      .status(200)
+      .clearCookie("accessToken", option)
+      .clearCookie("refreshToken", option)
+      .json({ success: true, message: "User logged out successfully" });
+  } catch (error) {
+    console.log("Error while logging out user", error);
+    return res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
 };
 
 const refreshAccessToken = async (req, res) => {
@@ -401,7 +417,7 @@ const updateUser = async (req, res) => {
   } catch (error) {
     console.log("Error while updating user details", error);
     return res.status(500).json({
-      success: false, 
+      success: false,
       message: "Something went wrong",
     });
   }

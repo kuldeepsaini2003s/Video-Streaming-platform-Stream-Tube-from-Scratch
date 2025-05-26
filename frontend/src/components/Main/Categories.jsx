@@ -26,8 +26,11 @@ const Categories = () => {
         if (res.status === 200) {
           setCategories(res?.data?.data);
         }
-      } catch (error) {
-        console.error("Error while fetching all category", error);
+      } catch (error) {        
+        handleError({
+          error,          
+          message: "Error while fetching category",
+        });
       }
     };
     fetchAllCategories();

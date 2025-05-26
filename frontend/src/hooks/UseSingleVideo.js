@@ -18,7 +18,10 @@ const UseSingleVideo = (videoId) => {
         dispatch(setSingleVideo(res?.data?.data));
       }
     } catch (error) {
-      console.error("Error while getting video by id", error);
+      handleError({
+        error,
+        message: "Error while getting video by id",
+      });
     }
   };
   useEffect(() => {

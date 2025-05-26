@@ -66,7 +66,7 @@ export const UserPlaylist = () => {
           setPlaylist([]);
         }
       } catch (error) {
-        console.error("Error while fetching user playlist", error);
+        handleError({ error, message: "Error while fetching user playlist" });
         setPlaylist([]);
       }
     };

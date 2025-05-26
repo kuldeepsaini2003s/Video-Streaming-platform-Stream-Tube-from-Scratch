@@ -31,7 +31,7 @@ const Subscriptions = () => {
         setSubscriptions(response?.data?.data);
       }
     } catch (error) {
-      console.error("Error while fetching subscriptions");
+      handleError({ error, message: "Error while fetching subscriptions" });
       setSubscriptions([]);
     }
   };
@@ -56,7 +56,7 @@ const Subscriptions = () => {
         fetchSubscriptions();
       }
     } catch (error) {
-      console.error("Error while subscribing channel", error);
+      handleError({ error, message: "Error while subscribing channel" });
     }
   };
 

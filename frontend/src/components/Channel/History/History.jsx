@@ -27,7 +27,10 @@ const History = () => {
         setWatchHistory(response?.data?.data);
       }
     } catch (error) {
-      console.error("Error while fetch watch history", error);
+      handleError({
+        error,
+        message: "Error while fetching watchHistory video",
+      });
       setWatchHistory([]);
     }
   };
@@ -55,8 +58,11 @@ const History = () => {
         });
       }
     } catch (error) {
-      console.error("Error while removing video from history", error);
-      handleError({ error, toastId, message: "Error while removing video" });
+      handleError({
+        error,
+        toastId,
+        message: "Error while removing video from history",
+      });
     }
   };
 

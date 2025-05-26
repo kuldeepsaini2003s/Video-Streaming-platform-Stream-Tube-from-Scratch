@@ -17,7 +17,7 @@ const router = Router();
 router.post("/register", upload.single("avatar"), registerUser);
 router.post("/login", loginUser);
 router.get("/logout", verifyToken, logoutUser);
-router.get("/refresh_token", refreshAccessToken);
+router.get("/refreshToken", refreshAccessToken);
 router.post("/updatePassword", verifyToken, updatePassword);
 router.post(
   "/updateUser",

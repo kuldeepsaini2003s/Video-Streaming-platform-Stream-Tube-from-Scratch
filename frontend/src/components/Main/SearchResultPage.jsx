@@ -37,7 +37,7 @@ const SearchResultPage = () => {
           setVideos(res?.data?.data);
         }
       } catch (error) {
-        console.error("Error while searching video", error);
+        handleError({ error, message: "Error while searching video" });
       }
     };
     if (search_query) {
@@ -61,7 +61,7 @@ const SearchResultPage = () => {
           },
         });
       } catch (error) {
-        console.error("Error while subscribing channel", error);
+        handleError({ error, message: "Error while subscribing channel" });
       }
       setSubscribed(true);
     } else {
@@ -98,7 +98,7 @@ const SearchResultPage = () => {
                   <div className="flex gap-2 flex-wrap max-sm:text-xs items-center">
                     <h1>{item.userName}</h1>
                     <h1 className="flex gap-2 items-center">
-                      <GoDotFill size={8} className="max-mm:hidden"/>
+                      <GoDotFill size={8} className="max-mm:hidden" />
                       {formatViewCount(item.subscribersCount)} subscribers
                     </h1>
                   </div>

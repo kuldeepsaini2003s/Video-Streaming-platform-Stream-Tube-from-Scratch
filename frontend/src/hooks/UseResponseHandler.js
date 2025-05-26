@@ -1,6 +1,8 @@
 import { toast } from "react-toastify";
+import useRefreshToken from "./useRefreshToken";
 
 const useResponseHandler = () => {
+  const { refreshAccessToken } = useRefreshToken();
   const handleResponse = ({
     status,
     message,
@@ -37,14 +39,19 @@ const useResponseHandler = () => {
     message = "Something went wrong!",
   }) => {
     console.error("Error:", error);
-    toast.update(toastId, {
-      render: message,
-      type: "error",
-      isLoading: false,
-      autoClose: 3000,
-      pauseOnFocusLoss: false,
-      closeOnClick: true,
-    });
+    if (error?.response?.status === 401) {
+      refreshAccessToken();
+    }
+    if (showToast) {
+      toast.update(toastId, {
+        render: message,
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+        pauseOnFocusLoss: false,
+        closeOnClick: true,
+      });
+    }
   };
 
   return { handleResponse, handleError };

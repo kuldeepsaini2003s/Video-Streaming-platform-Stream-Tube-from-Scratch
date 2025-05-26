@@ -20,10 +20,10 @@ import UpdateVideo from "./components/Video/UpdateVideo";
 import LoginBlocker from "./utils/ProtectionLayout/LoginBlocker";
 import Subscriptions from "./components/Channel/Subscriptions";
 import History from "./components/Channel/History/History";
-import axios from "axios";
 import UserChannel from "./components/Channel/UserChannel";
 import SearchResultPage from "./components/Main/SearchResultPage";
 import MobileSearchPage from "./components/Main/MobileSearchPage";
+import useRefreshToken from "./hooks/useRefreshToken";
 
 export const AppRouter = createBrowserRouter([
   {
@@ -104,27 +104,8 @@ export const AppRouter = createBrowserRouter([
 
 function App() {
   const userToken = localStorage.getItem("token");
+  const { refreshAccessToken } = useRefreshToken();
   const dispatch = useDispatch();
-  const [isRefreshing, setIsRefreshing] = useState(false);
-
-  const refreshAccessToken = async () => {
-    if (isRefreshing) return;
-    setIsRefreshing(true);
-    try {
-      const response = await axios.get(BACKEND_USER + "/refresh_token", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
-        },
-      });
-      if (response.status === 200) {
-        localStorage.setItem("token", response?.data?.accessToken);
-        localStorage.setItem("refreshToken", response?.data?.refreshToken);
-        window.location.reload();
-      }
-    } catch (error) {
-      console.error("Error while refreshing the user token", error);
-    }
-  };
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -142,7 +123,6 @@ function App() {
         }
         if (response.status === 200) {
           dispatch(setUser(data.data));
-          setIsRefreshing(false);
         }
       } catch (error) {
         console.error("error while checking token", error);

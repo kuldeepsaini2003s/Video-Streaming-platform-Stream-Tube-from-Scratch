@@ -80,16 +80,20 @@ const WatchPage = () => {
 
   useEffect(() => {
     const fetchPlaylist = async () => {
-      const { data } = await axios.get(
-        BACKEND_PLAYLIST + `/playlist/${playlistId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
+      try {
+        const { data } = await axios.get(
+          BACKEND_PLAYLIST + `/playlist/${playlistId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${userToken}`,
+            },
+          }
+        );
+        if (data) {
+          setPlaylist(data?.data);
         }
-      );
-      if (data) {
-        setPlaylist(data?.data);
+      } catch (error) {
+        handleError({ error, message: "Error while fetching playlist" });
       }
     };
     if (playlistId) {
@@ -106,7 +110,10 @@ const WatchPage = () => {
           },
         });
       } catch (error) {
-        console.error("Error while adding video to watched history", error);
+        handleError({
+          error,
+          message: "Error while adding video to watch history",
+        });
       }
     };
     if (!videoViewed) {
@@ -198,7 +205,7 @@ const WatchPage = () => {
           },
         });
       } catch (error) {
-        console.error("Error while updating views", error);
+        handleError({ error, message: "Error while updating views" });
       }
     };
     if (!videoViewed) {
@@ -229,7 +236,7 @@ const WatchPage = () => {
           },
         });
       } catch (error) {
-        console.error("Error while subscribing channel", error);
+        handleError({ error, message: "Error while subscribing channel" });
       }
       setSubscribed(true);
     } else {
@@ -291,7 +298,7 @@ const WatchPage = () => {
         },
       });
     } catch (error) {
-      console.error("Error while subscribing channel", error);
+      handleError({ error, message: "Error while subscribing" });
     }
     setSubscribed(false);
   };
@@ -357,7 +364,7 @@ const WatchPage = () => {
         setCommentsList(res?.data?.data);
       }
     } catch (error) {
-      console.error("Error while getting comments", error);
+      handleError({ error, message: "Error while getting comments" });
     }
   };
 
@@ -383,7 +390,7 @@ const WatchPage = () => {
         setDisable(false);
       }
     } catch (error) {
-      console.error("Error while creating comment", error);
+      handleError({ error, message: "Error while creating video" });
       setDisable(false);
     }
   };

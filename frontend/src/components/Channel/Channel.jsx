@@ -123,7 +123,7 @@ const Channel = () => {
           }
         );
       } catch (error) {
-        console.error("Error while subscribing channel", error);
+        handleError({ error, message: "Error while subscribing channel" });
       }
       setSubscribed(true);
     } else {
@@ -142,7 +142,7 @@ const Channel = () => {
         }
       );
     } catch (error) {
-      console.error("Error while subscribing channel", error);
+      handleError({ error, message: "Error while unsubscribing channel" });
     }
     setSubscribed(false);
   };

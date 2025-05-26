@@ -25,7 +25,7 @@ const UserChannel = () => {
           setHistory(response?.data?.data);
         }
       } catch (error) {
-        console.error("Error while fetching user details");
+        handleError({ error, message: "Error while fetching user details" });
         setHistory([]);
       }
     };

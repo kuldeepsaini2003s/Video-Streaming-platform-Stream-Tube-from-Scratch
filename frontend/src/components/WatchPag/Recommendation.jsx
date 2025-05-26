@@ -23,7 +23,10 @@ const Recommendation = ({ category, videoId }) => {
           setRecommendedVideos(res?.data?.data);
         }
       } catch (error) {
-        console.error("Error while getting recommended videos", error);
+        handleError({
+          error,
+          message: "Error while getting recommended videos",
+        });
       }
     };
     if (category) {

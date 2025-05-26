@@ -72,8 +72,8 @@ export const CreatePlaylist = ({ setShowCreatePlaylist }) => {
       } else if (response.status === 201) {
         toast.success("playlist already exist");
       }
-    } catch (error) {
-      console.error("Error while creating playlist", error);
+    } catch (error) {      
+      handleError({ error, message: "Error while creating playlist" });
     }
   };
 
@@ -188,7 +188,10 @@ export const SavePlaylist = ({ setShowPlaylist, setShowCreatePlaylist }) => {
           setPlaylist(response?.data?.data);
         }
       } catch (error) {
-        console.error("Error while fetching user playlist", error);
+        handleError({
+          error,
+          message: "Error while fetching user playlist",
+        });
       }
     };
     if (user._id) {

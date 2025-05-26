@@ -52,7 +52,7 @@ const UpdateVideo = () => {
           setInitialData(videoData);
         }
       } catch (error) {
-        console.error("Error while getting video details", error);
+        handleError({ error, message: "Error while getting video details" });
       }
     };
     if (videoId) {
