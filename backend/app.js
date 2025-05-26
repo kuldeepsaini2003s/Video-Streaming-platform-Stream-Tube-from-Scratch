@@ -34,4 +34,8 @@ app.use("/api/likes", likesRouter);
 app.use("/api/subscriptions", subscriptionsRouter);
 app.use("/api/comments", commentsRouter);
 
+app.get("/", (req, res) => {
+  res.send("Stream tube server started");
+});
+
 export { app };
